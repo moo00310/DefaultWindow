@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CSceneMgr.h"
 #include "COrbit_or_bit.h"
+#include "CRhythmWorld.h"
 
 CSceneMgr* CSceneMgr::m_pInstance = nullptr;
 
@@ -30,6 +31,10 @@ void CSceneMgr::Set_Scene(SCENEID eID)
 
 		case SC_MOO:
 			m_pScene = new COrbit_or_bit;
+			break;
+
+		case SC_HERO:
+			m_pScene = new CRhythmWorld;
 			break;
 
 		/*	case SC_EDIT:

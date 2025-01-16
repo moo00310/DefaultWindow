@@ -70,6 +70,9 @@
     <Filter Include="02.Desin\KeyMgr">
       <UniqueIdentifier>{b369a1be-c022-49f5-9574-1b9e0c981787}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03.Scene\05.Hero_Scene">
+      <UniqueIdentifier>{12bcd490-6965-4058-a32d-049511c7d47b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -135,6 +138,9 @@
     <ClInclude Include="COrbit_or_bit.h">
       <Filter>03.Scene\02.Moo_Scene</Filter>
     </ClInclude>
+    <ClInclude Include="CRhythmWorld.h">
+      <Filter>03.Scene\05.Hero_Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DefaultWindow.cpp">
@@ -184,6 +190,9 @@
     </ClCompile>
     <ClCompile Include="COrbit_or_bit.cpp">
       <Filter>03.Scene\02.Moo_Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CRhythmWorld.cpp">
+      <Filter>03.Scene\05.Hero_Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

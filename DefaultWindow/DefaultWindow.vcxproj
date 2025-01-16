@@ -161,6 +161,7 @@
     <ClInclude Include="COrbit_or_bit.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CPlayer_moo.h" />
+    <ClInclude Include="CRhythmWorld.h" />
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CSceneMgr.h" />
     <ClInclude Include="CSoundMgr.h" />
@@ -183,6 +184,7 @@
     <ClCompile Include="COrbit_or_bit.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CPlayer_moo.cpp" />
+    <ClCompile Include="CRhythmWorld.cpp" />
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CSceneMgr.cpp" />
     <ClCompile Include="CSoundMgr.cpp" />
