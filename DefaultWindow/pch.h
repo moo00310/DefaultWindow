@@ -24,13 +24,12 @@
 #include "fmod_studio.hpp"
 //#pragma comment(lib, "fmodex_vc.lib")
 // Debug 일 때
-#pragma comment(lib, "fmod.lib")
-#pragma comment(lib, "fmodstudio.lib")
+#pragma comment(lib, "fmodL_vc.lib")
+#pragma comment(lib, "fmodstudioL_vc.lib")
 
 // Release 일 때
-#pragma comment(lib, "fmod.lib")
-#pragma comment(lib, "fmodstudio.lib")
-
+#pragma comment(lib, "fmod_vc.lib")
+#pragma comment(lib, "fmodstudio_vc.lib")
 
 #ifdef _DEBUG
 
