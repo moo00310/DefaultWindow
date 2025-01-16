@@ -28,18 +28,6 @@
     <Filter Include="02.Desin\SceneMgr">
       <UniqueIdentifier>{3d1a0e62-5e51-4f1b-8b0d-7de93ec37403}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Obj\00.Moo_Obj">
-      <UniqueIdentifier>{83487ee4-a103-4480-9f1f-b4152e42e997}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\00.Moo_Obj\03.Orbit">
-      <UniqueIdentifier>{a39766c2-6540-42db-a164-53ab5400388c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\00.Moo_Obj\01.CPlayer_moo">
-      <UniqueIdentifier>{024489c4-0f05-4f7f-a806-c17504888b44}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\00.Moo_Obj\02.Cthorn">
-      <UniqueIdentifier>{dc2a4504-0eec-4416-b5d3-7ff8a69f6455}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Obj\99.Player">
       <UniqueIdentifier>{0d160408-139b-4b41-a75d-ed72a58c3568}</UniqueIdentifier>
     </Filter>
@@ -69,6 +57,21 @@
     </Filter>
     <Filter Include="02.Desin\KeyMgr">
       <UniqueIdentifier>{b369a1be-c022-49f5-9574-1b9e0c981787}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\00. Moo_Obj">
+      <UniqueIdentifier>{83487ee4-a103-4480-9f1f-b4152e42e997}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\00. Moo_Obj\03.Orbit">
+      <UniqueIdentifier>{a39766c2-6540-42db-a164-53ab5400388c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\00. Moo_Obj\01.CPlayer_moo">
+      <UniqueIdentifier>{024489c4-0f05-4f7f-a806-c17504888b44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\00. Moo_Obj\02.Cthorn">
+      <UniqueIdentifier>{dc2a4504-0eec-4416-b5d3-7ff8a69f6455}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Desin\CameraMgr">
+      <UniqueIdentifier>{61d176b2-e7d8-4932-9195-2bf7595d4b8b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -100,7 +103,7 @@
       <Filter>02.Desin\SoundMgr</Filter>
     </ClInclude>
     <ClInclude Include="COrbit.h">
-      <Filter>01. Obj\00.Moo_Obj\03.Orbit</Filter>
+      <Filter>01. Obj\00. Moo_Obj\03.Orbit</Filter>
     </ClInclude>
     <ClInclude Include="CSceneMgr.h">
       <Filter>02.Desin\SceneMgr</Filter>
@@ -112,10 +115,10 @@
       <Filter>01. Obj\100.Obj</Filter>
     </ClInclude>
     <ClInclude Include="CThorn.h">
-      <Filter>01. Obj\00.Moo_Obj\02.Cthorn</Filter>
+      <Filter>01. Obj\00. Moo_Obj\02.Cthorn</Filter>
     </ClInclude>
     <ClInclude Include="CPlayer_moo.h">
-      <Filter>01. Obj\00.Moo_Obj\01.CPlayer_moo</Filter>
+      <Filter>01. Obj\00. Moo_Obj\01.CPlayer_moo</Filter>
     </ClInclude>
     <ClInclude Include="CStart.h">
       <Filter>03.Scene\00.Start</Filter>
@@ -135,6 +138,9 @@
     <ClInclude Include="COrbit_or_bit.h">
       <Filter>03.Scene\02.Moo_Scene</Filter>
     </ClInclude>
+    <ClInclude Include="CCameraMgr.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DefaultWindow.cpp">
@@ -153,7 +159,7 @@
       <Filter>02.Desin\SoundMgr</Filter>
     </ClCompile>
     <ClCompile Include="COrbit.cpp">
-      <Filter>01. Obj\00.Moo_Obj\03.Orbit</Filter>
+      <Filter>01. Obj\00. Moo_Obj\03.Orbit</Filter>
     </ClCompile>
     <ClCompile Include="CSceneMgr.cpp">
       <Filter>02.Desin\SceneMgr</Filter>
@@ -165,10 +171,10 @@
       <Filter>01. Obj\100.Obj</Filter>
     </ClCompile>
     <ClCompile Include="CThorn.cpp">
-      <Filter>01. Obj\00.Moo_Obj\02.Cthorn</Filter>
+      <Filter>01. Obj\00. Moo_Obj\02.Cthorn</Filter>
     </ClCompile>
     <ClCompile Include="CPlayer_moo.cpp">
-      <Filter>01. Obj\00.Moo_Obj\01.CPlayer_moo</Filter>
+      <Filter>01. Obj\00. Moo_Obj\01.CPlayer_moo</Filter>
     </ClCompile>
     <ClCompile Include="CStart.cpp">
       <Filter>03.Scene\00.Start</Filter>
@@ -184,6 +190,9 @@
     </ClCompile>
     <ClCompile Include="COrbit_or_bit.cpp">
       <Filter>03.Scene\02.Moo_Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CCameraMgr.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

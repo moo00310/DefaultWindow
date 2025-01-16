@@ -4,11 +4,11 @@
 #include "CObjMgr.h"
 #include "CSoundMgr.h"
 #include "CKeyMgr.h"
+#include "CCameraMgr.h"
 
 CMainGame::CMainGame():  m_longTime(GetTickCount64()), m_iFPS(0), m_hDC(nullptr), m_hBit(nullptr), m_memDC(nullptr)
 {
 	ZeroMemory(m_szFPS, sizeof(m_szFPS));
-	
 }
 
 CMainGame::~CMainGame()
@@ -29,6 +29,7 @@ void CMainGame::Initialize()
 void CMainGame::Update()
 {
 	CSceneMgr::Get_Instance()->Update();
+	CCameraMgr::Get_Instance()->Update();
 }
 
 void CMainGame::Late_Update()
@@ -39,17 +40,10 @@ void CMainGame::Late_Update()
 void CMainGame::Render()
 {
 	ShowFps();
-
 	Rectangle(m_memDC, 0,0, WINCX, WINCY);
 
 	CSceneMgr::Get_Instance()->Render(m_memDC);
-
-	BitBlt(m_hDC,
-		0, 0, WINCX, WINCY,
-		m_memDC,
-		0,
-		0,
-		SRCCOPY);
+	CCameraMgr::Get_Instance()->Render(m_hDC, m_memDC);
 }
 
 void CMainGame::Release()
@@ -58,6 +52,7 @@ void CMainGame::Release()
 	CObjMgr::DestroyInstance();
 	CSceneMgr::Destroy_Instance();
 	CSoundMgr::Destroy_Instance();
+	CCameraMgr::Destroy_Instance();
 	ReleaseDC(g_hWnd, m_hDC);
 }
 
