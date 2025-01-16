@@ -5,20 +5,19 @@ class CThorn :  public CObj
 public:
 	CThorn();
 	virtual ~CThorn();
-
-public:
-
 public:
 	void Initialize() override;
 	int Update() override;
+	void Late_Update() override;
 	void Render(HDC hDC) override;
 	void Release() override;
 
-private:
-	D3DXVECTOR3 points[3];
-	D3DXVECTOR3 transformVertex[3];
+public:
+	float TranceAngle();
 
-	// CObj을(를) 통해 상속됨
-	void Late_Update() override;
+private:
+	D3DXVECTOR3 m_vPoints[3];
+	D3DXVECTOR3 m_vTransformVertex[3];
+	D3DXVECTOR3 m_vMidPoint;
 };
 

@@ -9,6 +9,7 @@ public:
 
 public:
     void Initialize() override;
+    void Late_Update() override;
     int Update() override;
     void Render(HDC hDC) override;
     void Release() override;
@@ -16,10 +17,6 @@ public:
 
 private:
     float m_Diagonal;
-
-
-    // CPlayer을(를) 통해 상속됨
-    void Late_Update() override;
-
+    D3DXVECTOR3     m_vOriginPoint;
 };
 
