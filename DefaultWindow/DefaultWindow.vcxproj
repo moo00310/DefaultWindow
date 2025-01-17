@@ -75,16 +75,17 @@
     <LibraryPath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\core\lib\x64;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\studio\lib\x64$(IncludePath);$(DXSDK_DIR)lib\x64;$(LibraryPath);$(IncludePath);$(FMOD);$(FMOD);$(FMOD)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\core\lib\x64;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\studio\lib\x64;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
-    <IncludePath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\core\inc;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\studio\inc;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\studio\lib\x64;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\core\lib\x64;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
+    <IncludePath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\studio\inc;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\core\inc;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LibraryPath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\core\lib\x64;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\studio\lib\x64;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
-    <IncludePath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\core\inc;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\studio\inc;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\studio\lib\x64;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\core\lib\x64;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
+    <IncludePath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\studio\inc;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\core\inc;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LibraryPath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\core\lib\x64;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\studio\lib\x64$(IncludePath);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(IncludePath);$(FMOD);$(FMOD);$(FMOD)</LibraryPath>
     <IncludePath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\core\inc;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\studio\inc;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -152,6 +153,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CAbstractFactory.h" />
+    <ClInclude Include="CCameraMgr.h" />
     <ClInclude Include="CKeyMgr.h" />
     <ClInclude Include="CMainGame.h" />
     <ClInclude Include="CMenu.h" />
@@ -161,9 +163,14 @@
     <ClInclude Include="COrbit_or_bit.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CPlayer_moo.h" />
+    <ClInclude Include="CRhythmWorld.h" />
+    <ClInclude Include="CPlayer_SSH.h" />
+    <ClInclude Include="CPlayer_SSH_Fire.h" />
+    <ClInclude Include="CPlayer_SSH_Ice.h" />
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CSceneMgr.h" />
     <ClInclude Include="CSoundMgr.h" />
+    <ClInclude Include="CSSHScene.h" />
     <ClInclude Include="CStart.h" />
     <ClInclude Include="CThorn.h" />
     <ClInclude Include="DefaultWindow.h" />
@@ -171,9 +178,11 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="CSquare.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CCameraMgr.cpp" />
     <ClCompile Include="CKeyMgr.cpp" />
     <ClCompile Include="CMainGame.cpp" />
     <ClCompile Include="CMenu.cpp" />
@@ -190,6 +199,7 @@
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CSceneMgr.cpp" />
     <ClCompile Include="CSoundMgr.cpp" />
+    <ClCompile Include="CSSHScene.cpp" />
     <ClCompile Include="CStart.cpp" />
     <ClCompile Include="CThorn.cpp" />
     <ClCompile Include="DefaultWindow.cpp" />
@@ -199,6 +209,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="CSquare.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DefaultWindow.rc" />
