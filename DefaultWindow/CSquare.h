@@ -1,8 +1,14 @@
 #pragma once
 #include "CObj.h"
+
+#define SIDE 60.f
+
 class CSquare :
     public CObj
 {
+public:
+    void Set_RollLeft(bool _b) { m_bLeft = _b; }
+
 public:
     CSquare();
     virtual ~CSquare();
@@ -27,7 +33,7 @@ private:
     float       m_fAngle;
     float       m_fSize;
     int         m_iRotPoint;
-
+    bool        m_bLeft;
 
 };
 

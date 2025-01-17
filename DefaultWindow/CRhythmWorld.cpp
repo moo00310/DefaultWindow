@@ -15,9 +15,16 @@ CRhythmWorld::~CRhythmWorld()
 
 void CRhythmWorld::Initialize()
 {
-    CObj* pObj = CAbstractFactory<CSquare>::Create();
+    CObj* pObj(nullptr);
+    pObj = CAbstractFactory<CSquare>::Create(SIDE * 2.f, WINCY * 0.5f - SIDE * 0.5f);
     CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, pObj);
 
+    pObj = CAbstractFactory<CSquare>::Create(SIDE * ((int)(WINCX / SIDE) - 1), WINCY * 0.5f - SIDE * 0.5f);
+    CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, pObj);
+    if (CSquare* pSquare = dynamic_cast<CSquare*>(pObj))
+    {
+        pSquare->Set_RollLeft(true);
+    }
 }
 
 int CRhythmWorld::Update()
