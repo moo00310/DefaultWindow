@@ -1,10 +1,11 @@
 #pragma once
-#include "CObj.h"
-class CThorn :  public CObj
+#include "CScene.h"
+class CSSHScene : public CScene
 {
 public:
-	CThorn();
-	virtual ~CThorn();
+	CSSHScene();
+	virtual ~CSSHScene();
+
 public:
 	void Initialize() override;
 	int Update() override;
@@ -13,11 +14,9 @@ public:
 	void Release() override;
 
 public:
-	float TranceAngle();
+	void Key_Input();
 
 private:
-	D3DXVECTOR3 m_vPoints[3];
-	D3DXVECTOR3 m_vTransformVertex[3];
-	D3DXVECTOR3 m_vMidPoint;
+	bool m_bChange;
 };
 

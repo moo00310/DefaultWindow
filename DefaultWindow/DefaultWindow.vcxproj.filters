@@ -28,18 +28,6 @@
     <Filter Include="02.Desin\SceneMgr">
       <UniqueIdentifier>{3d1a0e62-5e51-4f1b-8b0d-7de93ec37403}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Obj\00.Moo_Obj">
-      <UniqueIdentifier>{83487ee4-a103-4480-9f1f-b4152e42e997}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\00.Moo_Obj\03.Orbit">
-      <UniqueIdentifier>{a39766c2-6540-42db-a164-53ab5400388c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\00.Moo_Obj\01.CPlayer_moo">
-      <UniqueIdentifier>{024489c4-0f05-4f7f-a806-c17504888b44}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\00.Moo_Obj\02.Cthorn">
-      <UniqueIdentifier>{dc2a4504-0eec-4416-b5d3-7ff8a69f6455}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Obj\99.Player">
       <UniqueIdentifier>{0d160408-139b-4b41-a75d-ed72a58c3568}</UniqueIdentifier>
     </Filter>
@@ -78,6 +66,37 @@
     </Filter>
     <Filter Include="01. Obj\05.Hero_Obj\00.Square">
       <UniqueIdentifier>{c3c37284-3428-4f27-8fe7-3d90afdff37f}</UniqueIdentifier>
+    <Filter Include="01. Obj\04.SSH_Obj">
+      <UniqueIdentifier>{f772c2f1-60ca-4ff2-ad43-94c1d2f52ec1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Scene\05.SSH_Scene">
+      <UniqueIdentifier>{c6566cf9-3191-49e3-b192-b4f729dc4b39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\04.SSH_Obj\00_Player_SSH">
+      <UniqueIdentifier>{5de70896-7881-437a-8ded-c87f58d8fe2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\04.SSH_Obj\00_Player_SSH\00_Player_SSH">
+      <UniqueIdentifier>{50dbd575-4a71-4d4d-927d-53fbb32cb0d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\04.SSH_Obj\00_Player_SSH\02_Player_SSH_Fire">
+      <UniqueIdentifier>{98ca0d81-e89e-4e55-b1e6-03bc998d65d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\04.SSH_Obj\00_Player_SSH\01_Player_SSH_Ice">
+      <UniqueIdentifier>{aced43ac-e7b9-4995-9d27-297213c2fa10}</UniqueIdentifier>
+    <Filter Include="01. Obj\00. Moo_Obj">
+      <UniqueIdentifier>{83487ee4-a103-4480-9f1f-b4152e42e997}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\00. Moo_Obj\03.Orbit">
+      <UniqueIdentifier>{a39766c2-6540-42db-a164-53ab5400388c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\00. Moo_Obj\01.CPlayer_moo">
+      <UniqueIdentifier>{024489c4-0f05-4f7f-a806-c17504888b44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\00. Moo_Obj\02.Cthorn">
+      <UniqueIdentifier>{dc2a4504-0eec-4416-b5d3-7ff8a69f6455}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Desin\CameraMgr">
+      <UniqueIdentifier>{61d176b2-e7d8-4932-9195-2bf7595d4b8b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -109,7 +128,7 @@
       <Filter>02.Desin\SoundMgr</Filter>
     </ClInclude>
     <ClInclude Include="COrbit.h">
-      <Filter>01. Obj\00.Moo_Obj\03.Orbit</Filter>
+      <Filter>01. Obj\00. Moo_Obj\03.Orbit</Filter>
     </ClInclude>
     <ClInclude Include="CSceneMgr.h">
       <Filter>02.Desin\SceneMgr</Filter>
@@ -121,10 +140,10 @@
       <Filter>01. Obj\100.Obj</Filter>
     </ClInclude>
     <ClInclude Include="CThorn.h">
-      <Filter>01. Obj\00.Moo_Obj\02.Cthorn</Filter>
+      <Filter>01. Obj\00. Moo_Obj\02.Cthorn</Filter>
     </ClInclude>
     <ClInclude Include="CPlayer_moo.h">
-      <Filter>01. Obj\00.Moo_Obj\01.CPlayer_moo</Filter>
+      <Filter>01. Obj\00. Moo_Obj\01.CPlayer_moo</Filter>
     </ClInclude>
     <ClInclude Include="CStart.h">
       <Filter>03.Scene\00.Start</Filter>
@@ -149,6 +168,19 @@
     </ClInclude>
     <ClInclude Include="CSquare.h">
       <Filter>01. Obj\05.Hero_Obj\00.Square</Filter>
+    <ClInclude Include="CSSHScene.h">
+      <Filter>03.Scene\05.SSH_Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer_SSH.h">
+      <Filter>01. Obj\04.SSH_Obj\00_Player_SSH\00_Player_SSH</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer_SSH_Fire.h">
+      <Filter>01. Obj\04.SSH_Obj\00_Player_SSH\02_Player_SSH_Fire</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer_SSH_Ice.h">
+      <Filter>01. Obj\04.SSH_Obj\00_Player_SSH\01_Player_SSH_Ice</Filter>
+    <ClInclude Include="CCameraMgr.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -168,7 +200,7 @@
       <Filter>02.Desin\SoundMgr</Filter>
     </ClCompile>
     <ClCompile Include="COrbit.cpp">
-      <Filter>01. Obj\00.Moo_Obj\03.Orbit</Filter>
+      <Filter>01. Obj\00. Moo_Obj\03.Orbit</Filter>
     </ClCompile>
     <ClCompile Include="CSceneMgr.cpp">
       <Filter>02.Desin\SceneMgr</Filter>
@@ -180,10 +212,10 @@
       <Filter>01. Obj\100.Obj</Filter>
     </ClCompile>
     <ClCompile Include="CThorn.cpp">
-      <Filter>01. Obj\00.Moo_Obj\02.Cthorn</Filter>
+      <Filter>01. Obj\00. Moo_Obj\02.Cthorn</Filter>
     </ClCompile>
     <ClCompile Include="CPlayer_moo.cpp">
-      <Filter>01. Obj\00.Moo_Obj\01.CPlayer_moo</Filter>
+      <Filter>01. Obj\00. Moo_Obj\01.CPlayer_moo</Filter>
     </ClCompile>
     <ClCompile Include="CStart.cpp">
       <Filter>03.Scene\00.Start</Filter>
@@ -205,6 +237,19 @@
     </ClCompile>
     <ClCompile Include="CSquare.cpp">
       <Filter>01. Obj\05.Hero_Obj\00.Square</Filter>
+    <ClCompile Include="CSSHScene.cpp">
+      <Filter>03.Scene\05.SSH_Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer_SSH.cpp">
+      <Filter>01. Obj\04.SSH_Obj\00_Player_SSH\00_Player_SSH</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer_SSH_Fire.cpp">
+      <Filter>01. Obj\04.SSH_Obj\00_Player_SSH\02_Player_SSH_Fire</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer_SSH_Ice.cpp">
+      <Filter>01. Obj\04.SSH_Obj\00_Player_SSH\01_Player_SSH_Ice</Filter>
+    <ClCompile Include="CCameraMgr.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

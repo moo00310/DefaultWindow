@@ -5,6 +5,7 @@
 #include "CSoundMgr.h"
 #include "CObjMgr.h"
 #include "CAbstractFactory.h"
+#include "CThorn.h"
 
 COrbit_or_bit::COrbit_or_bit() : m_pPlayer(nullptr), m_pOrbit(nullptr)
 {
@@ -16,15 +17,15 @@ COrbit_or_bit::~COrbit_or_bit()
 
 void COrbit_or_bit::Initialize()
 {
-	CSoundMgr::Get_Instance()->Initialize();
-	CSoundMgr::Get_Instance()->PlayEvent("event:/Tobu & Itro - Sunburst");
 
-	CSoundMgr::Get_Instance()->Update();
+	//CSoundMgr::Get_Instance()->Initialize();
+	//CSoundMgr::Get_Instance()->PlayEvent("event:/Tobu & Itro - Sunburst");
+	//CSoundMgr::Get_Instance()->Update();
 	
 
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer_moo>::Create());
+	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CThorn>::Create(100.f, 100.f));
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<COrbit>::Create());
-
 }
 
 int COrbit_or_bit::Update()

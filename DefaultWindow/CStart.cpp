@@ -14,7 +14,7 @@ int CStart::Update()
 		CSceneMgr::Get_Instance()->Set_Scene(SC_MENU);
 		return 0;
 	}
-
+	return 0;
 }
 
 void CStart::Late_Update()

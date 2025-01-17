@@ -10,7 +10,9 @@ public:
 
 public:
 	INFO		Get_Info() { return m_tInfo; }
-
+	
+	CObj*		Get_Target() { if(nullptr != m_pTarget) return m_pTarget; }
+	void		Set_Target(CObj* _pTarget) { m_pTarget = _pTarget; }
 
 public:
 	virtual void		Initialize()PURE;
@@ -22,6 +24,7 @@ public:
 public:
 	bool		Get_Dead() { return m_bDead; }
 	void		Set_Dead() { m_bDead = true; }
+	void		Set_Pos(float _x, float _y) { m_tInfo.vPos.x = _x; m_tInfo.vPos.y=_y; }
 
 	const RENDERID Get_GroupID() const { return m_eRender; }
 
@@ -33,5 +36,7 @@ protected:
 	float		m_fAngle;
 
 	bool		m_bDead;
+
+	CObj*		m_pTarget;
 };
 
