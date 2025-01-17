@@ -36,7 +36,7 @@ void CSceneMgr::Set_Scene(SCENEID eID)
 			break;
 		case SC_HERO:
 			m_pScene = new CRhythmWorld;
-
+			break;
 		case SC_SSH:
 			m_pScene = new CSSHScene;
 
