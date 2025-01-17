@@ -10,7 +10,9 @@ public:
 
 public:
 	INFO		Get_Info() { return m_tInfo; }
-
+	
+	CObj*		Get_Target() { if(nullptr != m_pTarget) return m_pTarget; }
+	void		Set_Target(CObj* _pTarget) { m_pTarget = _pTarget; }
 
 public:
 	virtual void		Initialize()PURE;
@@ -33,5 +35,7 @@ protected:
 	float		m_fAngle;
 
 	bool		m_bDead;
+
+	CObj*		m_pTarget;
 };
 

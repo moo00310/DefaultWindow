@@ -70,6 +70,24 @@
     <Filter Include="02.Desin\KeyMgr">
       <UniqueIdentifier>{b369a1be-c022-49f5-9574-1b9e0c981787}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Obj\04.SSH_Obj">
+      <UniqueIdentifier>{f772c2f1-60ca-4ff2-ad43-94c1d2f52ec1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Scene\05.SSH_Scene">
+      <UniqueIdentifier>{c6566cf9-3191-49e3-b192-b4f729dc4b39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\04.SSH_Obj\00_Player_SSH">
+      <UniqueIdentifier>{5de70896-7881-437a-8ded-c87f58d8fe2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\04.SSH_Obj\00_Player_SSH\00_Player_SSH">
+      <UniqueIdentifier>{50dbd575-4a71-4d4d-927d-53fbb32cb0d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\04.SSH_Obj\00_Player_SSH\02_Player_SSH_Fire">
+      <UniqueIdentifier>{98ca0d81-e89e-4e55-b1e6-03bc998d65d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\04.SSH_Obj\00_Player_SSH\01_Player_SSH_Ice">
+      <UniqueIdentifier>{aced43ac-e7b9-4995-9d27-297213c2fa10}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -135,6 +153,18 @@
     <ClInclude Include="COrbit_or_bit.h">
       <Filter>03.Scene\02.Moo_Scene</Filter>
     </ClInclude>
+    <ClInclude Include="CSSHScene.h">
+      <Filter>03.Scene\05.SSH_Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer_SSH.h">
+      <Filter>01. Obj\04.SSH_Obj\00_Player_SSH\00_Player_SSH</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer_SSH_Fire.h">
+      <Filter>01. Obj\04.SSH_Obj\00_Player_SSH\02_Player_SSH_Fire</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer_SSH_Ice.h">
+      <Filter>01. Obj\04.SSH_Obj\00_Player_SSH\01_Player_SSH_Ice</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DefaultWindow.cpp">
@@ -184,6 +214,18 @@
     </ClCompile>
     <ClCompile Include="COrbit_or_bit.cpp">
       <Filter>03.Scene\02.Moo_Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CSSHScene.cpp">
+      <Filter>03.Scene\05.SSH_Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer_SSH.cpp">
+      <Filter>01. Obj\04.SSH_Obj\00_Player_SSH\00_Player_SSH</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer_SSH_Fire.cpp">
+      <Filter>01. Obj\04.SSH_Obj\00_Player_SSH\02_Player_SSH_Fire</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer_SSH_Ice.cpp">
+      <Filter>01. Obj\04.SSH_Obj\00_Player_SSH\01_Player_SSH_Ice</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
