@@ -19,6 +19,18 @@ public:
 		return m_localParentPosition;
 	}
 
+	// 나의 위치를 로컬 좌표에서 월드 좌표로 변환.
+	D3DXVECTOR3 GetLocalPositionToWorld()
+	{
+		D3DXMatrixTranslation(&m_MatrixPosition, m_localPosition.x, m_localPosition.y, m_localPosition.z);
+		D3DXMatrixTranslation(&m_MatrixParent, m_localParentPosition.x, m_localParentPosition.y, m_localParentPosition.z);
+		D3DXMatrixRotationZ(&m_MatrixRevolution, D3DXToRadian(m_revolAngle));
+
+		m_MatrixWorld = m_MatrixPosition * m_MatrixRevolution * m_MatrixParent;
+
+		return { m_MatrixWorld.m[3][0], m_MatrixWorld.m[3][1], m_MatrixWorld.m[3][2] };
+	}
+
 private:
 	// 원점.
 	D3DXVECTOR3 m_ResetPosition;

@@ -5,7 +5,7 @@
 class CHexaPad : public CObj
 {
 public:
-	CHexaPad(CKDHPlayer* _player, int _iDir);
+	CHexaPad();
 	virtual ~CHexaPad();
 
 	// CObj을(를) 통해 상속됨
@@ -14,6 +14,8 @@ public:
 	void Late_Update() override;
 	void Render(HDC hDC) override;
 	void Release() override;
+	void SetPlayer(CKDHPlayer* _player);
+	void SetDirection(int _idirection);
 
 private:
 	float GetDistance(D3DXVECTOR3 _info)

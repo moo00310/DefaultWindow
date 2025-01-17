@@ -15,9 +15,5 @@ public:
 	void Late_Update() override;
 	void Render(HDC hDC) override;
 	void Release() override;
-
-private:
-	CKDHPlayer* m_Player;
-	CHexaPad* m_Pad;
 };
 

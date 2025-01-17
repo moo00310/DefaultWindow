@@ -1,48 +1,12 @@
 #include "pch.h"
 #include "CHexaPad.h"
+#include "CSceneMgr.h"
 
-CHexaPad::CHexaPad(CKDHPlayer* _player, int _iDir)
+CHexaPad::CHexaPad()
 {
 	ZeroMemory(&m_ResetPosition, sizeof(D3DXVECTOR3));
 
-	m_Player = _player;
 	m_fScale = 20.f;
-	m_iDirection = _iDir;
-
-	switch (_iDir)
-	{
-	case 0:
-	{
-		// 위.
-		m_localPosition = { WINCX * 0.5f, m_fScale, 0.f };
-		m_rotAngle = 180.f;
-	}
-	break;
-
-	case 1:
-	{
-		// 아래.
-		m_localPosition = { WINCX * 0.5f, WINCY - m_fScale, 0.f };
-		m_rotAngle = 0.f;
-	}
-	break;
-
-	case 2:
-	{
-		// 좌.
-		m_localPosition = { m_fScale, WINCY * 0.5f, 0.f };
-		m_rotAngle = 90.f;
-	}
-	break;
-
-	case 3:
-	{
-		// 우.
-		m_localPosition = { WINCX - m_fScale, WINCY * 0.5f, 0.f };
-		m_rotAngle = 270.f;
-	}
-	break;
-	}
 }
 
 CHexaPad::~CHexaPad()
@@ -51,6 +15,8 @@ CHexaPad::~CHexaPad()
 
 void CHexaPad::Initialize()
 {
+	m_eRender = RENDER_GAMEOBJECT;
+
 	m_localLookAt = { 1.f, 0.f, 0.f };
 	m_localScale = { 1.f, 1.f, 0.f };
 
@@ -86,6 +52,15 @@ void CHexaPad::Initialize()
 int CHexaPad::Update()
 {
 	m_distance = GetDistance(m_Player->GetLocalParentPosition());
+	float fPlayerDistance = GetDistance(m_Player->GetLocalPositionToWorld());
+
+	// 플레이어 접촉 확인.
+	if (fPlayerDistance <= m_fScale + m_fScale)
+	{
+		// 게임 오버 판정.
+		CSceneMgr::Get_Instance()->Set_Scene(SC_KDH);
+		return 0;
+	}
 
 	if (m_distance <= 0.f)
 	{
@@ -195,4 +170,49 @@ void CHexaPad::Render(HDC hDC)
 void CHexaPad::Release()
 {
 	
+}
+
+void CHexaPad::SetPlayer(CKDHPlayer* _player)
+{
+	m_Player = _player;
+}
+
+void CHexaPad::SetDirection(int _idirection)
+{
+	m_iDirection = _idirection;
+
+	switch (m_iDirection)
+	{
+	case 0:
+	{
+		// 위.
+		m_localPosition = { WINCX * 0.5f, m_fScale, 0.f };
+		m_rotAngle = 180.f;
+	}
+	break;
+
+	case 1:
+	{
+		// 아래.
+		m_localPosition = { WINCX * 0.5f, WINCY - m_fScale, 0.f };
+		m_rotAngle = 0.f;
+	}
+	break;
+
+	case 2:
+	{
+		// 좌.
+		m_localPosition = { m_fScale, WINCY * 0.5f, 0.f };
+		m_rotAngle = 90.f;
+	}
+	break;
+
+	case 3:
+	{
+		// 우.
+		m_localPosition = { WINCX - m_fScale, WINCY * 0.5f, 0.f };
+		m_rotAngle = 270.f;
+	}
+	break;
+	}
 }

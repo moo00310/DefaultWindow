@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "CKDHPlayer.h"
+#include "CKeyMgr.h"
+#include "CObjMgr.h"
 
 CKDHPlayer::CKDHPlayer()
 {
@@ -13,6 +15,8 @@ CKDHPlayer::~CKDHPlayer()
 
 void CKDHPlayer::Initialize()
 {
+	m_eRender = RENDER_GAMEOBJECT_FRONT;
+
 	m_fParentScale = 30.f;
 	m_fScale = 10.f;
 
@@ -108,6 +112,9 @@ void CKDHPlayer::Late_Update()
 
 	// 방향을 구함.
 	D3DXVec3TransformNormal(&m_localDirection, &m_localLookAt, &m_MatrixWorld);
+
+	D3DXVECTOR3 d = GetLocalPositionToWorld();
+	int a = 10;
 }
 
 void CKDHPlayer::Render(HDC hDC)
@@ -146,49 +153,49 @@ void CKDHPlayer::Release()
 
 void CKDHPlayer::Key_Input()
 {
-	/*if (GetAsyncKeyState(VK_UP))
+	if (CKeyMgr::Get_Instance()->Key_Pressing('W'))
 	{
 		m_localParentPosition.y -= m_fSpeed;
 	}
 
-	if (GetAsyncKeyState(VK_DOWN))
+	if (CKeyMgr::Get_Instance()->Key_Pressing('S'))
 	{
 		m_localParentPosition.y += m_fSpeed;
 	}
 
-	if (GetAsyncKeyState(VK_LEFT))
+	if (CKeyMgr::Get_Instance()->Key_Pressing('A'))
 	{
 		m_localParentPosition.x -= m_fSpeed;
 	}
 
-	if (GetAsyncKeyState(VK_RIGHT))
+	if (CKeyMgr::Get_Instance()->Key_Pressing('D'))
 	{
 		m_localParentPosition.x += m_fSpeed;
-	}*/
+	}
 
-	if (GetAsyncKeyState(VK_LEFT))
+	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_LEFT))
 	{
 		m_revolAngle -= m_revolSpeed;
 		//m_rotAngle -= m_rotSpeed;
 	}
 
-	if (GetAsyncKeyState(VK_RIGHT))
+	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_RIGHT))
 	{
 		m_revolAngle += m_revolSpeed;
 		//m_rotAngle -= m_rotSpeed;
 	}
 
-	if (GetAsyncKeyState(VK_UP))
+	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_UP))
 	{
 		//m_localPosition += m_localDirection * m_fMoveSpeed;
 	}
 
-	if (GetAsyncKeyState(VK_DOWN))
+	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_DOWN))
 	{
 		//m_localPosition -= m_localDirection * m_fMoveSpeed;
 	}
 
-	if (GetAsyncKeyState(VK_SPACE))
+	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_SPACE))
 	{
 		m_localScale.x += m_moreScale;
 	}
