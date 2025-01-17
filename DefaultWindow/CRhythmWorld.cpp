@@ -5,6 +5,7 @@
 #include "CObjMgr.h"
 #include "CKeyMgr.h"
 #include "CSpawner.h"
+#include "CSoundMgr.h"
 
 CRhythmWorld::CRhythmWorld()
     :m_pSpawner(nullptr), m_fDistance(0.f)
@@ -18,8 +19,11 @@ CRhythmWorld::~CRhythmWorld()
 
 void CRhythmWorld::Initialize()
 {
+    CSoundMgr::Get_Instance()->Initialize();
+
     m_pSpawner = CAbstractFactory<CSpawner>::Create();
     CObjMgr::Get_Instance()->Add_Object(OBJ_SHIELD, m_pSpawner);
+
 }
 
 int CRhythmWorld::Update()
@@ -46,7 +50,7 @@ void CRhythmWorld::Render(HDC hDC)
     TCHAR cBuffer[64]; //저장할 문자열 버퍼
 
     _stprintf_s(cBuffer, _T("Distance: %.2f"), m_fDistance);
-    TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.5f), cBuffer, (int)_tcslen(cBuffer));
+    TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.35f), cBuffer, (int)_tcslen(cBuffer));
 
     CObjMgr::Get_Instance()->Render(hDC);
 }
@@ -55,6 +59,7 @@ void CRhythmWorld::Release()
 {
     CObjMgr::DestroyInstance();
     CKeyMgr::Destroy_Instance();
+    CSoundMgr::Destroy_Instance();
 }
 
 void CRhythmWorld::Check_Hit()

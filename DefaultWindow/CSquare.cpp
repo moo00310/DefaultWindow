@@ -2,9 +2,11 @@
 #include "CSquare.h"
 #include "CObjMgr.h"
 #include "CSpawner.h"
+#include "CSoundMgr.h"
 
 CSquare::CSquare()
-	:m_fAngle(0.f), m_fSize(0.f), m_iRotPoint(0), m_bLeft(false)
+	:m_fAngle(0.f), m_fSize(0.f), m_iRotPoint(0), m_bLeft(false), m_ullWaitTime(0),
+	m_pBankPoint(nullptr), m_pNotePoint(nullptr), m_iNote(0)
 {
 	ZeroMemory(&m_vLocalPoint, sizeof(m_vLocalPoint));
 	ZeroMemory(&m_vWorldPoint, sizeof(m_vWorldPoint));
@@ -23,7 +25,7 @@ void CSquare::Initialize()
 	m_eRender = RENDER_GAMEOBJECT;
 
 	m_fSize = SIDE;
-	m_fSpeed = 4.f;
+	//m_fSpeed = 4.f;
 
 	m_vLocalPoint[0] = { -m_fSize * 0.5f, -m_fSize * 0.5f, 0.f };
 	m_vLocalPoint[1] = { m_fSize * 0.5f, -m_fSize * 0.5f, 0.f };
@@ -32,7 +34,17 @@ void CSquare::Initialize()
 
 	m_vLocalPoint_Center = { 0.f, 0.f, 0.f };
 
+	Update_WorldMatrix();
+
 	m_iRotPoint = 3;
+
+	m_ullWaitTime = GetTickCount64();
+
+	//m_pNotePoint = CSoundMgr::Get_Instance()->PlayEvent("event:/Note");
+	//m_pBankPoint =  CSoundMgr::Get_Instance()->LoadBank("bank:/Note");
+
+	m_pNotePoint = CSoundMgr::Get_Instance()->PlayEvent("event:/Note");
+	m_pNotePoint->setParameterByName("Note", (float)(rand() % 6));
 }
 
 int CSquare::Update()
@@ -40,8 +52,12 @@ int CSquare::Update()
 	if (m_bDead)
 		return OBJ_DEAD;
 
-	Roll_Corners();
-	//Roll();
+	if (!Wait_Time())
+	{
+		Roll_Corners();
+		//Roll();
+	}
+
 
 	Update_WorldMatrix();
 
@@ -92,6 +108,11 @@ void CSquare::Roll_Corners()
 		//충돌 체크할 포인트가 충돌하면
 		if (m_vWorldPoint[iCheckPoint].y > WINCY * 0.5f)
 		{
+			m_pNotePoint = CSoundMgr::Get_Instance()->PlayEvent("event:/Note");
+			//m_pNotePoint->setParameterByName("Note", (float)(m_iNote++));
+			//CSoundMgr::Get_Instance()->Update();
+			//m_pNotePoint->start();
+
 			//현재 회전의 중점으로 하는 포인트에 따라, 사각형의 중점을 이동 시킨다.[하드코딩, 규칙을 못 찾음]
 			//처음 시작점(3) 포인트 차이만큼 이동시키는 것 같긴함
 			switch (m_iRotPoint)
@@ -179,6 +200,11 @@ void CSquare::Check_ScreenOut()
 	{
 		Set_Dead();
 	}
+}
+
+bool CSquare::Wait_Time()
+{
+	return m_ullWaitTime + 1000 > GetTickCount64();
 }
 
 void CSquare::Render(HDC hDC)
