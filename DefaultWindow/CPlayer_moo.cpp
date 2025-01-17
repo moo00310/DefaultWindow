@@ -13,12 +13,13 @@ CPlayer_moo::~CPlayer_moo()
 
 void CPlayer_moo::Initialize()
 {
-	m_tInfo.vPos = { 400.f, 300.f, 0.f };
+	m_tInfo.vPos = { 155.f, 155.f, 0.f };
 	m_tInfo.vDir = { 1.f, 0.f, 0.f };
 	m_fSpeed = 1.5f;
-	m_fAngle = 0.f;
 
 	m_Diagonal = 220.f;
+
+	m_vOriginPoint = m_tInfo.vPos;
 
 	m_eRender = RENDER_GAMEOBJECT;
 }
@@ -27,18 +28,22 @@ int CPlayer_moo::Update()
 {
 	Key_Input();
 
-	if (m_fAngle >= 360)
-		m_fAngle = 0;
-	else
-		m_fAngle += m_fSpeed;
+	if (m_fAngle >= 360) m_fAngle = 0;
+	else m_fAngle += m_fSpeed;
 
-	m_tInfo.vPos.x = m_Diagonal * cosf(m_fAngle * PI / 180) + 400;
-	m_tInfo.vPos.y = m_Diagonal * sinf(m_fAngle * PI / 180) + 300;
+	m_tInfo.vPos = m_vOriginPoint; // °ª ÁßÃ¸ ¹æÁö
+	D3DXMATRIX	matRotZ, matTrans1, matTrans2, matScale;
+
+	D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
+	D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(m_fAngle));
+	D3DXMatrixTranslation(&matTrans2, 400.f, 300.f, 0.f);
+
+	m_tInfo.matWorld =  matRotZ * matTrans2;
+
+	D3DXVec3TransformCoord(&m_tInfo.vPos, &m_tInfo.vPos, &m_tInfo.matWorld);
 
 	return 0;
 }
-
-
 void CPlayer_moo::Late_Update()
 {
 }
@@ -60,22 +65,22 @@ void CPlayer_moo::Key_Input()
 {
 	if (GetAsyncKeyState(VK_RIGHT))
 	{
-		m_Diagonal = 220.f;
+		m_vOriginPoint = { 155.f, 155.f, 0.f };
 	}
 
 	if (GetAsyncKeyState(VK_LEFT))
 	{
-		m_Diagonal = 180.f;
+		m_vOriginPoint = { 125.f, 125.f, 0.f };
 	}
 
 	if (GetAsyncKeyState(VK_UP))
 	{
-		m_Diagonal = 220.f;
+		m_vOriginPoint = { 155.f, 155.f, 0.f };
 	}
 
 	if (GetAsyncKeyState(VK_DOWN))
 	{
-		m_Diagonal = 180.f;
+		m_vOriginPoint = { 125.f, 125.f, 0.f };
 	}
 }
 
