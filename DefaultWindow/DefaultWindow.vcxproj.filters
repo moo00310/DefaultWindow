@@ -1,225 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project>
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="00. MainGame">
-      <UniqueIdentifier>{13828fb6-a723-4d86-ab6f-9809b1211c82}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj">
-      <UniqueIdentifier>{e2af40d7-7336-426a-b430-c284427d1e40}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Desin">
-      <UniqueIdentifier>{c8dd8315-3655-4ac9-9e38-6ac69a14054a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Desin\SoundMgr">
-      <UniqueIdentifier>{9710a3eb-c592-42d9-86c2-622daaece74d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Desin\SceneMgr">
-      <UniqueIdentifier>{3d1a0e62-5e51-4f1b-8b0d-7de93ec37403}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\99.Player">
-      <UniqueIdentifier>{0d160408-139b-4b41-a75d-ed72a58c3568}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\100.Obj">
-      <UniqueIdentifier>{73f6f6a5-31a4-4e22-971d-570b09b0ee8a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03.Scene">
-      <UniqueIdentifier>{1e649ffd-e81f-4818-ab97-a2fd75585e47}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03.Scene\Scene">
-      <UniqueIdentifier>{76f8835d-166d-4b56-a486-a4d6b4f6c5f5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03.Scene\01.Menu">
-      <UniqueIdentifier>{26487810-e51c-4498-8204-f8ecfa813998}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03.Scene\00.Start">
-      <UniqueIdentifier>{436bdb5e-8a76-4798-9e95-7ee8782936bc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03.Scene\02.Moo_Scene">
-      <UniqueIdentifier>{547e7c15-3166-488c-a2d5-b8237d139cb6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Desin\AbstractFactory">
-      <UniqueIdentifier>{b6ba3890-9515-4696-bf45-429654b9b5dc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Desin\ObjMgr">
-      <UniqueIdentifier>{00d752dd-d602-429e-bc0c-6e3a50b02d58}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Desin\KeyMgr">
-      <UniqueIdentifier>{b369a1be-c022-49f5-9574-1b9e0c981787}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03.Scene\05.Hero_Scene">
-      <UniqueIdentifier>{12bcd490-6965-4058-a32d-049511c7d47b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\05.Hero_Obj">
-      <UniqueIdentifier>{a9377853-e1a8-4236-ad68-67a84d615172}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\05.Hero_Obj\00.Square">
-      <UniqueIdentifier>{c3c37284-3428-4f27-8fe7-3d90afdff37f}</UniqueIdentifier>
-    <Filter Include="01. Obj\04.SSH_Obj">
-      <UniqueIdentifier>{f772c2f1-60ca-4ff2-ad43-94c1d2f52ec1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03.Scene\05.SSH_Scene">
-      <UniqueIdentifier>{c6566cf9-3191-49e3-b192-b4f729dc4b39}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\04.SSH_Obj\00_Player_SSH">
-      <UniqueIdentifier>{5de70896-7881-437a-8ded-c87f58d8fe2a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\04.SSH_Obj\00_Player_SSH\00_Player_SSH">
-      <UniqueIdentifier>{50dbd575-4a71-4d4d-927d-53fbb32cb0d3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\04.SSH_Obj\00_Player_SSH\02_Player_SSH_Fire">
-      <UniqueIdentifier>{98ca0d81-e89e-4e55-b1e6-03bc998d65d8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\04.SSH_Obj\00_Player_SSH\01_Player_SSH_Ice">
-      <UniqueIdentifier>{aced43ac-e7b9-4995-9d27-297213c2fa10}</UniqueIdentifier>
-    <Filter Include="01. Obj\00. Moo_Obj">
-      <UniqueIdentifier>{83487ee4-a103-4480-9f1f-b4152e42e997}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\00. Moo_Obj\03.Orbit">
-      <UniqueIdentifier>{a39766c2-6540-42db-a164-53ab5400388c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\00. Moo_Obj\01.CPlayer_moo">
-      <UniqueIdentifier>{024489c4-0f05-4f7f-a806-c17504888b44}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Obj\00. Moo_Obj\02.Cthorn">
-      <UniqueIdentifier>{dc2a4504-0eec-4416-b5d3-7ff8a69f6455}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.Desin\CameraMgr">
-      <UniqueIdentifier>{61d176b2-e7d8-4932-9195-2bf7595d4b8b}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="framework.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="DefaultWindow.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CMainGame.h">
-      <Filter>00. MainGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Define.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayer.h">
-      <Filter>01. Obj\99.Player</Filter>
-    </ClInclude>
-    <ClInclude Include="CSoundMgr.h">
-      <Filter>02.Desin\SoundMgr</Filter>
-    </ClInclude>
-    <ClInclude Include="COrbit.h">
-      <Filter>01. Obj\00. Moo_Obj\03.Orbit</Filter>
-    </ClInclude>
-    <ClInclude Include="CSceneMgr.h">
-      <Filter>02.Desin\SceneMgr</Filter>
-    </ClInclude>
-    <ClInclude Include="CScene.h">
-      <Filter>03.Scene\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="CObj.h">
-      <Filter>01. Obj\100.Obj</Filter>
-    </ClInclude>
-    <ClInclude Include="CThorn.h">
-      <Filter>01. Obj\00. Moo_Obj\02.Cthorn</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayer_moo.h">
-      <Filter>01. Obj\00. Moo_Obj\01.CPlayer_moo</Filter>
-    </ClInclude>
-    <ClInclude Include="CStart.h">
-      <Filter>03.Scene\00.Start</Filter>
-    </ClInclude>
-    <ClInclude Include="CKeyMgr.h">
-      <Filter>02.Desin\KeyMgr</Filter>
-    </ClInclude>
-    <ClInclude Include="CAbstractFactory.h">
-      <Filter>02.Desin\AbstractFactory</Filter>
-    </ClInclude>
-    <ClInclude Include="CObjMgr.h">
-      <Filter>02.Desin\ObjMgr</Filter>
-    </ClInclude>
-    <ClInclude Include="CMenu.h">
-      <Filter>03.Scene\01.Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="COrbit_or_bit.h">
-      <Filter>03.Scene\02.Moo_Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="CRhythmWorld.h">
-      <Filter>03.Scene\05.Hero_Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="CSquare.h">
-      <Filter>01. Obj\05.Hero_Obj\00.Square</Filter>
-    <ClInclude Include="CSSHScene.h">
-      <Filter>03.Scene\05.SSH_Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayer_SSH.h">
-      <Filter>01. Obj\04.SSH_Obj\00_Player_SSH\00_Player_SSH</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayer_SSH_Fire.h">
-      <Filter>01. Obj\04.SSH_Obj\00_Player_SSH\02_Player_SSH_Fire</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayer_SSH_Ice.h">
-      <Filter>01. Obj\04.SSH_Obj\00_Player_SSH\01_Player_SSH_Ice</Filter>
-    <ClInclude Include="CCameraMgr.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="DefaultWindow.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="CMainGame.cpp">
-      <Filter>00. MainGame</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayer.cpp">
-      <Filter>01. Obj\99.Player</Filter>
-    </ClCompile>
-    <ClCompile Include="CSoundMgr.cpp">
-      <Filter>02.Desin\SoundMgr</Filter>
-    </ClCompile>
-    <ClCompile Include="COrbit.cpp">
-      <Filter>01. Obj\00. Moo_Obj\03.Orbit</Filter>
-    </ClCompile>
-    <ClCompile Include="CSceneMgr.cpp">
-      <Filter>02.Desin\SceneMgr</Filter>
-    </ClCompile>
-    <ClCompile Include="CScene.cpp">
-      <Filter>03.Scene\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="CObj.cpp">
-      <Filter>01. Obj\100.Obj</Filter>
-    </ClCompile>
-    <ClCompile Include="CThorn.cpp">
-      <Filter>01. Obj\00. Moo_Obj\02.Cthorn</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayer_moo.cpp">
-      <Filter>01. Obj\00. Moo_Obj\01.CPlayer_moo</Filter>
-    </ClCompile>
-    <ClCompile Include="CStart.cpp">
-      <Filter>03.Scene\00.Start</Filter>
-    </ClCompile>
     <ClCompile Include="CKeyMgr.cpp">
       <Filter>05.Desgin\KeyMgr</Filter>
     </ClCompile>
@@ -234,9 +14,6 @@
     </ClCompile>
     <ClCompile Include="CPlayer_moo.cpp">
       <Filter>01.Moo\01.Player</Filter>
-    </ClCompile>
-    <ClCompile Include="COrbit_or_bit.cpp">
-      <Filter>01.Moo\00.Scene</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>99.Trash</Filter>
@@ -262,24 +39,38 @@
     <ClCompile Include="CThorn.cpp">
       <Filter>01.Moo\02.Obj</Filter>
     </ClCompile>
-    <ClCompile Include="CRhythmWorld.cpp">
-      <Filter>03.Scene\05.Hero_Scene</Filter>
+    <ClCompile Include="COrbit_or_bit.cpp">
+      <Filter>01.Moo\00.Scene</Filter>
     </ClCompile>
-    <ClCompile Include="CSquare.cpp">
-      <Filter>01. Obj\05.Hero_Obj\00.Square</Filter>
-    <ClCompile Include="CSSHScene.cpp">
-      <Filter>03.Scene\05.SSH_Scene</Filter>
+    <ClCompile Include="CCameraMgr.cpp">
+      <Filter>05.Desgin\CCameraMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene.cpp">
+      <Filter>06.Abstract\02.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CStart.cpp">
+      <Filter>07.UnionScene\StartScene</Filter>
+    </ClCompile>
+    <ClCompile Include="CMenu.cpp">
+      <Filter>07.UnionScene\MenuScene</Filter>
     </ClCompile>
     <ClCompile Include="CPlayer_SSH.cpp">
-      <Filter>01. Obj\04.SSH_Obj\00_Player_SSH\00_Player_SSH</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayer_SSH_Fire.cpp">
-      <Filter>01. Obj\04.SSH_Obj\00_Player_SSH\02_Player_SSH_Fire</Filter>
+      <Filter>02.SSH\01.Player</Filter>
     </ClCompile>
     <ClCompile Include="CPlayer_SSH_Ice.cpp">
-      <Filter>01. Obj\04.SSH_Obj\00_Player_SSH\01_Player_SSH_Ice</Filter>
-    <ClCompile Include="CCameraMgr.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>02.SSH\01.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer_SSH_Fire.cpp">
+      <Filter>02.SSH\01.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CSquare.cpp">
+      <Filter>03.HERO\01.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CRhythmWorld.cpp">
+      <Filter>03.HERO\00.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CSSHScene.cpp">
+      <Filter>02.SSH\00.Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -462,6 +253,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ResourceCompile Include="DefaultWindow.rc">
+      <Filter>99.Trash</Filter>
+    </ResourceCompile>
     <ResourceCompile Include="DefaultWindow.rc">
       <Filter>99.Trash</Filter>
     </ResourceCompile>
