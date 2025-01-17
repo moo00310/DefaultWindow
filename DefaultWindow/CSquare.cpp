@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "CSquare.h"
+#include "CObjMgr.h"
+#include "CSpawner.h"
 
 CSquare::CSquare()
 	:m_fAngle(0.f), m_fSize(0.f), m_iRotPoint(0), m_bLeft(false)
@@ -22,8 +24,6 @@ void CSquare::Initialize()
 
 	m_fSize = SIDE;
 	m_fSpeed = 4.f;
-
-	//m_tInfo.vPos = { m_fSize, WINCY * 0.5f - m_fSize, 0.f };
 
 	m_vLocalPoint[0] = { -m_fSize * 0.5f, -m_fSize * 0.5f, 0.f };
 	m_vLocalPoint[1] = { m_fSize * 0.5f, -m_fSize * 0.5f, 0.f };
@@ -94,24 +94,18 @@ void CSquare::Roll_Corners()
 		{
 			//현재 회전의 중점으로 하는 포인트에 따라, 사각형의 중점을 이동 시킨다.[하드코딩, 규칙을 못 찾음]
 			//처음 시작점(3) 포인트 차이만큼 이동시키는 것 같긴함
-			//m_tInfo.vPos += 2.f * (m_vLocalPoint[3] - m_vLocalPoint[m_iRotPoint]);
-
 			switch (m_iRotPoint)
 			{
 			case 0:
-				//m_tInfo.vPos += {2.f * m_fSize, -2.0f * m_fSize, 0.f};
 				m_tInfo.vPos -= {2.f * m_fSize, 0.f, 0.f};
 				break;
 			case 1:
-				//m_tInfo.vPos += {4.f * m_fSize, 0.f, 0.f};
 				m_tInfo.vPos -= {1.f * m_fSize, 1.f * m_fSize, 0.f};
 				break;
 			case 2:
-				//m_tInfo.vPos += {2.f * m_fSize, 2.f * m_fSize, 0.f};
 				m_tInfo.vPos -= {0.f, 0.f, 0.f};
 				break;
 			case 3:
-				//m_tInfo.vPos += {0.f, 0.f, 0.f};
 				m_tInfo.vPos -= {1.f * m_fSize, -1.0f * m_fSize, 0.f};
 				break;
 			default:
@@ -139,8 +133,6 @@ void CSquare::Roll_Corners()
 		{
 			//현재 회전의 중점으로 하는 포인트에 따라, 사각형의 중점을 이동 시킨다.[하드코딩, 규칙을 못 찾음]
 			//처음 시작점(3) 포인트 차이만큼 이동시키는 것 같긴함
-			//m_tInfo.vPos += 2.f * (m_vLocalPoint[3] - m_vLocalPoint[m_iRotPoint]);
-
 			switch (m_iRotPoint)
 			{
 			case 0:
@@ -194,10 +186,6 @@ void CSquare::Render(HDC hDC)
 	//사각형
 	for (int i = 0; i < 4; ++i)
 	{
-		//D3DXVECTOR3 vTemp = m_vLocalPoint[i];
-		//vTemp -= { m_fSize, m_fSize, 0.f };
-		//D3DXVec3TransformCoord(&m_vWorldPoint[i], &vTemp, &m_tInfo.matWorld);
-
 		D3DXVec3TransformCoord(&m_vWorldPoint[i], &m_vLocalPoint[i], &m_tInfo.matWorld);
 	}
 
@@ -237,6 +225,20 @@ void CSquare::Render(HDC hDC)
 
 void CSquare::Release()
 {
+	list<CObj*> List = CObjMgr::Get_Instance()->Get_List()[OBJ_SHIELD];
+	CObj* pObj = *List.begin();
+
+	if (CSpawner* pSpawner = dynamic_cast<CSpawner*>(pObj))
+	{
+		if (m_bLeft)
+		{
+			pSpawner->Set_LeftSquare(nullptr);
+		}
+		else
+		{
+			pSpawner->Set_RightSquare(nullptr);
+		}
+	}
 }
 
 void CSquare::Late_Update()

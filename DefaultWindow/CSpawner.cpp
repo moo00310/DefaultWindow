@@ -24,11 +24,13 @@ int CSpawner::Update()
 	if (m_bDead)
 		return OBJ_DEAD;
 
-
-	if (m_ullLastSpawnTime + 5000 < GetTickCount64())
+	if (!m_pLeftSquare && !m_pRightSquare)
 	{
-		m_ullLastSpawnTime = GetTickCount64();
-		Spawn();
+		if (m_ullLastSpawnTime + 5000 < GetTickCount64())
+		{
+			m_ullLastSpawnTime = GetTickCount64();
+			Spawn();
+		}
 	}
 
 	return OBJ_NOEVENT;

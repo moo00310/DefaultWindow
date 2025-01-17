@@ -16,6 +16,8 @@ public:
 	CObj* Get_LastPlayer()  { return m_ObjList[OBJ_PLAYER].back(); }
 	CObj* Get_LastMonster() { return m_ObjList[OBJ_MONSTER].back(); }
 
+	list<CObj*>* Get_List() { return m_ObjList; }
+
 	CObj* Get_Target(OBJID eID, CObj* pDst);
 
 public:

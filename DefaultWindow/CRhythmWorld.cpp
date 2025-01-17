@@ -46,7 +46,7 @@ void CRhythmWorld::Render(HDC hDC)
     TCHAR cBuffer[64]; //저장할 문자열 버퍼
 
     _stprintf_s(cBuffer, _T("Distance: %.2f"), m_fDistance);
-    TextOut(hDC, 0, 0, cBuffer, (int)_tcslen(cBuffer));
+    TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.5f), cBuffer, (int)_tcslen(cBuffer));
 
     CObjMgr::Get_Instance()->Render(hDC);
 }
@@ -55,17 +55,28 @@ void CRhythmWorld::Release()
 {
     CObjMgr::DestroyInstance();
     CKeyMgr::Destroy_Instance();
-
 }
 
 void CRhythmWorld::Check_Hit()
 {
     if (CKeyMgr::Get_Instance()->Key_Down(VK_SPACE))
     {
+        //list<CObj*> SquareList = CObjMgr::Get_Instance()->Get_List()[OBJ_MONSTER];
+        //
+        //CObj* Square1 = *SquareList.begin();
+        //CObj* Square1 = *SquareList.(begin() + 1);
+
+        //
         if (CSpawner* pSpawner = dynamic_cast<CSpawner*>(m_pSpawner))
         {
             CObj* pLeft = pSpawner->Get_LeftSqure();
             CObj* pRight = pSpawner->Get_RightSqure();
+
+            if (!pLeft || !pRight)
+            {
+                m_fDistance = WINCX;
+                return;
+            }
 
             D3DXVECTOR3 vLeft{};
             D3DXVECTOR3 vRight{};

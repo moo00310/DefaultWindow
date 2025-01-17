@@ -7,8 +7,10 @@ public:
     CSpawner();
     virtual ~CSpawner();
 public:
-    CObj* Get_LeftSqure() { return m_pLeftSquare; }
-    CObj* Get_RightSqure() { return m_pRightSquare; }
+    CObj*   Get_LeftSqure() { return m_pLeftSquare; }
+    CObj*   Get_RightSqure() { return m_pRightSquare; }
+    void    Set_LeftSquare(CObj* _pObj) { m_pLeftSquare = _pObj; }
+    void    Set_RightSquare(CObj* _pObj) { m_pRightSquare = _pObj; }
 
 public:
     void Initialize() override;
