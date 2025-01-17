@@ -76,7 +76,7 @@
     <Filter Include="01. Obj\05.Hero_Obj">
       <UniqueIdentifier>{a9377853-e1a8-4236-ad68-67a84d615172}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Obj\05.Hero_Obj\Square">
+    <Filter Include="01. Obj\05.Hero_Obj\00.Square">
       <UniqueIdentifier>{c3c37284-3428-4f27-8fe7-3d90afdff37f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -148,7 +148,7 @@
       <Filter>03.Scene\05.Hero_Scene</Filter>
     </ClInclude>
     <ClInclude Include="CSquare.h">
-      <Filter>01. Obj\05.Hero_Obj\Square</Filter>
+      <Filter>01. Obj\05.Hero_Obj\00.Square</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -204,7 +204,7 @@
       <Filter>03.Scene\05.Hero_Scene</Filter>
     </ClCompile>
     <ClCompile Include="CSquare.cpp">
-      <Filter>01. Obj\05.Hero_Obj\Square</Filter>
+      <Filter>01. Obj\05.Hero_Obj\00.Square</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

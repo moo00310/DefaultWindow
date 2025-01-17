@@ -9,9 +9,13 @@ public:
 public:
     void Initialize() override;
     int Update() override;
-    void Update_WorldMatrix();
+    void Late_Update() override;
     void Render(HDC hDC) override;
     void Release() override;
+private:
+    void Update_WorldMatrix();
+    void Roll_Corners();
+    void Roll();
 private:
     //사각형 점 4개
     D3DXVECTOR3 m_vLocalPoint[4];
@@ -24,7 +28,6 @@ private:
     float       m_fSize;
     int         m_iRotPoint;
 
-    // CObj을(를) 통해 상속됨
-    void Late_Update() override;
+
 };
 

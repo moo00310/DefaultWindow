@@ -20,7 +20,7 @@ void CSquare::Initialize()
 {
 	m_eRender = RENDER_GAMEOBJECT;
 
-	m_fSize = 50.f;
+	m_fSize = 30.f;
 
 	m_tInfo.vPos = { m_fSize, WINCY * 0.5f - m_fSize, 0.f };
 
@@ -35,6 +35,43 @@ void CSquare::Initialize()
 }
 
 int CSquare::Update()
+{
+	//Roll_Corners();
+	Roll();
+
+	Update_WorldMatrix();
+
+	return 0;
+}
+
+void CSquare::Update_WorldMatrix()
+{
+	D3DXMATRIX matScale;
+	D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
+
+	/*D3DXMATRIX matTransMove;
+	D3DXMatrixIdentity(&matTransMove);
+	D3DXMatrixTranslation(&matTransMove, -m_vLocalPoint[m_iRotPoint].x, -m_vLocalPoint[m_iRotPoint].y, -m_vLocalPoint[m_iRotPoint].z);*/
+
+	D3DXMATRIX matRotZ;
+	D3DXMatrixRotationZ(&matRotZ, m_fAngle);
+
+	/*D3DXMATRIX matTransBack;
+	D3DXMatrixIdentity(&matTransBack);
+	D3DXMatrixTranslation(&matTransBack, m_vLocalPoint[m_iRotPoint].x, m_vLocalPoint[m_iRotPoint].y, m_vLocalPoint[m_iRotPoint].z);*/
+
+	D3DXMATRIX matTrans;
+	D3DXMatrixIdentity(&matTrans);
+	D3DXMatrixTranslation(&matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, m_tInfo.vPos.z);
+
+	// 행렬 조합: 스케일 * (중심 이동 * 회전 * 원위치 이동) * 최종 이동
+	//m_tInfo.matWorld = matScale * (matTransMove * matRotZ * matTransBack) * matTrans;
+
+	m_tInfo.matWorld = matScale * matRotZ * matTrans;
+
+}
+
+void CSquare::Roll_Corners()
 {
 	//각도를 증가 시킨다.
 	m_fAngle += D3DXToRadian(.5f);
@@ -75,35 +112,21 @@ int CSquare::Update()
 		m_iRotPoint = iCheckPoint;
 	}
 
-	Update_WorldMatrix();
-
-	return 0;
 }
 
-void CSquare::Update_WorldMatrix()
+void CSquare::Roll()
 {
-	D3DXMATRIX matScale;
-	D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
+	float fAngle = D3DXToRadian(1.f);  // 각도 증가 (1도씩)
+	float fL = m_fSize * 2.f;  // 한 변의 길이
+	float fR = fL * sqrtf(2.f);  // 대각선 절반 길이
 
-	D3DXMATRIX matTransMove;
-	D3DXMatrixIdentity(&matTransMove);
-	D3DXMatrixTranslation(&matTransMove, -m_vLocalPoint[m_iRotPoint].x, -m_vLocalPoint[m_iRotPoint].y, -m_vLocalPoint[m_iRotPoint].z);
+	m_fAngle += fAngle;  // 각도 증가
 
-	D3DXMATRIX matRotZ;
-	D3DXMatrixRotationZ(&matRotZ, m_fAngle);
+	float fY = WINCY * 0.5f - m_fSize * 0.5f;
 
-	D3DXMATRIX matTransBack;
-	D3DXMatrixIdentity(&matTransBack);
-	D3DXMatrixTranslation(&matTransBack, m_vLocalPoint[m_iRotPoint].x, m_vLocalPoint[m_iRotPoint].y, m_vLocalPoint[m_iRotPoint].z);
-
-	D3DXMATRIX matTrans;
-	D3DXMatrixIdentity(&matTrans);
-	D3DXMatrixTranslation(&matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, m_tInfo.vPos.z);
-
-	// 행렬 조합: 스케일 * (중심 이동 * 회전 * 원위치 이동) * 최종 이동
-	m_tInfo.matWorld = matScale * (matTransMove * matRotZ * matTransBack) * matTrans;
-
-	//m_tInfo.matWorld = matScale * matRotZ * matTrans;
+	// 중점의 위치 계산
+	m_tInfo.vPos.x = m_fSize * m_fAngle;  // 중점의 수평 이동
+	m_tInfo.vPos.y = fY - m_fSize * (1 + (sqrtf(2.f) - 1) * cos(PI * m_fAngle));  // 중점의 수직 이동
 
 }
 
@@ -119,33 +142,33 @@ void CSquare::Render(HDC hDC)
 		D3DXVec3TransformCoord(&m_vWorldPoint[i], &m_vLocalPoint[i], &m_tInfo.matWorld);
 	}
 
-	MoveToEx(hDC, m_vWorldPoint[0].x, m_vWorldPoint[0].y, nullptr);
-	LineTo(hDC, m_vWorldPoint[1].x, m_vWorldPoint[1].y);
-	LineTo(hDC, m_vWorldPoint[2].x, m_vWorldPoint[2].y);
-	LineTo(hDC, m_vWorldPoint[3].x, m_vWorldPoint[3].y);
-	LineTo(hDC, m_vWorldPoint[0].x, m_vWorldPoint[0].y);
+	MoveToEx(hDC, (int)m_vWorldPoint[0].x, (int)m_vWorldPoint[0].y, nullptr);
+	LineTo(hDC, (int)m_vWorldPoint[1].x, (int)m_vWorldPoint[1].y);
+	LineTo(hDC, (int)m_vWorldPoint[2].x, (int)m_vWorldPoint[2].y);
+	LineTo(hDC, (int)m_vWorldPoint[3].x, (int)m_vWorldPoint[3].y);
+	LineTo(hDC, (int)m_vWorldPoint[0].x, (int)m_vWorldPoint[0].y);
 	
 	//중점
 	D3DXVec3TransformCoord(&m_vWorldPoint_Center, &m_vLocalPoint_Center, &m_tInfo.matWorld);
-	int iEllipseSize = 20;
+	int iEllipseSize = (int)(m_fSize * 0.5f);
 	Ellipse(hDC, 
-		m_vWorldPoint_Center.x - iEllipseSize,
-		m_vWorldPoint_Center.y - iEllipseSize,
-		m_vWorldPoint_Center.x + iEllipseSize,
-		m_vWorldPoint_Center.y + iEllipseSize);
+		(int)(m_vWorldPoint_Center.x - iEllipseSize),
+		(int)(m_vWorldPoint_Center.y - iEllipseSize),
+		(int)(m_vWorldPoint_Center.x + iEllipseSize),
+		(int)(m_vWorldPoint_Center.y + iEllipseSize));
 
-	TCHAR buffer[64]; //저장할 문자열 버퍼
+	TCHAR cBuffer[64]; //저장할 문자열 버퍼
 	// 문자열로 변환하여 출력 준비
 	for (int i = 0; i < 4; ++i)
 	{
-		_stprintf_s(buffer, _T("(%d)[%.0f, %.0f]"), i, m_vWorldPoint[i].x, m_vWorldPoint[i].y);
+		_stprintf_s(cBuffer, _T("(%d)[%.0f, %.0f]"), i, m_vWorldPoint[i].x, m_vWorldPoint[i].y);
 		// 화면에 출력 (10, 10 위치)
-		TextOut(hDC, m_vWorldPoint[i].x, m_vWorldPoint[i].y, buffer, _tcslen(buffer));
+		TextOut(hDC, (int)m_vWorldPoint[i].x, (int)m_vWorldPoint[i].y, cBuffer, (int)_tcslen(cBuffer));
 	}
 
-	_stprintf_s(buffer, _T("(O)[%.0f, %.0f]"), m_tInfo.vPos.x, m_tInfo.vPos.y);
+	_stprintf_s(cBuffer, _T("(O)[%.0f, %.0f]"), m_tInfo.vPos.x, m_tInfo.vPos.y);
 	// 화면에 출력 (10, 10 위치)
-	TextOut(hDC, m_tInfo.vPos.x, m_tInfo.vPos.y, buffer, _tcslen(buffer));
+	TextOut(hDC, (int)m_tInfo.vPos.x, (int)m_tInfo.vPos.y, cBuffer, (int)_tcslen(cBuffer));
 }
 
 void CSquare::Release()
