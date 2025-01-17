@@ -3,8 +3,11 @@
 #include "CSquare.h"
 #include "CAbstractFactory.h"
 #include "CObjMgr.h"
+#include "CKeyMgr.h"
+#include "CSpawner.h"
 
 CRhythmWorld::CRhythmWorld()
+    :m_pSpawner(nullptr), m_fDistance(0.f)
 {
 }
 
@@ -15,16 +18,8 @@ CRhythmWorld::~CRhythmWorld()
 
 void CRhythmWorld::Initialize()
 {
-    CObj* pObj(nullptr);
-    pObj = CAbstractFactory<CSquare>::Create(SIDE * 2.f, WINCY * 0.5f - SIDE * 0.5f);
-    CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, pObj);
-
-    pObj = CAbstractFactory<CSquare>::Create(SIDE * ((int)(WINCX / SIDE) - 1), WINCY * 0.5f - SIDE * 0.5f);
-    CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, pObj);
-    if (CSquare* pSquare = dynamic_cast<CSquare*>(pObj))
-    {
-        pSquare->Set_RollLeft(true);
-    }
+    m_pSpawner = CAbstractFactory<CSpawner>::Create();
+    CObjMgr::Get_Instance()->Add_Object(OBJ_SHIELD, m_pSpawner);
 }
 
 int CRhythmWorld::Update()
@@ -36,6 +31,11 @@ int CRhythmWorld::Update()
 void CRhythmWorld::Late_Update()
 {
     CObjMgr::Get_Instance()->Late_Update();
+
+    Check_Hit();
+
+    CKeyMgr::Get_Instance()->Update();
+
 }
 
 void CRhythmWorld::Render(HDC hDC)
@@ -43,10 +43,42 @@ void CRhythmWorld::Render(HDC hDC)
     MoveToEx(hDC, 0, int(WINCY * 0.5f), nullptr);
     LineTo(hDC, int(WINCX), int(WINCY * 0.5f));
 
+    TCHAR cBuffer[64]; //저장할 문자열 버퍼
+
+    _stprintf_s(cBuffer, _T("Distance: %.2f"), m_fDistance);
+    TextOut(hDC, 0, 0, cBuffer, (int)_tcslen(cBuffer));
+
     CObjMgr::Get_Instance()->Render(hDC);
 }
 
 void CRhythmWorld::Release()
 {
     CObjMgr::DestroyInstance();
+    CKeyMgr::Destroy_Instance();
+
+}
+
+void CRhythmWorld::Check_Hit()
+{
+    if (CKeyMgr::Get_Instance()->Key_Down(VK_SPACE))
+    {
+        if (CSpawner* pSpawner = dynamic_cast<CSpawner*>(m_pSpawner))
+        {
+            CObj* pLeft = pSpawner->Get_LeftSqure();
+            CObj* pRight = pSpawner->Get_RightSqure();
+
+            D3DXVECTOR3 vLeft{};
+            D3DXVECTOR3 vRight{};
+            if (CSquare* pLeftSquare = dynamic_cast<CSquare*>(pLeft))
+            {
+                vLeft = pLeftSquare->Get_World_Center();
+            }
+            if (CSquare* pRightSquare = dynamic_cast<CSquare*>(pRight))
+            {
+                vRight = pRightSquare->Get_World_Center();
+            }
+
+            m_fDistance = abs(vLeft.x - vRight.x);
+        }
+    }
 }

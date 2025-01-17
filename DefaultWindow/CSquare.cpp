@@ -21,7 +21,7 @@ void CSquare::Initialize()
 	m_eRender = RENDER_GAMEOBJECT;
 
 	m_fSize = SIDE;
-	m_fSpeed = 2.f;
+	m_fSpeed = 4.f;
 
 	//m_tInfo.vPos = { m_fSize, WINCY * 0.5f - m_fSize, 0.f };
 
@@ -37,12 +37,15 @@ void CSquare::Initialize()
 
 int CSquare::Update()
 {
+	if (m_bDead)
+		return OBJ_DEAD;
+
 	Roll_Corners();
 	//Roll();
 
 	Update_WorldMatrix();
 
-	return 0;
+	return OBJ_NOEVENT;
 }
 
 void CSquare::Update_WorldMatrix()
@@ -174,8 +177,16 @@ void CSquare::Roll()
 
 	// 중점의 위치 계산
 	m_tInfo.vPos.x = m_fSize * m_fAngle;  // 중점의 수평 이동
-	m_tInfo.vPos.y = fY - m_fSize * (1 + (sqrtf(2.f) - 1) * cos(PI * m_fAngle));  // 중점의 수직 이동
+	m_tInfo.vPos.y = float(fY - m_fSize * (1 + (sqrtf(2.f) - 1) * cos(PI * m_fAngle)));  // 중점의 수직 이동
 
+}
+
+void CSquare::Check_ScreenOut()
+{
+	if (m_vWorldPoint_Center.x < 0.f || m_vWorldPoint_Center.x >(float)WINCX)
+	{
+		Set_Dead();
+	}
 }
 
 void CSquare::Render(HDC hDC)
@@ -230,4 +241,5 @@ void CSquare::Release()
 
 void CSquare::Late_Update()
 {
+	Check_ScreenOut();
 }

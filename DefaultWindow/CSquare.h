@@ -1,14 +1,14 @@
 #pragma once
 #include "CObj.h"
 
-#define SIDE 60.f
+#define SIDE (WINCX/12)
 
 class CSquare :
     public CObj
 {
 public:
     void Set_RollLeft(bool _b) { m_bLeft = _b; }
-
+    D3DXVECTOR3 Get_World_Center() { return m_vWorldPoint_Center; }
 public:
     CSquare();
     virtual ~CSquare();
@@ -22,6 +22,7 @@ private:
     void Update_WorldMatrix();
     void Roll_Corners();
     void Roll();
+    void Check_ScreenOut();
 private:
     //사각형 점 4개
     D3DXVECTOR3 m_vLocalPoint[4];

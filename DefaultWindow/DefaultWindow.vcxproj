@@ -85,7 +85,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LibraryPath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\core\lib\x64;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\studio\lib\x64$(IncludePath);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(IncludePath);$(FMOD);$(FMOD);$(FMOD)</LibraryPath>
     <IncludePath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\core\inc;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\studio\inc;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -170,6 +169,7 @@
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CSceneMgr.h" />
     <ClInclude Include="CSoundMgr.h" />
+    <ClInclude Include="CSpawner.h" />
     <ClInclude Include="CSSHScene.h" />
     <ClInclude Include="CStart.h" />
     <ClInclude Include="CThorn.h" />
@@ -199,6 +199,7 @@
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CSceneMgr.cpp" />
     <ClCompile Include="CSoundMgr.cpp" />
+    <ClCompile Include="CSpawner.cpp" />
     <ClCompile Include="CSSHScene.cpp" />
     <ClCompile Include="CStart.cpp" />
     <ClCompile Include="CThorn.cpp" />
