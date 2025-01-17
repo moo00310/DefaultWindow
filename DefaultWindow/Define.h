@@ -21,6 +21,9 @@ enum SCENEID { SC_START, SC_MENU, SC_MOO, SC_SSH, SC_HERO, SC_END };
 enum OBJID { OBJ_PLAYER, OBJ_BULLET, OBJ_MONSTER, OBJ_MOUSE, OBJ_SHIELD, OBJ_BUTTON, OBJ_END };
 enum RENDERID { RENDER_BACKGROUND, RENDER_GAMEOBJECT, RENDER_UI, RENDER_EFFECT, RENDER_END };
 
+enum CarmeraState { CS_ZoomAndFollow, CS_Shake1, CS_Shake2, CS_END };
+enum Carmera {C_Move_LT, C_Move_size, C_Zoom_LT, C_Zoom_size, C_End };
+
 template<typename T>
 void Safe_Delete(T& Temp)
 {

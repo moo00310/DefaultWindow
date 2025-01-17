@@ -50,8 +50,9 @@ void CMainGame::Render()
 void CMainGame::Release()
 {
 	CKeyMgr::Destroy_Instance();
-	CObjMgr::DestroyInstance();
 	CSceneMgr::Destroy_Instance();
+	CObjMgr::DestroyInstance();
+
 	CSoundMgr::Destroy_Instance();
 	CCameraMgr::Destroy_Instance();
 	ReleaseDC(g_hWnd, m_hDC);

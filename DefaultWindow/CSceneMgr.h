@@ -1,7 +1,6 @@
 #pragma once
 
 #include "CScene.h"
-
 #include "CStart.h"
 
 class CSceneMgr

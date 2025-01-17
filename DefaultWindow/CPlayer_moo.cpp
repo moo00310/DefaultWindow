@@ -16,7 +16,7 @@ void CPlayer_moo::Initialize()
 {
 	m_tInfo.vPos = { 153.f, 153.f, 0.f };
 	m_tInfo.vDir = { 1.f, 0.f, 0.f };
-	m_fSpeed = 1.5f;
+	m_fSpeed = 0.5f;
 
 	m_Diagonal = 220.f;
 
@@ -61,6 +61,12 @@ void CPlayer_moo::Render(HDC hDC)
 
 	SelectObject(hDC, hOldBrush);
 	DeleteObject(hBrush);
+
+	TCHAR szBuffer3[128];
+	_stprintf_s(szBuffer3, _T("x : %f \t y : %f"), m_tInfo.vPos.x, m_tInfo.vPos.y);
+	SetTextColor(hDC, RGB(0, 0, 0));
+	SetBkMode(hDC, TRANSPARENT);
+	TextOut(hDC, m_tInfo.vPos.x - 100, m_tInfo.vPos.y+20, szBuffer3, (int)_tcslen(szBuffer3));
 }
 
 void CPlayer_moo::Release()

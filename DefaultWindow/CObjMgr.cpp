@@ -115,12 +115,6 @@ void CObjMgr::Render(HDC hDC)
 
 	float x = m_ObjList[OBJ_MONSTER].front()->Get_Info().vPos.x;
 	float y = m_ObjList[OBJ_MONSTER].front()->Get_Info().vPos.y;
-	
-	TCHAR szBuffer3[128];
-	_stprintf_s(szBuffer3, _T("x : %f \t y : %f"), x, y);
-	SetTextColor(hDC, RGB(0, 0, 0));
-	SetBkMode(hDC, TRANSPARENT);
-	TextOut(hDC, 350, 50, szBuffer3, (int)_tcslen(szBuffer3));
 }
 
 void CObjMgr::Release()
