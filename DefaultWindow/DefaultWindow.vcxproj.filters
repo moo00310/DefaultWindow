@@ -54,15 +54,6 @@
     <ClCompile Include="CMenu.cpp">
       <Filter>07.UnionScene\MenuScene</Filter>
     </ClCompile>
-    <ClCompile Include="CPlayer_SSH.cpp">
-      <Filter>02.SSH\01.Player</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayer_SSH_Ice.cpp">
-      <Filter>02.SSH\01.Player</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayer_SSH_Fire.cpp">
-      <Filter>02.SSH\01.Player</Filter>
-    </ClCompile>
     <ClCompile Include="CSquare.cpp">
       <Filter>03.HERO\01.Player</Filter>
     </ClCompile>
@@ -71,6 +62,18 @@
     </ClCompile>
     <ClCompile Include="CSSHScene.cpp">
       <Filter>02.SSH\00.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer_SSH_Fire.cpp">
+      <Filter>02.SSH\01.Player\00. Player_SSH\01. Fire</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer_SSH_Ice.cpp">
+      <Filter>02.SSH\01.Player\00. Player_SSH\02. Ice</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer_SSH.cpp">
+      <Filter>02.SSH\01.Player\00. Player_SSH\00. SSH</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlock_SSH.cpp">
+      <Filter>02.SSH\02. Block\00. Block</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -136,15 +139,6 @@
     <ClInclude Include="CSSHScene.h">
       <Filter>02.SSH\00.Scene</Filter>
     </ClInclude>
-    <ClInclude Include="CPlayer_SSH.h">
-      <Filter>02.SSH\01.Player</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayer_SSH_Fire.h">
-      <Filter>02.SSH\01.Player</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayer_SSH_Ice.h">
-      <Filter>02.SSH\01.Player</Filter>
-    </ClInclude>
     <ClInclude Include="CSquare.h">
       <Filter>03.HERO\01.Player</Filter>
     </ClInclude>
@@ -153,6 +147,18 @@
     </ClInclude>
     <ClInclude Include="CScene.h">
       <Filter>06.Abstract\02.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer_SSH_Fire.h">
+      <Filter>02.SSH\01.Player\00. Player_SSH\01. Fire</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer_SSH_Ice.h">
+      <Filter>02.SSH\01.Player\00. Player_SSH\02. Ice</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer_SSH.h">
+      <Filter>02.SSH\01.Player\00. Player_SSH\00. SSH</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlock_SSH.h">
+      <Filter>02.SSH\02. Block\00. Block</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +256,24 @@
     </Filter>
     <Filter Include="07.UnionScene\StartScene">
       <UniqueIdentifier>{2d29434d-419f-426f-a7b8-0b27756ab884}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.SSH\01.Player\00. Player_SSH">
+      <UniqueIdentifier>{6912844c-e7b2-49cb-a4cc-631a0e2817dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.SSH\01.Player\00. Player_SSH\01. Fire">
+      <UniqueIdentifier>{e5e63c7e-4f14-4377-92f3-2e08c3882b13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.SSH\01.Player\00. Player_SSH\02. Ice">
+      <UniqueIdentifier>{9fafcb73-861d-4ee0-be25-4da15a8512f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.SSH\01.Player\00. Player_SSH\00. SSH">
+      <UniqueIdentifier>{308bfdee-229f-431a-aa54-6730e8d70a30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.SSH\02. Block">
+      <UniqueIdentifier>{890553af-539a-4e21-984c-752f115cf2c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.SSH\02. Block\00. Block">
+      <UniqueIdentifier>{ad649063-7bbe-4b6b-9c64-b2fb50ff231c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

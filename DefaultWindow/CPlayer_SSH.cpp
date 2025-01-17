@@ -3,7 +3,7 @@
 
 #include "CKeyMgr.h"
 
-CPlayer_SSH::CPlayer_SSH() : m_bChange(false)
+CPlayer_SSH::CPlayer_SSH() : m_bRev(false), m_fMaxAngle(360.f), m_fRevSpeed(REV_SPEED)
 {
 }
 

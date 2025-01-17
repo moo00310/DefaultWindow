@@ -25,5 +25,14 @@ public:
 
 		return pObj;
 	}
+
+	static CObj* Create(D3DXVECTOR3 _vPos)
+	{
+		CObj* pObj = new T;
+		pObj->Initialize();
+		pObj->Set_vPos(_vPos);
+
+		return pObj;
+	}
 };
 

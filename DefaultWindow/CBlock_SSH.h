@@ -1,10 +1,10 @@
 #pragma once
-#include "CScene.h"
-class CSSHScene : public CScene
+#include "CObj.h"
+class CBlock_SSH : public CObj
 {
 public:
-	CSSHScene();
-	virtual ~CSSHScene();
+	CBlock_SSH();
+	virtual ~CBlock_SSH();
 
 public:
 	void Initialize() override;
@@ -14,12 +14,7 @@ public:
 	void Release() override;
 
 public:
-	void Key_Input();
-
-private:
-	bool  m_bChange;
-
-	float m_fCheckAngle;
-	float m_fMaxAngle;
+	D3DXVECTOR3 m_vPoint[4];
+	D3DXVECTOR3 m_vOriginPoint[4];
 };
 

@@ -13,26 +13,20 @@ CPlayer_SSH_Fire::~CPlayer_SSH_Fire()
 
 void CPlayer_SSH_Fire::Initialize()
 {
-    m_tInfo.vPos = { 400.f, 300.f, 0.f };
+    m_tInfo.vPos = { 0.f, 300.f, 0.f };
     D3DXMatrixIdentity(&m_tInfo.matWorld);
 
     m_vPoint = { 0.f, 0.f, 0.f };
     m_vOriginPoint = m_vPoint;
 
     m_eRender = RENDER_GAMEOBJECT;
-    m_bChange = true; // 둘 중 하나는 일단 돌아야하기때문에 트루
+    m_bRev = true; // 둘 중 하나는 일단 돌아야하기때문에 트루
 }
 
 int CPlayer_SSH_Fire::Update()
 {
     if (m_bDead)
         return OBJ_DEAD;
-
-    // 바뀌었다면 회전
-    //if (m_bChange)
-    //{
-    //    m_fAngle += 3.f;
-    //}
 
     D3DXMATRIX matScale, matRotZ, matTranse, matRevZ, matParrent;
 
@@ -47,17 +41,25 @@ int CPlayer_SSH_Fire::Update()
 
     D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
     D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(0.f));
-    D3DXMatrixTranslation(&matTranse, -100.f, 0.f, 0.f);
+    D3DXMatrixTranslation(&matTranse, -50.f, 0.f, 0.f);
     D3DXMatrixRotationZ(&matRevZ, D3DXToRadian(m_fAngle));
 
+    if (m_fAngle > m_fMaxAngle)
+        m_fAngle -= m_fAngle;
+
+    //공전이라면 공전
+    if (m_bRev)
+    {
+        m_fAngle += m_fRevSpeed;
+    }
 
     //바뀌지 않았다면 제자리
-    if (!m_bChange)
+    if (!m_bRev)
     {
         D3DXMatrixTranslation(&matParrent, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
     }
     // 바꼈다면 타깃중심으로 공전
-    else if (m_bChange)
+    else if (m_bRev)
     {
         if (CPlayer_SSH* Temp = dynamic_cast<CPlayer_SSH*>(m_pTarget))
         {
@@ -104,7 +106,7 @@ void CPlayer_SSH_Fire::Release()
 
 void CPlayer_SSH_Fire::Key_Input()
 {
-    if (m_bChange)
+    if (m_bRev)
     {
         if (CKeyMgr::Get_Instance()->Key_Pressing('A'))
         {
