@@ -72,6 +72,15 @@
     <ClCompile Include="CSSHScene.cpp">
       <Filter>02.SSH\00.Scene</Filter>
     </ClCompile>
+    <ClCompile Include="CKDHPlayer.cpp">
+      <Filter>04.KDH\01.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CKDHScene.cpp">
+      <Filter>04.KDH\00.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CHexaPad.cpp">
+      <Filter>04.KDH</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Define.h" />
@@ -153,6 +162,15 @@
     </ClInclude>
     <ClInclude Include="CScene.h">
       <Filter>06.Abstract\02.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CKDHPlayer.h">
+      <Filter>04.KDH\01.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CKDHScene.h">
+      <Filter>04.KDH\00.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CHexaPad.h">
+      <Filter>04.KDH</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
