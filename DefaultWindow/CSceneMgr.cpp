@@ -31,6 +31,14 @@ void CSceneMgr::Set_Scene(SCENEID eID)
 		case SC_MOO:
 			m_pScene = new COrbit_or_bit;
 			break;
+		case SC_HERO:
+			m_pScene = new CRhythmWorld;
+			break;
+
+		case SC_SSH:
+			m_pScene = new CSSHScene;
+
+			break;
 
 		/*	case SC_EDIT:
 			m_pScene = new CMyEdit;
