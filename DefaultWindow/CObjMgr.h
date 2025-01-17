@@ -18,6 +18,8 @@ public:
 
 	CObj* Get_Target(OBJID eID, CObj* pDst);
 
+	bool Collision_Check();
+
 public:
 	void		Add_Object(OBJID eID, CObj* pObj);
 	int			Update();
@@ -51,6 +53,6 @@ private:
 
 	static CObjMgr* m_pInstance;
 
-
+	CObj* m_pPlayer;
 };
 

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CPlayer_moo.h"
 #include "CSoundMgr.h"
+#include "CKeyMgr.h"
 
 CPlayer_moo::CPlayer_moo() : m_Diagonal(0)
 {
@@ -13,7 +14,7 @@ CPlayer_moo::~CPlayer_moo()
 
 void CPlayer_moo::Initialize()
 {
-	m_tInfo.vPos = { 155.f, 155.f, 0.f };
+	m_tInfo.vPos = { 153.f, 153.f, 0.f };
 	m_tInfo.vDir = { 1.f, 0.f, 0.f };
 	m_fSpeed = 1.5f;
 
@@ -34,7 +35,6 @@ int CPlayer_moo::Update()
 	m_tInfo.vPos = m_vOriginPoint; // °ª ÁßÃ¸ ¹æÁö
 	D3DXMATRIX	matRotZ, matTrans1, matTrans2, matScale;
 
-	D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
 	D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(m_fAngle));
 	D3DXMatrixTranslation(&matTrans2, 400.f, 300.f, 0.f);
 
@@ -50,11 +50,17 @@ void CPlayer_moo::Late_Update()
 
 void CPlayer_moo::Render(HDC hDC)
 {
+	HBRUSH hBrush = CreateSolidBrush(RGB(0, 0, 0));
+	HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, hBrush);
+
 	Ellipse(hDC,
-		int(m_tInfo.vPos.x - 20.f),
-		int(m_tInfo.vPos.y - 20.f),
-		int(m_tInfo.vPos.x + 20.f),
-		int(m_tInfo.vPos.y + 20.f));
+		int(m_tInfo.vPos.x - 15.f),
+		int(m_tInfo.vPos.y - 15.f),
+		int(m_tInfo.vPos.x + 15.f),
+		int(m_tInfo.vPos.y + 15.f));
+
+	SelectObject(hDC, hOldBrush);
+	DeleteObject(hBrush);
 }
 
 void CPlayer_moo::Release()
@@ -63,24 +69,24 @@ void CPlayer_moo::Release()
 
 void CPlayer_moo::Key_Input()
 {
-	if (GetAsyncKeyState(VK_RIGHT))
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_RIGHT))
 	{
-		m_vOriginPoint = { 155.f, 155.f, 0.f };
+		m_vOriginPoint = { 153.f, 153.f, 0.f };
 	}
 
-	if (GetAsyncKeyState(VK_LEFT))
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_LEFT))
 	{
-		m_vOriginPoint = { 125.f, 125.f, 0.f };
+		m_vOriginPoint = { 128.f, 128.f, 0.f };
 	}
 
-	if (GetAsyncKeyState(VK_UP))
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_UP))
 	{
-		m_vOriginPoint = { 155.f, 155.f, 0.f };
+		m_vOriginPoint = { 153.f, 153.f, 0.f };
 	}
 
-	if (GetAsyncKeyState(VK_DOWN))
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_DOWN))
 	{
-		m_vOriginPoint = { 125.f, 125.f, 0.f };
+		m_vOriginPoint = { 128.f, 128.f, 0.f };
 	}
 }
 

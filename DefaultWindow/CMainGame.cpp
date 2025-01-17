@@ -23,7 +23,7 @@ void CMainGame::Initialize()
 	m_memDC = CreateCompatibleDC(m_hDC);
 	SelectObject(m_memDC, m_hBit);
   
-	CSceneMgr::Get_Instance()->Set_Scene(SC_HERO);
+	CSceneMgr::Get_Instance()->Set_Scene(SC_MOO);
 }
 
 void CMainGame::Update()
@@ -34,6 +34,7 @@ void CMainGame::Update()
 
 void CMainGame::Late_Update()
 {
+	CKeyMgr::Get_Instance()->Update();
 	CSceneMgr::Get_Instance()->Late_Update();
 }
 
