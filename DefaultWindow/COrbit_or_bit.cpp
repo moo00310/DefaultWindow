@@ -17,6 +17,7 @@ COrbit_or_bit::~COrbit_or_bit()
 
 void COrbit_or_bit::Initialize()
 {
+
 	//CSoundMgr::Get_Instance()->Initialize();
 	//CSoundMgr::Get_Instance()->PlayEvent("event:/Tobu & Itro - Sunburst");
 	//CSoundMgr::Get_Instance()->Update();

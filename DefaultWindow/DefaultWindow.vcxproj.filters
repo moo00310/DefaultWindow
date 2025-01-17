@@ -58,6 +58,14 @@
     <Filter Include="02.Desin\KeyMgr">
       <UniqueIdentifier>{b369a1be-c022-49f5-9574-1b9e0c981787}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03.Scene\05.Hero_Scene">
+      <UniqueIdentifier>{12bcd490-6965-4058-a32d-049511c7d47b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\05.Hero_Obj">
+      <UniqueIdentifier>{a9377853-e1a8-4236-ad68-67a84d615172}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\05.Hero_Obj\00.Square">
+      <UniqueIdentifier>{c3c37284-3428-4f27-8fe7-3d90afdff37f}</UniqueIdentifier>
     <Filter Include="01. Obj\04.SSH_Obj">
       <UniqueIdentifier>{f772c2f1-60ca-4ff2-ad43-94c1d2f52ec1}</UniqueIdentifier>
     </Filter>
@@ -155,6 +163,11 @@
     <ClInclude Include="COrbit_or_bit.h">
       <Filter>03.Scene\02.Moo_Scene</Filter>
     </ClInclude>
+    <ClInclude Include="CRhythmWorld.h">
+      <Filter>03.Scene\05.Hero_Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CSquare.h">
+      <Filter>01. Obj\05.Hero_Obj\00.Square</Filter>
     <ClInclude Include="CSSHScene.h">
       <Filter>03.Scene\05.SSH_Scene</Filter>
     </ClInclude>
@@ -219,6 +232,11 @@
     <ClCompile Include="COrbit_or_bit.cpp">
       <Filter>03.Scene\02.Moo_Scene</Filter>
     </ClCompile>
+    <ClCompile Include="CRhythmWorld.cpp">
+      <Filter>03.Scene\05.Hero_Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CSquare.cpp">
+      <Filter>01. Obj\05.Hero_Obj\00.Square</Filter>
     <ClCompile Include="CSSHScene.cpp">
       <Filter>03.Scene\05.SSH_Scene</Filter>
     </ClCompile>

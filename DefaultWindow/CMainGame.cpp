@@ -22,8 +22,8 @@ void CMainGame::Initialize()
 	m_hBit = CreateCompatibleBitmap(m_hDC, WINCX, WINCY);
 	m_memDC = CreateCompatibleDC(m_hDC);
 	SelectObject(m_memDC, m_hBit);
-
-	CSceneMgr::Get_Instance()->Set_Scene(SC_SSH);
+  
+	CSceneMgr::Get_Instance()->Set_Scene(SC_HERO);
 }
 
 void CMainGame::Update()
