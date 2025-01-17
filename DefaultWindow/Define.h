@@ -12,6 +12,8 @@
 
 #define sqrt_3    1.732f
 
+#define OFFSET	500
+
 #define SSH_FIRE dynamic_cast<CPlayer_SSH*>(CObjMgr::Get_Instance()->Get_LastPlayer())
 #define SSH_ICE  dynamic_cast<CPlayer_SSH*>(CObjMgr::Get_Instance()->Get_Player())
 

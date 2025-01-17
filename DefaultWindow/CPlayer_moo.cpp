@@ -29,6 +29,7 @@ int CPlayer_moo::Update()
 {
 	Key_Input();
 
+
 	if (m_fAngle >= 360) m_fAngle = 0;
 	else m_fAngle += m_fSpeed;
 
@@ -36,7 +37,7 @@ int CPlayer_moo::Update()
 	D3DXMATRIX	matRotZ, matTrans1, matTrans2, matScale;
 
 	D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(m_fAngle));
-	D3DXMatrixTranslation(&matTrans2, 400.f, 300.f, 0.f);
+	D3DXMatrixTranslation(&matTrans2, 400.f , 300.f, 0.f);
 
 	m_tInfo.matWorld =  matRotZ * matTrans2;
 
@@ -66,7 +67,7 @@ void CPlayer_moo::Render(HDC hDC)
 	_stprintf_s(szBuffer3, _T("x : %f \t y : %f"), m_tInfo.vPos.x, m_tInfo.vPos.y);
 	SetTextColor(hDC, RGB(0, 0, 0));
 	SetBkMode(hDC, TRANSPARENT);
-	TextOut(hDC, m_tInfo.vPos.x - 100, m_tInfo.vPos.y+20, szBuffer3, (int)_tcslen(szBuffer3));
+	TextOut(hDC, m_tInfo.vPos.x - 100, m_tInfo.vPos.y + 20, szBuffer3, (int)_tcslen(szBuffer3));
 }
 
 void CPlayer_moo::Release()

@@ -8,6 +8,7 @@
 #include "CThorn.h"
 #include "CKeyMgr.h"
 #include "CCameraMgr.h"
+#include "CScrollMgr.h"
 
 COrbit_or_bit::COrbit_or_bit() : m_pPlayer(nullptr), m_pOrbit(nullptr)
 {
@@ -34,6 +35,7 @@ void COrbit_or_bit::Initialize()
 
 
 	// 카메라 플레이어 추적
+	//CScrollMgr::Get_Instance()->Init_Scroll(-500.f, -500.f);
 	CCameraMgr::Get_Instance()->Initailize();
 }
 
@@ -51,11 +53,32 @@ int COrbit_or_bit::Update()
 	}
 	if (CKeyMgr::Get_Instance()->Key_Down(VK_F1))
 	{
-		CCameraMgr::Get_Instance()->Set_State(CS_Shake1);
+		CCameraMgr::Get_Instance()->Set_State(CS_Shake2);
 	}
 	if (CKeyMgr::Get_Instance()->Key_Down(VK_F2))
 	{
 		CCameraMgr::Get_Instance()->Set_State(CS_END);
+	}
+
+	// 이동
+	if (CKeyMgr::Get_Instance()->Key_Pressing('A'))
+	{
+		CScrollMgr::Get_Instance()->Set_ScrollX(5.f);
+	}
+
+	if (CKeyMgr::Get_Instance()->Key_Pressing('D'))
+	{
+		CScrollMgr::Get_Instance()->Set_ScrollX(-5.f);
+	}
+
+	if (CKeyMgr::Get_Instance()->Key_Pressing('W'))
+	{
+		CScrollMgr::Get_Instance()->Set_ScrollY(5.f);
+	}
+
+	if (CKeyMgr::Get_Instance()->Key_Pressing('S'))
+	{
+		CScrollMgr::Get_Instance()->Set_ScrollY(-5.f);
 	}
 
 	return 0;
@@ -77,7 +100,7 @@ void COrbit_or_bit::Render(HDC hDC)
 		FillRect(hDC, &rect, hBrush);
 		DeleteObject(hBrush);
 	}
-	
+
 	CObjMgr::Get_Instance()->Render(hDC);
 }
 

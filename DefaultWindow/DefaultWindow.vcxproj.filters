@@ -72,6 +72,9 @@
     <ClCompile Include="CThorn.cpp">
       <Filter>01.Moo\02.Obj\01.Thorn</Filter>
     </ClCompile>
+    <ClCompile Include="CScrollMgr.cpp">
+      <Filter>05.Desgin\ScrollMgr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Define.h" />
@@ -153,6 +156,9 @@
     </ClInclude>
     <ClInclude Include="CThorn.h">
       <Filter>01.Moo\02.Obj\01.Thorn</Filter>
+    </ClInclude>
+    <ClInclude Include="CScrollMgr.h">
+      <Filter>05.Desgin\ScrollMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -256,6 +262,9 @@
     </Filter>
     <Filter Include="01.Moo\02.Obj\01.Thorn">
       <UniqueIdentifier>{de54c611-9b02-40bc-b7db-e972077748ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Desgin\ScrollMgr">
+      <UniqueIdentifier>{051ed0ef-fd34-4a5d-8549-0f9187bb4775}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
