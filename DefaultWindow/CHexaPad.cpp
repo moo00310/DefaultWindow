@@ -53,7 +53,10 @@ void CHexaPad::Initialize()
 
 int CHexaPad::Update()
 {
-	m_distance = GetDistance(m_Player->GetLocalParentPosition());
+	// 플레이어 부모와 거리 차이.
+	float fDistance = GetDistance(m_Player->GetLocalParentPosition());
+
+	// 플레이어와 거리 차이.
 	float fPlayerDistance = GetDistance(m_Player->GetLocalPositionToWorld());
 
 	// 플레이어 접촉 확인.
@@ -64,12 +67,12 @@ int CHexaPad::Update()
 		return 0;
 	}
 
-	if (m_distance <= 0.f)
+	if (fDistance <= 0.f)
 	{
 		return 0;
 	}
 
-	m_localScale.x = m_distance / 40.f;
+	m_localScale.x = fDistance / 40.f;
 
 	switch (m_Direction)
 	{
