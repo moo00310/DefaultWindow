@@ -18,5 +18,6 @@ public:
 
 private:
 	void CreatePattern();
+	void AddPad(kDIRECTION _direction);
 };
 
