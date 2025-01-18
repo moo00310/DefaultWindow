@@ -19,7 +19,7 @@
 
 #define REV_SPEED 3.f
 
-#define    STAGE1BPM        102
+#define    STAGE1BPM        204
 #define STAGE1BPMSEC    (int)((60.f / (float)STAGE1BPM) * 1000000.f)
 
 extern HWND		g_hWnd;
@@ -31,6 +31,8 @@ enum RENDERID { RENDER_BACKGROUND, RENDER_GAMEOBJECT, RENDER_GAMEOBJECT_FRONT, R
 
 enum CarmeraState { CS_ZoomAndFollow, CS_Shake1, CS_Shake2, CS_ZoomIN, CS_Slow_ZoomIN, CS_Force_ZoomIN, CS_ZoomOUT,CS_END };
 enum Carmera {C_Move_LT, C_Move_size, C_Zoom_LT, C_Zoom_size, C_End };
+
+enum Direction { D_RIght, D_LEFT, D_END };
 
 template<typename T>
 void Safe_Delete(T& Temp)

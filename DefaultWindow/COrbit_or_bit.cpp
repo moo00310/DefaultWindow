@@ -88,6 +88,14 @@ void COrbit_or_bit::Render(HDC hDC)
 	SetBkMode(hDC, TRANSPARENT);
 	TextOut(hDC, 450, 50, szBuffer, (int)_tcslen(szBuffer));
 
+	TCHAR szBuffer1[128];
+	_stprintf_s(szBuffer1, _T("X : %d \t Y : %d"), (int)Get_Mouse().x, (int)Get_Mouse().y);
+	SetTextColor(hDC, RGB(0, 0, 0));
+	SetBkMode(hDC, TRANSPARENT);
+	TextOut(hDC, 50, 50, szBuffer1, (int)_tcslen(szBuffer1));
+
+	
+
 	CObjMgr::Get_Instance()->Render(hDC);
 }
 
@@ -109,6 +117,7 @@ void COrbit_or_bit::CheckBpm()
 			m_tBeatStart += chrono::microseconds(STAGE1BPMSEC); // 이전 타임스탬프에 1박 지난 만큼의 초 더해줌
 			m_tTimerRightTime = chrono::system_clock::now(); // 밑의 if문 용 **
 			CameraMovement(++m_iBeatCount);
+			SwapThron(m_iBeatCount);
 			m_bRightTimeBeat = true; // 지금 정박입니다~
 		}
 	}
@@ -118,28 +127,58 @@ void COrbit_or_bit::CheckBpm()
 	}
 }
 
+void COrbit_or_bit::SwapThron(int _count)
+{
+	if (_count % 4 == 0)
+	{
+		CObjMgr::Get_Instance()->Delete_ID(OBJ_MONSTER);
+	}
+	if (_count % 4 == 1)
+	{
+		CObjMgr::Get_Instance()->Delete_ID(OBJ_MONSTER);
+	}
+	if (_count % 4 == 2)
+	{
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CThorn>::Create(545.f, 153.f, D_RIght));
+	}
+	if (_count % 4 == 3)
+	{
+		//CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CThorn>::Create(274.f, 493.f));
+	}
+}
+
 void COrbit_or_bit::CameraMovement(int _count)
 {
-	if (_count < 30)
+	if (_count < 60)
 	{
-		if (_count % 2 == 0)
+		if (_count % 4 == 0)
 			CCameraMgr::Get_Instance()->Set_State(CS_ZoomIN);
 	}
-	else if (_count < 49)
+	else if (_count < 98)
 	{
-		if (_count == 30)
+		if (_count == 60)
 			CCameraMgr::Get_Instance()->Set_State(CS_Slow_ZoomIN);
-		if (_count == 32)
+		if (_count == 65)
 			CCameraMgr::Get_Instance()->Set_State(CS_END);
 	}
-	else if (_count < 65)
+	else if (_count < 129)
 	{
-		if (_count % 2 == 1)
+		if (_count % 4 == 3)
 			CCameraMgr::Get_Instance()->Set_State(CS_ZoomIN);
 	}
-	else if (_count < 100)
+	else if (_count < 178)
+	{
+		if (_count % 2 == 0)
+			CCameraMgr::Get_Instance()->Set_State(CS_Force_ZoomIN);
+	}
+	else if (_count < 186)
 	{
 		CCameraMgr::Get_Instance()->Set_State(CS_Force_ZoomIN);
 	}
+	else if (220)
+	{
+		CCameraMgr::Get_Instance()->Set_State(CS_END);
+	}
+	
 }
 

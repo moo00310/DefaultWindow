@@ -17,6 +17,7 @@ public:
 private:
 	void CameraMovement(int _count);
 	void CheckBpm();
+	void SwapThron(int  _count);
 
 private:
 	CObj* m_pPlayer;

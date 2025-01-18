@@ -4,6 +4,7 @@ class CThorn :  public CObj
 {
 public:
 	CThorn();
+	CThorn(Direction _dir);
 	virtual ~CThorn();
 public:
 	void Initialize() override;
@@ -21,5 +22,7 @@ private:
 	D3DXVECTOR3 m_vMidPoint;
 
 	POINT m_tPoints[3];
+
+	Direction e_tDir;
 };
 
