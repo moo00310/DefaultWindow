@@ -4,6 +4,7 @@
 #include "CAbstractFactory.h"
 #include "CObjMgr.h"
 #include "CHexaPadManager.h"
+#include "CSoundMgr.h"
 
 CKDHScene::CKDHScene()
 {
@@ -20,6 +21,10 @@ void CKDHScene::Initialize()
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, player);
 
 	CreatePattern();
+
+	CSoundMgr::Get_Instance()->Initialize();
+	CSoundMgr::Get_Instance()->PlayEvent("event:/Milkyway");
+	CSoundMgr::Get_Instance()->Update();
 }
 
 int CKDHScene::Update()
@@ -82,6 +87,7 @@ void CKDHScene::CreatePattern()
 
 	sequence.sequence = [&]()
 		{
+			AddPad(DIR_UP);
 			AddPad(DIR_RIGHT);
 		};
 	sequence.fCount = 0.4f;
@@ -90,6 +96,8 @@ void CKDHScene::CreatePattern()
 
 	sequence.sequence = [&]()
 		{
+			AddPad(DIR_UP);
+			AddPad(DIR_RIGHT);
 			AddPad(DIR_DOWN);
 		};
 	sequence.fCount = 0.4f;
@@ -98,6 +106,9 @@ void CKDHScene::CreatePattern()
 
 	sequence.sequence = [&]()
 		{
+			AddPad(DIR_UP);
+			AddPad(DIR_RIGHT);
+			AddPad(DIR_DOWN);
 			AddPad(DIR_LEFT);
 		};
 	sequence.fCount = 1.3f;
