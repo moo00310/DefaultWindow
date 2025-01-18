@@ -4,6 +4,7 @@
 #include "COrbit_or_bit.h"
 #include "CRhythmWorld.h"
 #include "CSSHScene.h"
+#include "CKDHScene.h"
 
 CSceneMgr* CSceneMgr::m_pInstance = nullptr;
 
@@ -41,6 +42,10 @@ void CSceneMgr::Set_Scene(SCENEID eID)
 		case SC_SSH:
 			m_pScene = new CSSHScene;
 
+			break;
+
+		case SC_KDH:
+			m_pScene = new CKDHScene();
 			break;
 
 		/*	case SC_EDIT:
