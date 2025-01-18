@@ -172,6 +172,7 @@
     <ClInclude Include="CPlayer_SSH_Ice.h" />
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CSceneMgr.h" />
+    <ClInclude Include="CScrollMgr.h" />
     <ClInclude Include="CSequence.h" />
     <ClInclude Include="CSoundMgr.h" />
     <ClInclude Include="CSSHScene.h" />
@@ -207,6 +208,7 @@
     <ClCompile Include="CRhythmWorld.cpp" />
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CSceneMgr.cpp" />
+    <ClCompile Include="CScrollMgr.cpp" />
     <ClCompile Include="CSequence.cpp" />
     <ClCompile Include="CSoundMgr.cpp" />
     <ClCompile Include="CSSHScene.cpp" />

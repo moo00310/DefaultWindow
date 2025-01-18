@@ -19,5 +19,7 @@ private:
 	D3DXVECTOR3 m_vPoints[3];
 	D3DXVECTOR3 m_vTransformVertex[3];
 	D3DXVECTOR3 m_vMidPoint;
+
+	POINT m_tPoints[3];
 };
 
