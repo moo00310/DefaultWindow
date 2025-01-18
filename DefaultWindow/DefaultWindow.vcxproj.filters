@@ -72,6 +72,21 @@
     <ClCompile Include="CSSHScene.cpp">
       <Filter>02.SSH\00.Scene</Filter>
     </ClCompile>
+    <ClCompile Include="CKDHPlayer.cpp">
+      <Filter>04.KDH\01.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CKDHScene.cpp">
+      <Filter>04.KDH\00.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CHexaPad.cpp">
+      <Filter>04.KDH</Filter>
+    </ClCompile>
+    <ClCompile Include="CSequence.cpp">
+      <Filter>04.KDH</Filter>
+    </ClCompile>
+    <ClCompile Include="CHexaPadManager.cpp">
+      <Filter>05.Desgin\HexaPadManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Define.h" />
@@ -153,6 +168,21 @@
     </ClInclude>
     <ClInclude Include="CScene.h">
       <Filter>06.Abstract\02.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CKDHPlayer.h">
+      <Filter>04.KDH\01.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CKDHScene.h">
+      <Filter>04.KDH\00.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CHexaPad.h">
+      <Filter>04.KDH</Filter>
+    </ClInclude>
+    <ClInclude Include="CSequence.h">
+      <Filter>04.KDH</Filter>
+    </ClInclude>
+    <ClInclude Include="CHexaPadManager.h">
+      <Filter>05.Desgin\HexaPadManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +280,9 @@
     </Filter>
     <Filter Include="07.UnionScene\StartScene">
       <UniqueIdentifier>{2d29434d-419f-426f-a7b8-0b27756ab884}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Desgin\HexaPadManager">
+      <UniqueIdentifier>{f82f0090-4314-4ef6-b9bd-029872c44efa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
