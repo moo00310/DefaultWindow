@@ -71,6 +71,38 @@ void CKDHScene::CreatePattern()
 	sequence.fCount = 1.f;
 
 	CHexaPadManager::Get_Instance()->AddPattern(sequence);
+
+	sequence.sequence = [&]()
+		{
+			AddPad(DIR_UP);			
+		};
+	sequence.fCount = 0.4f;
+
+	CHexaPadManager::Get_Instance()->AddPattern(sequence);
+
+	sequence.sequence = [&]()
+		{
+			AddPad(DIR_RIGHT);
+		};
+	sequence.fCount = 0.4f;
+
+	CHexaPadManager::Get_Instance()->AddPattern(sequence);
+
+	sequence.sequence = [&]()
+		{
+			AddPad(DIR_DOWN);
+		};
+	sequence.fCount = 0.4f;
+
+	CHexaPadManager::Get_Instance()->AddPattern(sequence);
+
+	sequence.sequence = [&]()
+		{
+			AddPad(DIR_LEFT);
+		};
+	sequence.fCount = 1.3f;
+
+	CHexaPadManager::Get_Instance()->AddPattern(sequence);
 }
 
 void CKDHScene::AddPad(kDIRECTION _direction)
