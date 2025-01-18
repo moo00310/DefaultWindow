@@ -178,6 +178,7 @@
     <ClInclude Include="CSpawner.h" />
     <ClInclude Include="CSSHScene.h" />
     <ClInclude Include="CStart.h" />
+    <ClInclude Include="CStick.h" />
     <ClInclude Include="CThorn.h" />
     <ClInclude Include="DefaultWindow.h" />
     <ClInclude Include="Define.h" />
@@ -215,6 +216,7 @@
     <ClCompile Include="CSpawner.cpp" />
     <ClCompile Include="CSSHScene.cpp" />
     <ClCompile Include="CStart.cpp" />
+    <ClCompile Include="CStick.cpp" />
     <ClCompile Include="CThorn.cpp" />
     <ClCompile Include="DefaultWindow.cpp" />
     <ClCompile Include="CHexaPadManager.cpp" />

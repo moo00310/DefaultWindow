@@ -6,6 +6,7 @@
 #include "CKeyMgr.h"
 #include "CSpawner.h"
 #include "CSoundMgr.h"
+#include "CStick.h"
 
 CRhythmWorld::CRhythmWorld()
     :m_pSpawner(nullptr), m_fDistance(0.f), m_iScore(0)
@@ -24,6 +25,10 @@ void CRhythmWorld::Initialize()
     m_pSpawner = CAbstractFactory<CSpawner>::Create();
     CObjMgr::Get_Instance()->Add_Object(OBJ_SHIELD, m_pSpawner);
 
+    CObj* pObj(nullptr);
+    pObj = CAbstractFactory<CStick>::Create(WINCX * 0.5f, WINCY * 0.9f);
+    CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, pObj);
+
 }
 
 int CRhythmWorld::Update()
@@ -31,7 +36,7 @@ int CRhythmWorld::Update()
     CObjMgr::Get_Instance()->Update();
     Check_Hit();
     CKeyMgr::Get_Instance()->Update();
-    //CSoundMgr::Get_Instance()->Update();
+
     return 0;
 }
 
