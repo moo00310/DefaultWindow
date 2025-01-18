@@ -19,6 +19,9 @@
 
 #define REV_SPEED 3.f
 
+#define    STAGE1BPM        102
+#define STAGE1BPMSEC    (int)((60.f / (float)STAGE1BPM) * 1000000.f)
+
 extern HWND		g_hWnd;
 
 

@@ -36,12 +36,12 @@ void COrbit::Render(HDC hDC)
     HPEN hPen = CreatePen(PS_SOLID, 10, RGB(0, 0, 0)); 
     HPEN hOldPen = (HPEN)SelectObject(hDC, hPen);
 
-    // Å¸¿ø ±×¸®±â
+    // íƒ€ì› ê·¸ë¦¬ê¸°
     Ellipse(hDC,
-        int(m_tInfo.vPos.x - 200.f),
-        int(m_tInfo.vPos.y - 200.f),
-        int(m_tInfo.vPos.x + 200.f),
-        int(m_tInfo.vPos.y + 200.f));
+        int(m_tInfo.vPos.x - 220.f),
+        int(m_tInfo.vPos.y - 220.f),
+        int(m_tInfo.vPos.x + 220.f),
+        int(m_tInfo.vPos.y + 220.f));
 
 	if (CKeyMgr::Get_Instance()->GetKeyState(VK_LEFT) ||
 		CKeyMgr::Get_Instance()->GetKeyState(VK_DOWN))
@@ -50,10 +50,10 @@ void COrbit::Render(HDC hDC)
 		HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, hBrush);
 
         Ellipse(hDC,
-            int(m_tInfo.vPos.x - 200.f),
-            int(m_tInfo.vPos.y - 200.f),
-            int(m_tInfo.vPos.x + 200.f),
-            int(m_tInfo.vPos.y + 200.f));
+            int(m_tInfo.vPos.x - 220.f),
+            int(m_tInfo.vPos.y - 220.f),
+            int(m_tInfo.vPos.x + 220.f),
+            int(m_tInfo.vPos.y + 220.f));
 
 		SelectObject(hDC, hOldBrush);
 		DeleteObject(hBrush);

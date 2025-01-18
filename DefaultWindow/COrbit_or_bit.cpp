@@ -10,7 +10,7 @@
 #include "CCameraMgr.h"
 #include "CScrollMgr.h"
 
-COrbit_or_bit::COrbit_or_bit() : m_pPlayer(nullptr), m_pOrbit(nullptr)
+COrbit_or_bit::COrbit_or_bit() : m_pPlayer(nullptr), m_pOrbit(nullptr), m_iTimeLine(0), m_BGM(nullptr), m_iBeatCount(0)
 {
 }
 
@@ -21,17 +21,19 @@ COrbit_or_bit::~COrbit_or_bit()
 
 void COrbit_or_bit::Initialize()
 {
+	CSoundMgr::Get_Instance()->Initialize();
+	m_BGM = CSoundMgr::Get_Instance()->PlayEvent("event:/TheFatRat - Windfall");
+	m_tBeatStart = chrono::system_clock::now();
+	CSoundMgr::Get_Instance()->Update();
 
-	//CSoundMgr::Get_Instance()->Initialize();
-	//CSoundMgr::Get_Instance()->PlayEvent("event:/Tobu & Itro - Sunburst");
-	//CSoundMgr::Get_Instance()->Update();
-	
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer_moo>::Create());
 	CObjMgr::Get_Instance()->Add_Object(OBJ_BULLET, CAbstractFactory<COrbit>::Create());
 
-	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CThorn>::Create(220.f, 260.f));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CThorn>::Create(180.f, 300.f));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CThorn>::Create(120.f, 260.f));
+
+	// 가시
+	//CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CThorn>::Create(220.f, 260.f));
+	//CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CThorn>::Create(180.f, 300.f));
+	//CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CThorn>::Create(120.f, 260.f));
 
 	CCameraMgr::Get_Instance()->Initailize();
 }
@@ -39,6 +41,8 @@ void COrbit_or_bit::Initialize()
 int COrbit_or_bit::Update()
 {
 	CObjMgr::Get_Instance()->Update();
+	m_BGM->getTimelinePosition(&m_iTimeLine);
+	CheckBpm();
 
 	if (CKeyMgr::Get_Instance()->Key_Down('P'))
 	{
@@ -54,28 +58,7 @@ int COrbit_or_bit::Update()
 	}
 	if (CKeyMgr::Get_Instance()->Key_Down(VK_F2))
 	{
-		CCameraMgr::Get_Instance()->Set_State(CS_ZoomIN);
-	}
-
-	// �̵�
-	if (CKeyMgr::Get_Instance()->Key_Pressing('A'))
-	{
-		CScrollMgr::Get_Instance()->Set_ScrollX(5.f);
-	}
-
-	if (CKeyMgr::Get_Instance()->Key_Pressing('D'))
-	{
-		CScrollMgr::Get_Instance()->Set_ScrollX(-5.f);
-	}
-
-	if (CKeyMgr::Get_Instance()->Key_Pressing('W'))
-	{
-		CScrollMgr::Get_Instance()->Set_ScrollY(5.f);
-	}
-
-	if (CKeyMgr::Get_Instance()->Key_Pressing('S'))
-	{
-		CScrollMgr::Get_Instance()->Set_ScrollY(-5.f);
+		CCameraMgr::Get_Instance()->Set_State(CS_Force_ZoomIN);
 	}
 
 	return 0;
@@ -84,7 +67,7 @@ int COrbit_or_bit::Update()
 void COrbit_or_bit::Late_Update()
 {
 	CObjMgr::Get_Instance()->Late_Update();
-	bool isCol = CObjMgr::Get_Instance()->Collision_Check();
+	bool isCol = CObjMgr::Get_Instance()->Collision_Check(20, 15);
 }
 
 void COrbit_or_bit::Render(HDC hDC)
@@ -98,6 +81,13 @@ void COrbit_or_bit::Render(HDC hDC)
 		DeleteObject(hBrush);
 	}
 
+
+	TCHAR szBuffer[128];
+	_stprintf_s(szBuffer, _T("BeatCount : %d"), m_iBeatCount);
+	SetTextColor(hDC, RGB(0, 0, 0));
+	SetBkMode(hDC, TRANSPARENT);
+	TextOut(hDC, 450, 50, szBuffer, (int)_tcslen(szBuffer));
+
 	CObjMgr::Get_Instance()->Render(hDC);
 }
 
@@ -105,3 +95,51 @@ void COrbit_or_bit::Release()
 {
 	CObjMgr::Get_Instance()->Release();
 }
+
+
+void COrbit_or_bit::CheckBpm()
+{
+	// 직전 박자에서 몇 초 지났는지 값을 받음
+	m_llTimeChecker = chrono::duration_cast<chrono::microseconds>(chrono::system_clock::now() - m_tBeatStart); 
+	
+	if (m_llTimeChecker.count() >= STAGE1BPMSEC) // 이전 박자에서 다음 박자가 나와야 하는 (마이크로초) 시간 만큼 지났으면
+	{
+		if (m_bRightTimeBeat == false) // 아래 구문 1번만 수행되게 하려고 추가함 없어도 될지도
+		{
+			m_tBeatStart += chrono::microseconds(STAGE1BPMSEC); // 이전 타임스탬프에 1박 지난 만큼의 초 더해줌
+			m_tTimerRightTime = chrono::system_clock::now(); // 밑의 if문 용 **
+			CameraMovement(++m_iBeatCount);
+			m_bRightTimeBeat = true; // 지금 정박입니다~
+		}
+	}
+	if (chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now() - m_tTimerRightTime).count() > 80) // 80마이크로초만큼 true인 시간 유지 후
+	{
+		m_bRightTimeBeat = false; // 저희 정박 이제 문 닫습니다~
+	}
+}
+
+void COrbit_or_bit::CameraMovement(int _count)
+{
+	if (_count < 30)
+	{
+		if (_count % 2 == 0)
+			CCameraMgr::Get_Instance()->Set_State(CS_ZoomIN);
+	}
+	else if (_count < 49)
+	{
+		if (_count == 30)
+			CCameraMgr::Get_Instance()->Set_State(CS_Slow_ZoomIN);
+		if (_count == 32)
+			CCameraMgr::Get_Instance()->Set_State(CS_END);
+	}
+	else if (_count < 65)
+	{
+		if (_count % 2 == 1)
+			CCameraMgr::Get_Instance()->Set_State(CS_ZoomIN);
+	}
+	else if (_count < 100)
+	{
+		CCameraMgr::Get_Instance()->Set_State(CS_Force_ZoomIN);
+	}
+}
+

@@ -19,9 +19,10 @@ void CSoundMgr::Initialize()
     m_pStudioSystem->getCoreSystem(&m_pCoreSystem);
     m_pStudioSystem->initialize(32, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, nullptr);
 
-    // ±âº»ÀûÀ¸·Î Ç×»ó ÇÊ¿äÇÑ Bankµé ·Îµå
+    // ê¸°ë³¸ì ìœ¼ë¡œ í•­ìƒ í•„ìš”í•œ Bankë“¤ ë¡œë“œ
     LoadBank("../sound/Build/Desktop/Master.bank");
     LoadBank("../sound/Build/Desktop/Master.strings.bank");
+   
     //LoadBank("./examples/Build/Desktop/Music.bank");
     //LoadBank("./examples/Build/Desktop/SFX.bank");
 }
@@ -29,24 +30,24 @@ void CSoundMgr::Update()
 {
     m_pStudioSystem->update();
     m_pCoreSystem->update();
-    // ¼­¼øÁß¿äÇÔ.
+    // ì„œìˆœì¤‘ìš”í•¨.
 }
 void CSoundMgr::Release()
 {
     m_pStudioSystem->release();
     m_pCoreSystem->release();
-    // ¼­¼øÁß¿äÇÔ.
+    // ì„œìˆœì¤‘ìš”í•¨.
 }
 
 FMOD::Studio::EventInstance* CSoundMgr::PlayEvent(const char* _EventPath)
 {
-    FMOD::Studio::EventDescription* pEventDescription; // ÀÌº¥Æ®ÀÇ Á¤º¸¸¦ ÀúÀåÇÏ´Â Å¬·¡½º
-    FMOD_RESULT result = m_pStudioSystem->getEvent(_EventPath, &pEventDescription); // ½Ã½ºÅÛÀ¸·Î ºÎÅÍ ÀÌ¸§À» ÅëÇØ ÀÌº¥Æ®ÀÇ Á¤º¸¸¦ ¹Ş¾Æ¿Â´Ù.
+    FMOD::Studio::EventDescription* pEventDescription; // ì´ë²¤íŠ¸ì˜ ì •ë³´ë¥¼ ì €ì¥í•˜ëŠ” í´ë˜ìŠ¤
+    FMOD_RESULT result = m_pStudioSystem->getEvent(_EventPath, &pEventDescription); // ì‹œìŠ¤í…œìœ¼ë¡œ ë¶€í„° ì´ë¦„ì„ í†µí•´ ì´ë²¤íŠ¸ì˜ ì •ë³´ë¥¼ ë°›ì•„ì˜¨ë‹¤.
 
     FMOD::Studio::EventInstance* pEventInstance = nullptr;
-    pEventDescription->createInstance(&pEventInstance); // ÀÌº¥Æ® ÀÎ½ºÅÏ½º »ı¼º
+    pEventDescription->createInstance(&pEventInstance); // ì´ë²¤íŠ¸ ì¸ìŠ¤í„´ìŠ¤ ìƒì„±
     result = pEventInstance->start();
-    pEventInstance->setCallback(AutoRelease, FMOD_STUDIO_EVENT_CALLBACK_STOPPED); // ÀÌº¥Æ®°¡ ³¡³ª¸é AutoReleaseÇÔ¼ö¸¦ ÅëÇØ ÀÚµ¿À¸·Î ¸Ş¸ğ¸®¸¦ ¹İÈ¯ÇØÁØ´Ù.
+    pEventInstance->setCallback(AutoRelease, FMOD_STUDIO_EVENT_CALLBACK_STOPPED); // ì´ë²¤íŠ¸ê°€ ëë‚˜ë©´ AutoReleaseí•¨ìˆ˜ë¥¼ í†µí•´ ìë™ìœ¼ë¡œ ë©”ëª¨ë¦¬ë¥¼ ë°˜í™˜í•´ì¤€ë‹¤.
 
     m_pStudioSystem->update();
     return pEventInstance;
@@ -59,9 +60,9 @@ FMOD::Studio::Bank* CSoundMgr::LoadBank(const char* _BankFilePath)
     return pBank;
 }
 
-FMOD_RESULT F_CALLBACK AutoRelease(FMOD_STUDIO_EVENT_CALLBACK_TYPE type, FMOD_STUDIO_EVENTINSTANCE* eventInstance, void* parameters) // Àç»ıÀÌ ³¡³­ ÀÌº¥Æ® ÀÚµ¿ ¹İÈ¯À» À§ÇÑ
+FMOD_RESULT F_CALLBACK AutoRelease(FMOD_STUDIO_EVENT_CALLBACK_TYPE type, FMOD_STUDIO_EVENTINSTANCE* eventInstance, void* parameters) // ì¬ìƒì´ ëë‚œ ì´ë²¤íŠ¸ ìë™ ë°˜í™˜ì„ ìœ„í•œ
 {
-    reinterpret_cast<FMOD::Studio::EventInstance*>(eventInstance)->release(); // FMOD Äİ¹éÇÔ¼ö´Â C¿Í C++ÀÇ ¹ü¿ëÀû »ç¿ëÀ» ÇÏ±â À§ÇØ ±¸Á¶Ã¼ Æ÷ÀÎÅÍ¸¦ ±âº» ¸Å°³º¯¼ö·Î ÀâÀ½.
-    //ÀÌ¶§¹®¿¡ C++¿¡¼­´Â reinterpret_cast¸¦ ÅëÇØ Å¬·¡½º Æ÷ÀÎÅÍ·Î Çüº¯È¯ ½ÃÄÑÁÖ¾î¾ßÇÔ.
+    reinterpret_cast<FMOD::Studio::EventInstance*>(eventInstance)->release(); // FMOD ì½œë°±í•¨ìˆ˜ëŠ” Cì™€ C++ì˜ ë²”ìš©ì  ì‚¬ìš©ì„ í•˜ê¸° ìœ„í•´ êµ¬ì¡°ì²´ í¬ì¸í„°ë¥¼ ê¸°ë³¸ ë§¤ê°œë³€ìˆ˜ë¡œ ì¡ìŒ.
+    //ì´ë•Œë¬¸ì— C++ì—ì„œëŠ” reinterpret_castë¥¼ í†µí•´ í´ë˜ìŠ¤ í¬ì¸í„°ë¡œ í˜•ë³€í™˜ ì‹œì¼œì£¼ì–´ì•¼í•¨.
     return FMOD_OK;
 }

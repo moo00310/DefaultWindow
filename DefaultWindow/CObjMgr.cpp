@@ -40,12 +40,12 @@ CObj* CObjMgr::Get_Target(OBJID eID, CObj* pDst)
 	return nullptr;
 }
 
-bool CObjMgr::Collision_Check()
+bool CObjMgr::Collision_Check(float _Dst, float _Src)
 {
 	m_pPlayer = m_ObjList[OBJ_PLAYER].front();
 	for_each(m_ObjList[OBJ_MONSTER].begin(), m_ObjList[OBJ_MONSTER].end(), [&](CObj* obj)
 		{
-			float fRadius = (20 + 15) * 0.5f;
+			float fRadius = (_Dst + _Src) * 0.5f;
 			float fWidth = abs(m_pPlayer->Get_Info().vPos.x - obj->Get_Info().vPos.x);
 			float fHeight = abs(m_pPlayer->Get_Info().vPos.y - obj->Get_Info().vPos.y);
 			float fDiagonal = sqrtf(fWidth * fWidth + fHeight * fHeight);
@@ -112,9 +112,6 @@ void CObjMgr::Render(HDC hDC)
 
 		m_RenderList[i].clear();
 	}
-
-	float x = m_ObjList[OBJ_MONSTER].front()->Get_Info().vPos.x;
-	float y = m_ObjList[OBJ_MONSTER].front()->Get_Info().vPos.y;
 }
 
 void CObjMgr::Release()
