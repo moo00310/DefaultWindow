@@ -50,29 +50,47 @@ private:
 	// 플레이어 크기.
 	D3DXVECTOR3 m_localScale;
 
-	// 위치 행렬.
+	// 자식 위치 행렬.
 	D3DXMATRIX m_MatrixPosition;
 
-	// 회전 행렬.
+	// 자식 회전 행렬.
 	D3DXMATRIX m_MatrixRotate;
 
-	// 크기 행렬.
+	// 자식 크기 행렬.
 	D3DXMATRIX m_MatrixScale;
 
-	// 공전 행렬.
+	// 자식 공전 행렬.
 	D3DXMATRIX m_MatrixRevolution;
 
-	// 부모 행렬.
+	// 자식 부모 행렬.
 	D3DXMATRIX m_MatrixParent;
 
-	// 월드 행렬.
+	// 자식 월드 행렬.
 	D3DXMATRIX m_MatrixWorld;
+
+	// 부모 크기 벡터.
+	D3DXVECTOR3 m_localParentScale;
+
+	// 부모 월드 행렬.
+	D3DXMATRIX m_MatrixParentWorld;
+
+	// 부모 위치 행렬.
+	D3DXMATRIX m_MatrixParentPosition;
+
+	// 부모 크기 행렬.
+	D3DXMATRIX m_MatrixParentScale;
 
 	// 버텍스.
 	D3DXVECTOR3 vertex[3];
 
 	// 기존 버텍스.
 	D3DXVECTOR3 vertexOrigin[3];
+
+	// 부모 버텍스.
+	D3DXVECTOR3 parentVertex[2];
+
+	// 부모 기존 버텍스.
+	D3DXVECTOR3 parentVertexOrigin[2];
 
 	// 부모 크기.
 	float m_fParentScale;
@@ -94,5 +112,9 @@ private:
 
 	// 자전 속도.
 	float m_rotSpeed;
+
+	// 부모 늘어나는 속도.
+	float m_ratioSpeed;
+	float m_ratio;
 };
 
