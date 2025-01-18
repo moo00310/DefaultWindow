@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "CThorn.h"
 
-CThorn::CThorn()
+CThorn::CThorn() : m_tPoints{}
 {
+	
 }
 
 CThorn::~CThorn()
@@ -28,7 +29,7 @@ int CThorn::Update()
 {
 	D3DXMATRIX		matRotZ, matTrans1, matTrans2, matScale;
 
-	D3DXMatrixScaling(&matScale, 1.5f, 1.5f, 1.5f);
+	D3DXMatrixScaling(&matScale, 1.35f, 1.35f, 1.35f);
 	D3DXMatrixRotationZ(&matRotZ, m_fAngle);
 	D3DXMatrixTranslation(&matTrans2, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
 
@@ -45,17 +46,22 @@ int CThorn::Update()
 
 void CThorn::Late_Update()
 {
+	m_tPoints[0] = { (int)m_vTransformVertex[0].x, (int)m_vTransformVertex[0].y };
+	m_tPoints[1] = { (int)m_vTransformVertex[1].x, (int)m_vTransformVertex[1].y };
+	m_tPoints[2] = { (int)m_vTransformVertex[2].x, (int)m_vTransformVertex[2].y };
 }
 
 void CThorn::Render(HDC hDC)
 {
-	MoveToEx(hDC, (int)m_vTransformVertex[0].x, (int)m_vTransformVertex[0].y, nullptr);
-	LineTo(hDC, (int)m_vTransformVertex[1].x, (int)m_vTransformVertex[1].y);
-	LineTo(hDC, (int)m_vTransformVertex[2].x, (int)m_vTransformVertex[2].y);
-	LineTo(hDC, (int)m_vTransformVertex[0].x, (int)m_vTransformVertex[0].y);
+	HBRUSH hBrush = CreateSolidBrush(RGB(235, 0, 0));
+	HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, hBrush);
 
+	Polygon(hDC, m_tPoints, 3);
 
-	Ellipse(hDC, (int)m_vTransformVertex[0].x - 5, (int)m_vTransformVertex[0].y - 5, (int)m_vTransformVertex[0].x + 5, (int)m_vTransformVertex[0].y + 5);
+	SelectObject(hDC, hOldBrush);
+	DeleteObject(hBrush);
+
+	//Ellipse(hDC, (int)m_vTransformVertex[0].x - 5, (int)m_vTransformVertex[0].y - 5, (int)m_vTransformVertex[0].x + 5, (int)m_vTransformVertex[0].y + 5);
 }
 
 void CThorn::Release()
@@ -69,11 +75,13 @@ float CThorn::TranceAngle()
 	D3DXVec3Normalize(&m_tInfo.vDir, &temp);
 
 	float fDot = D3DXVec3Dot(&m_tInfo.vDir, &m_tInfo.vLook);
-
 	float angle = acosf(fDot);
 
 	 if (m_tInfo.vPos.x < m_vMidPoint.x)
 		 angle = 2 *PI - angle;
+
+	 if (D3DXVec3Length(&temp) < 200.f)
+		 angle += PI;
 
 	 return angle;
 }

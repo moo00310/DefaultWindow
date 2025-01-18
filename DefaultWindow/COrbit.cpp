@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "COrbit.h"
 #include "CSoundMgr.h"
+#include "CKeyMgr.h"
 
 COrbit::COrbit()
 {
@@ -41,6 +42,22 @@ void COrbit::Render(HDC hDC)
         int(m_tInfo.vPos.y - 200.f),
         int(m_tInfo.vPos.x + 200.f),
         int(m_tInfo.vPos.y + 200.f));
+
+	if (CKeyMgr::Get_Instance()->GetKeyState(VK_LEFT) ||
+		CKeyMgr::Get_Instance()->GetKeyState(VK_DOWN))
+	{
+		HBRUSH hBrush = CreateSolidBrush(RGB(211, 211, 211)); 
+		HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, hBrush);
+
+        Ellipse(hDC,
+            int(m_tInfo.vPos.x - 200.f),
+            int(m_tInfo.vPos.y - 200.f),
+            int(m_tInfo.vPos.x + 200.f),
+            int(m_tInfo.vPos.y + 200.f));
+
+		SelectObject(hDC, hOldBrush);
+		DeleteObject(hBrush);
+	}
 
     SelectObject(hDC, hOldPen);
     DeleteObject(hPen);

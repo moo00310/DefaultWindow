@@ -1,10 +1,11 @@
 #pragma once
 #include "CObj.h"
-class CThorn :  public CObj
+class CBlock_SSH : public CObj
 {
 public:
-	CThorn();
-	virtual ~CThorn();
+	CBlock_SSH();
+	virtual ~CBlock_SSH();
+
 public:
 	void Initialize() override;
 	int Update() override;
@@ -13,13 +14,7 @@ public:
 	void Release() override;
 
 public:
-	float TranceAngle();
-
-private:
-	D3DXVECTOR3 m_vPoints[3];
-	D3DXVECTOR3 m_vTransformVertex[3];
-	D3DXVECTOR3 m_vMidPoint;
-
-	POINT m_tPoints[3];
+	D3DXVECTOR3 m_vPoint[4];
+	D3DXVECTOR3 m_vOriginPoint[4];
 };
 

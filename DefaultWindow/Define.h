@@ -12,14 +12,22 @@
 
 #define sqrt_3    1.732f
 
+#define OFFSET	500
+
 #define SSH_FIRE dynamic_cast<CPlayer_SSH*>(CObjMgr::Get_Instance()->Get_LastPlayer())
 #define SSH_ICE  dynamic_cast<CPlayer_SSH*>(CObjMgr::Get_Instance()->Get_Player())
 
+#define REV_SPEED 3.f
+
 extern HWND		g_hWnd;
 
+
 enum SCENEID { SC_START, SC_MENU, SC_MOO, SC_KDH, SC_SSH,  SC_HERO, SC_END };
-enum OBJID { OBJ_PLAYER, OBJ_BULLET, OBJ_MONSTER, OBJ_MOUSE, OBJ_SHIELD, OBJ_BUTTON, OBJ_END };
-enum RENDERID { RENDER_BACKGROUND, RENDER_GAMEOBJECT, RENDER_UI, RENDER_EFFECT, RENDER_END };
+enum OBJID { OBJ_PLAYER, OBJ_BULLET, OBJ_MONSTER, OBJ_MOUSE, OBJ_SHIELD, OBJ_BUTTON, OBJ_BLOCK, OBJ_END };
+enum RENDERID { RENDER_BACKGROUND, RENDER_GAMEOBJECT, RENDER_GAMEOBJECT_FRONT, RENDER_UI, RENDER_EFFECT, RENDER_END };
+
+enum CarmeraState { CS_ZoomAndFollow, CS_Shake1, CS_Shake2, CS_ZoomIN, CS_Slow_ZoomIN, CS_Force_ZoomIN, CS_ZoomOUT,CS_END };
+enum Carmera {C_Move_LT, C_Move_size, C_Zoom_LT, C_Zoom_size, C_End };
 
 template<typename T>
 void Safe_Delete(T& Temp)
@@ -54,28 +62,44 @@ typedef struct tagInfo
 }INFO;
 
 
-// ��� ���� �Լ�
 
-// �׵� ����� ������ִ� �Լ�
-// D3DXMatrixIdentity(�׵� ����� ����� ���� ����� �ּ�)
+// 시퀀스용.
+enum kSEQUENCE
+{
+	SEQUENCE_WAIT,
+	SEQUENCE_PLAY,
+	SEQUENCE_END,
+};
+
+enum kDIRECTION
+{
+	DIR_UP = 0,
+	DIR_DOWN,
+	DIR_LEFT,
+	DIR_RIGHT
+};
+
+
+// �׵� �����?������ִ�?�Լ�
+// D3DXMatrixIdentity(�׵� �����?�����?���� �����?�ּ�)
 // D3DXMatrixIdentity(&m_tInfo.matWorld);
 
-// ũ�� ��ȯ ����� ����� �Լ�
-// D3DXMatrixScaling(������� ������ ����� �ּ�, X����, Y����, Z����)
+// ũ�� ��ȯ �����?�����?�Լ�
+// D3DXMatrixScaling(�������?������ �����?�ּ�, X����, Y����, Z����)
 // D3DXMATRIX		matScale;
 // D3DXMatrixScaling(&matScale, 1.f, 2.f, 1.f);
 
-// ȸ�� ��ȯ ����� ����� �Լ�
-// D3DXMatrixRotationZ(������� ������ ����� �ּ�, ȸ�� ����(����))
+// ȸ�� ��ȯ �����?�����?�Լ�
+// D3DXMatrixRotationZ(�������?������ �����?�ּ�, ȸ�� ����(����))
 // D3DXMATRIX		matRotZ, matRevZ;
 // D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(angle));
 
-// ��ġ ��ȯ ����� ����� �Լ�
-// D3DXMatrixTranslation(������� ������ ����� �ּ�, x��ġ, y��ġ, z��ġ)
+// ��ġ ��ȯ �����?�����?�Լ�
+// D3DXMatrixTranslation(�������?������ �����?�ּ�, x��ġ, y��ġ, z��ġ)
 // D3DXMATRIX		matTrans;
 // D3DXMatrixTranslation(&matTrans, 400.f, 300.f, 0.f);
 
-// dx���� �����ϴ� ��İ��� �Լ����� ���� ù��° �۾����� ��� ���� ������ ����� �׵� ��ķ� �����.
+// dx���� �����ϴ� ��İ���?�Լ����� ���� ù��° �۾����� ���?���� ������ �����?�׵� ��ķ�?�����?
 
 // D3DXMATRIX		matScale, matRotZ, matTrans;
 // 
@@ -85,6 +109,6 @@ typedef struct tagInfo
 // 
 // m_tInfo.matWorld = matScale * matRotZ * matTrans;
 
-// ���Ϳ� ����� ������ ��������ִ� �Լ�
-// D3DXVec3TransformCoord(��� ���� ������ ������ �ּ�(��ġ), ������ ������ ��ġ ����, ���);
-// D3DXVec3TransformNormal(��� ���� ������ ������ �ּ�(����), ������ ������ ���� ����, ���);
+// ���Ϳ� �����?������ ��������ִ�?�Լ�
+// D3DXVec3TransformCoord(���?���� ������ ������ �ּ�(��ġ), ������ ������ ��ġ ����, ���?;
+// D3DXVec3TransformNormal(���?���� ������ ������ �ּ�(����), ������ ������ ���� ����, ���?;

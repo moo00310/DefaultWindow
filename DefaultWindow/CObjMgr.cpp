@@ -3,7 +3,7 @@
 
 CObjMgr* CObjMgr::m_pInstance = nullptr;
 
-CObjMgr::CObjMgr()
+CObjMgr::CObjMgr() : m_pPlayer(nullptr)
 {
 }
 
@@ -38,6 +38,22 @@ CObj* CObjMgr::Get_Target(OBJID eID, CObj* pDst)
 	}	*/	
 
 	return nullptr;
+}
+
+bool CObjMgr::Collision_Check()
+{
+	m_pPlayer = m_ObjList[OBJ_PLAYER].front();
+	for_each(m_ObjList[OBJ_MONSTER].begin(), m_ObjList[OBJ_MONSTER].end(), [&](CObj* obj)
+		{
+			float fRadius = (20 + 15) * 0.5f;
+			float fWidth = abs(m_pPlayer->Get_Info().vPos.x - obj->Get_Info().vPos.x);
+			float fHeight = abs(m_pPlayer->Get_Info().vPos.y - obj->Get_Info().vPos.y);
+			float fDiagonal = sqrtf(fWidth * fWidth + fHeight * fHeight);
+			if (fRadius >= fDiagonal)
+				return true;
+		});
+
+	return false;
 }
 
 void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
@@ -96,6 +112,9 @@ void CObjMgr::Render(HDC hDC)
 
 		m_RenderList[i].clear();
 	}
+
+	float x = m_ObjList[OBJ_MONSTER].front()->Get_Info().vPos.x;
+	float y = m_ObjList[OBJ_MONSTER].front()->Get_Info().vPos.y;
 }
 
 void CObjMgr::Release()

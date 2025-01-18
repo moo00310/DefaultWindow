@@ -15,10 +15,13 @@ public:
 	CObj* Get_Player()		{ return m_ObjList[OBJ_PLAYER].front(); }
 	CObj* Get_LastPlayer()  { return m_ObjList[OBJ_PLAYER].back(); }
 	CObj* Get_LastMonster() { return m_ObjList[OBJ_MONSTER].back(); }
+	list<CObj*>* Get_ObjList() { return m_ObjList; }
 
 	list<CObj*>* Get_List() { return m_ObjList; }
 
 	CObj* Get_Target(OBJID eID, CObj* pDst);
+
+	bool Collision_Check();
 
 public:
 	void		Add_Object(OBJID eID, CObj* pObj);
@@ -53,6 +56,6 @@ private:
 
 	static CObjMgr* m_pInstance;
 
-
+	CObj* m_pPlayer;
 };
 

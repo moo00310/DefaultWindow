@@ -152,7 +152,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CAbstractFactory.h" />
+    <ClInclude Include="CBlock_SSH.h" />
     <ClInclude Include="CCameraMgr.h" />
+    <ClInclude Include="CHexaPad.h" />
+    <ClInclude Include="CKDHPlayer.h" />
+    <ClInclude Include="CKDHScene.h" />
     <ClInclude Include="CKeyMgr.h" />
     <ClInclude Include="CMainGame.h" />
     <ClInclude Include="CMenu.h" />
@@ -168,6 +172,8 @@
     <ClInclude Include="CPlayer_SSH_Ice.h" />
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CSceneMgr.h" />
+    <ClInclude Include="CScrollMgr.h" />
+    <ClInclude Include="CSequence.h" />
     <ClInclude Include="CSoundMgr.h" />
     <ClInclude Include="CSpawner.h" />
     <ClInclude Include="CSSHScene.h" />
@@ -176,13 +182,18 @@
     <ClInclude Include="DefaultWindow.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="CHexaPadManager.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="CSquare.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CBlock_SSH.cpp" />
     <ClCompile Include="CCameraMgr.cpp" />
+    <ClCompile Include="CHexaPad.cpp" />
+    <ClCompile Include="CKDHPlayer.cpp" />
+    <ClCompile Include="CKDHScene.cpp" />
     <ClCompile Include="CKeyMgr.cpp" />
     <ClCompile Include="CMainGame.cpp" />
     <ClCompile Include="CMenu.cpp" />
@@ -198,12 +209,15 @@
     <ClCompile Include="CRhythmWorld.cpp" />
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CSceneMgr.cpp" />
+    <ClCompile Include="CScrollMgr.cpp" />
+    <ClCompile Include="CSequence.cpp" />
     <ClCompile Include="CSoundMgr.cpp" />
     <ClCompile Include="CSpawner.cpp" />
     <ClCompile Include="CSSHScene.cpp" />
     <ClCompile Include="CStart.cpp" />
     <ClCompile Include="CThorn.cpp" />
     <ClCompile Include="DefaultWindow.cpp" />
+    <ClCompile Include="CHexaPadManager.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
