@@ -21,6 +21,8 @@ CRhythmWorld::~CRhythmWorld()
 void CRhythmWorld::Initialize()
 {
     CSoundMgr::Get_Instance()->Initialize();
+    CSoundMgr::Get_Instance()->PlayEvent("event:/0004 BGM_DOREMI");
+    //CSoundMgr::Get_Instance()->PlayEvent("event:/Tobu & Itro - Sunburst");
 
     m_pSpawner = CAbstractFactory<CSpawner>::Create();
     CObjMgr::Get_Instance()->Add_Object(OBJ_SHIELD, m_pSpawner);
@@ -28,7 +30,6 @@ void CRhythmWorld::Initialize()
     CObj* pObj(nullptr);
     pObj = CAbstractFactory<CStick>::Create(WINCX * 0.5f, WINCY * 0.9f);
     CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, pObj);
-
 }
 
 int CRhythmWorld::Update()

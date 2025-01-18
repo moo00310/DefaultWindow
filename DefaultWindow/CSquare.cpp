@@ -74,7 +74,7 @@ int CSquare::Update()
 	if (m_bDead)
 		return OBJ_DEAD;
 
-	if (!Wait_Time())
+	/*if (!Wait_Time())
 	{
 		if (!m_bFall)
 		{
@@ -85,7 +85,18 @@ int CSquare::Update()
 		{
 			Fall();
 		}
+	}*/
+
+	if (!m_bFall)
+	{
+		Change_Speed();
+		Roll_Corners();
 	}
+	else
+	{
+		Fall();
+	}
+
 	Update_WorldMatrix();
 
 	return OBJ_NOEVENT;
@@ -141,10 +152,10 @@ void CSquare::Roll_Corners()
 		//충돌 체크할 포인트가 충돌하면 
 		if (m_arrWorldPoint[iCheckPoint].y > WINCY * 0.5f)
 		{
-			if (m_iNote < 5)
+			/*if (m_iNote < 5)
 			{
 				m_pNotePoint = CSoundMgr::Get_Instance()->PlayEvent("event:/Note");
-			}
+			}*/
 			OnVertexTouch();
 			//현재 회전의 중점으로 하는 포인트에 따라, 사각형의 중점을 이동 시킨다.[하드코딩, 규칙을 못 찾음]
 			//처음 시작점(3) 포인트 차이만큼 이동시키는 것 같긴함
@@ -230,7 +241,7 @@ void CSquare::Roll()
 
 void CSquare::Check_ScreenOut()
 {
-	if (m_vWorldPoint_Center.x < 0.f || m_vWorldPoint_Center.x >(float)WINCX)
+	if (m_vWorldPoint_Center.y < 0.f || m_vWorldPoint_Center.y >(float)WINCY)
 	{
 		Set_Dead();
 	}
@@ -244,8 +255,10 @@ bool CSquare::Wait_Time()
 void CSquare::Change_Speed()
 {
 	//땅에 닿았을때 느려졌다가...세워졌을 때 빨라져야함
-	m_fTime += 0.3f;
-	m_fCurSpeed = abs(sin(m_fTime)) * m_fSpeed;
+	/*m_fTime += 0.3f;
+	m_fCurSpeed = abs(sinf(m_fTime)) * m_fSpeed;*/
+
+	m_fCurSpeed = m_fSpeed;
 }
 
 void CSquare::Fall()
@@ -283,8 +296,8 @@ void CSquare::Render(HDC hDC)
 	POINT tPointArr[4] = {};
 	for (int i = 0; i < 4; ++i)
 	{
-		tPointArr[i].x = m_arrWorldPoint[i].x;
-		tPointArr[i].y = m_arrWorldPoint[i].y;
+		tPointArr[i].x = (LONG)m_arrWorldPoint[i].x;
+		tPointArr[i].y = (LONG)m_arrWorldPoint[i].y;
 	}
 	Polygon(hDC, tPointArr, 4);
 
@@ -300,7 +313,7 @@ void CSquare::Render(HDC hDC)
 		(int)(m_vWorldPoint_Center.x + iEllipseSize),
 		(int)(m_vWorldPoint_Center.y + iEllipseSize));
 
-	TCHAR cBuffer[64]; //저장할 문자열 버퍼
+	//TCHAR cBuffer[64]; //저장할 문자열 버퍼
 	//// 문자열로 변환하여 출력 준비
 	//for (int i = 0; i < 4; ++i)
 	//{
@@ -342,5 +355,5 @@ void CSquare::Release()
 
 void CSquare::Late_Update()
 {
-	//Check_ScreenOut();
+	Check_ScreenOut();
 }

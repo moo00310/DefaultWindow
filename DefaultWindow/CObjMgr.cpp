@@ -113,8 +113,9 @@ void CObjMgr::Render(HDC hDC)
 		m_RenderList[i].clear();
 	}
 
-	float x = m_ObjList[OBJ_MONSTER].front()->Get_Info().vPos.x;
-	float y = m_ObjList[OBJ_MONSTER].front()->Get_Info().vPos.y;
+	//이거 누가 쓰는지 모르겠지만 필요한건가? 이것 땜에 오류남 [글쓴이: 한영웅]
+	//float x = m_ObjList[OBJ_MONSTER].front()->Get_Info().vPos.x;
+	//float y = m_ObjList[OBJ_MONSTER].front()->Get_Info().vPos.y;
 }
 
 void CObjMgr::Release()
