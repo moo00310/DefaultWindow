@@ -10,9 +10,15 @@ public:
 
 public:
 	INFO		Get_Info() { return m_tInfo; }
-	
+
+	void        Set_vPos(D3DXVECTOR3 _vPoint) { m_tInfo.vPos = _vPoint; }
+
 	CObj*		Get_Target() { if(nullptr != m_pTarget) return m_pTarget; }
 	void		Set_Target(CObj* _pTarget) { m_pTarget = _pTarget; }
+
+	float       Get_Angle() { return m_fAngle; }
+	void        Set_Angle(float _fAngle) { m_fAngle = _fAngle; }
+	void        Set_AngleEx(float _fAngle) { m_fAngle += _fAngle; }
 
 public:
 	virtual void		Initialize()PURE;

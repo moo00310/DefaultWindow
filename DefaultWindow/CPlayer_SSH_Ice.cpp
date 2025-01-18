@@ -13,7 +13,8 @@ CPlayer_SSH_Ice::~CPlayer_SSH_Ice()
 
 void CPlayer_SSH_Ice::Initialize()
 {
-    m_tInfo.vPos = { 400.f, 300.f, 0.f };
+    m_tInfo.vPos = { 75.f, 300.f, 0.f };
+
     D3DXMatrixIdentity(&m_tInfo.matWorld);
 
     m_vPoint = { 0.f, 0.f, 0.f };
@@ -26,13 +27,7 @@ int CPlayer_SSH_Ice::Update()
 {
     if (m_bDead)
         return OBJ_DEAD;
-
-    // 바꼈다면 회전
-    //if (m_bChange)
-    //{
-    //    m_fAngle += 3.f;
-    //}
-
+    
     D3DXMATRIX matScale, matRotZ, matTranse, matRevZ, matParrent;
 
     // 크기 변환 행렬을 만드는 함수
@@ -46,16 +41,26 @@ int CPlayer_SSH_Ice::Update()
 
     D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
     D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(0.f));
-    D3DXMatrixTranslation(&matTranse, -100.f, 0.f, 0.f);
+    D3DXMatrixTranslation(&matTranse, -50.f, 0.f, 0.f);
     D3DXMatrixRotationZ(&matRevZ, D3DXToRadian(m_fAngle));
 
+
+    if (m_fAngle > m_fMaxAngle)
+        m_fAngle -= m_fAngle;
+
+    // 바꼈다면 회전
+    if (m_bRev)
+    {
+        m_fAngle += m_fRevSpeed;
+    }
+
     // 바뀌지 않았다면 제자리에서 대기
-    if (!m_bChange)
+    if (!m_bRev)
     {
         D3DXMatrixTranslation(&matParrent, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
     }
     // 바뀌었다면 타깃 중심으로 공전
-    else if(m_bChange)
+    else if(m_bRev)
     {
         // 타깃(불) 중심으로 공전, 
         if (CPlayer_SSH* Temp = dynamic_cast<CPlayer_SSH*>(m_pTarget))
@@ -82,12 +87,6 @@ void CPlayer_SSH_Ice::Late_Update()
 void CPlayer_SSH_Ice::Render(HDC hDC)
 {
     Ellipse(hDC,
-        int(m_tInfo.vPos.x - 100.f),
-        int(m_tInfo.vPos.y - 100.f),
-        int(m_tInfo.vPos.x + 100.f),
-        int(m_tInfo.vPos.y + 100.f));
-
-    Ellipse(hDC,
         int(m_vPoint.x - 20.f),
         int(m_vPoint.y - 20.f),
         int(m_vPoint.x + 20.f),
@@ -109,13 +108,13 @@ void CPlayer_SSH_Ice::Release()
 
 void CPlayer_SSH_Ice::Key_Input()
 {
-    if (m_bChange)
+    if (m_bRev)
     {
-        if (CKeyMgr::Get_Instance()->Key_Pressing(VK_LEFT))
+        if (CKeyMgr::Get_Instance()->Key_Pressing('A'))
         {
             m_fAngle -= 5.f;
         }
-        else if (CKeyMgr::Get_Instance()->Key_Pressing(VK_RIGHT))
+        else if (CKeyMgr::Get_Instance()->Key_Pressing('D'))
         {
             m_fAngle += 5.f;
         }
