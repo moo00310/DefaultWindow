@@ -9,6 +9,7 @@ CStick::CStick()
 	ZeroMemory(&m_arrWorldPoint, sizeof(m_arrWorldPoint));
 	ZeroMemory(&m_vWorldBackPosition, sizeof(D3DXVECTOR3));
 	ZeroMemory(&m_vLocalBackPosition, sizeof(D3DXVECTOR3));
+	ZeroMemory(&m_vOriginPosition, sizeof(D3DXVECTOR3));
 }
 
 CStick::~CStick()
@@ -27,7 +28,13 @@ void CStick::Initialize()
 
 	m_vLocalBackPosition = { 0.f, PULL_LENGTH, 0.f };
 
-	Set_BackPosition();
+	Update_WorldMatrix();
+
+	//최초 위치
+	D3DXVECTOR3 tZeroPoint{ 0.f, 0.f, 0.f };
+	D3DXVec3TransformCoord(&m_vOriginPosition, &tZeroPoint, &m_tInfo.matWorld);
+	//후퇴 위치
+	D3DXVec3TransformCoord(&m_vWorldBackPosition, &m_vLocalBackPosition, &m_tInfo.matWorld);
 }
 
 int CStick::Update()
@@ -36,7 +43,7 @@ int CStick::Update()
         return OBJ_DEAD;
 
 	Input_Key();
-
+	Check_ScreenOut();
 	if (m_bFly)
 	{
 		Fly();
@@ -116,6 +123,11 @@ void CStick::Input_Key()
 	}
 }
 
+void CStick::Set_OriginPosition()
+{
+	//m_vOriginPosition
+}
+
 void CStick::Set_BackPosition()
 {
 	D3DXMATRIX matScale;
@@ -130,11 +142,18 @@ void CStick::Set_BackPosition()
 
 	m_tInfo.matWorld = matScale * matRotZ * matTrans;
 
-	//후퇴 위치
-	D3DXVec3TransformCoord(&m_vWorldBackPosition, &m_vLocalBackPosition, &m_tInfo.matWorld);
 }
 
 void CStick::Fly()
 {
 	m_tInfo.vPos += {0.f, -FLY_SPEED, 0.f};
+}
+
+void CStick::Check_ScreenOut()
+{
+	if (m_tInfo.vPos.y < -(STICK_HEIGHT))
+	{
+		m_tInfo.vPos = m_vOriginPosition;
+		m_bFly = false;
+	}
 }
