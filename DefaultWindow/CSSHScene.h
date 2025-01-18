@@ -21,5 +21,8 @@ private:
 
 	float m_fCheckAngle;
 	float m_fMaxAngle;
+
+	int   m_iBlockCount;
+	int   m_iBlockSaveCount;
 };
 

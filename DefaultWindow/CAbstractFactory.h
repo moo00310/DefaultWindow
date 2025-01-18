@@ -26,11 +26,12 @@ public:
 		return pObj;
 	}
 
-	static CObj* Create(D3DXVECTOR3 _vPos)
+	static CObj* Create(D3DXVECTOR3 _vPos, float _fAngle = 180.f)
 	{
 		CObj* pObj = new T;
 		pObj->Initialize();
 		pObj->Set_vPos(_vPos);
+		pObj->Set_Angle(_fAngle);
 
 		return pObj;
 	}

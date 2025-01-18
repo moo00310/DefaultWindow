@@ -11,7 +11,8 @@
 #include "CAbstractFactory.h"
 
 CSSHScene::CSSHScene() 
-	: m_bChange(false), m_fCheckAngle(0.f), m_fMaxAngle(190.f)
+	: m_bChange(false), m_fCheckAngle(0.f), m_fMaxAngle(190.f),
+	m_iBlockCount(0), m_iBlockSaveCount(0)
 {
 }
 
@@ -29,11 +30,14 @@ void CSSHScene::Initialize()
 	// 불이 얼음을 타깃으로 잡음
 	CObjMgr::Get_Instance()->Get_LastPlayer()->Set_Target(CObjMgr::Get_Instance()->Get_Player());
 
-	for (int i = 0; i < 16; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		CObjMgr::Get_Instance()->
 			Add_Object(OBJ_BLOCK, CAbstractFactory<CBlock_SSH>::Create({ 25.f + i * 50.f, 300.f, 0.f}));
 	}
+
+	CObjMgr::Get_Instance()->
+		Add_Object(OBJ_BLOCK, CAbstractFactory<CBlock_SSH>::Create({ 225.f, 350.f, 0.f }, 90.f));
 }
 
 int CSSHScene::Update()
@@ -43,31 +47,46 @@ int CSSHScene::Update()
 
 	if (!m_bChange) // 불이 공전
 	{
-		if (200 <= SSH_FIRE->Get_Angle())
+		for (auto& iter : CObjMgr::Get_Instance()->Get_ObjList()[OBJ_BLOCK])
 		{
-			SSH_FIRE->Set_Angle(180.f);
-			m_bChange = !m_bChange;
-			SSH_FIRE->Set_bRev(!m_bChange);
-			SSH_ICE->Set_bRev(m_bChange);
-
-			if (180 <= SSH_ICE->Get_Angle())
+			if (m_iBlockSaveCount < m_iBlockCount)
 			{
-				SSH_ICE->Set_Angle(0.f);
+				m_iBlockSaveCount = m_iBlockCount;
+				break;
+			}
+
+			if (iter->Get_Angle() <= SSH_FIRE->Get_Angle())
+			{
+				SSH_FIRE->Set_Angle(iter->Get_Angle());
+				m_bChange = !m_bChange;
+				SSH_FIRE->Set_bRev(!m_bChange);
+				SSH_ICE->Set_bRev(m_bChange);
+				++m_iBlockCount;
+
+				if (iter->Get_Angle() <= SSH_ICE->Get_Angle())
+				{
+					SSH_ICE->Set_Angle(0.f);
+				}
 			}
 		}
+
 	}
 	else if (m_bChange) // 얼음이 공전
 	{
-		if (200 <= SSH_ICE->Get_Angle())
+		for (auto& iter : CObjMgr::Get_Instance()->Get_ObjList()[OBJ_BLOCK])
 		{
-			SSH_ICE->Set_Angle(180.f);
-			m_bChange = !m_bChange;
-			SSH_FIRE->Set_bRev(!m_bChange);
-			SSH_ICE->Set_bRev(m_bChange);
-
-			if (180 <= SSH_FIRE->Get_Angle())
+			if (iter->Get_Angle() <= SSH_ICE->Get_Angle())
 			{
-				SSH_FIRE->Set_Angle(0.f);
+				SSH_ICE->Set_Angle(iter->Get_Angle());
+				m_bChange = !m_bChange;
+				SSH_FIRE->Set_bRev(!m_bChange);
+				SSH_ICE->Set_bRev(m_bChange);
+				++m_iBlockCount;
+
+				if (iter->Get_Angle() <= SSH_FIRE->Get_Angle())
+				{
+					SSH_FIRE->Set_Angle(0.f);
+				}
 			}
 		}
 	}

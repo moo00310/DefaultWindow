@@ -29,7 +29,7 @@ int CBlock_SSH::Update()
     D3DXMATRIX matScale, matRotZ, matTrans;
 
     D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
-    D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(m_fAngle));
+    D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(0.f));
     D3DXMatrixTranslation(&matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, m_tInfo.vPos.z);
 
     m_tInfo.matWorld = matScale * matRotZ * matTrans;
