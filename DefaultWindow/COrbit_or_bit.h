@@ -19,6 +19,9 @@ private:
 	void CheckBpm();
 	void SwapThron(int  _count);
 
+	void DrawRight(int _count);
+	void DrawLeft(int _count);
+
 private:
 	CObj* m_pPlayer;
 	CObj* m_pOrbit;

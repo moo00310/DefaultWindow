@@ -31,6 +31,7 @@ public:
 	void		Release();
 
 	void		Delete_ID(OBJID eID);
+	void		Dead_Monster(Direction eID);
 
 public:
 	static CObjMgr* Get_Instance()
