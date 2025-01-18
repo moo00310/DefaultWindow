@@ -9,10 +9,11 @@
 #include "CKeyMgr.h"
 #include "CSoundMgr.h"
 #include "CAbstractFactory.h"
+#include "CScrollMgr.h"
 
 CSSHScene::CSSHScene() 
 	: m_bChange(false), m_fCheckAngle(0.f), m_fMaxAngle(190.f),
-	m_iBlockCount(0), m_iBlockSaveCount(0)
+	m_iBlockCount(0)
 {
 }
 
@@ -25,71 +26,98 @@ void CSSHScene::Initialize()
 {
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer_SSH_Ice>::Create());
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer_SSH_Fire>::Create());
-	// æÛ¿Ω¿Ã ∫“ ≈∏±Í¿∏∑Œ ¿‚¿Ω
+	// ??ÍπÜÎ≤â??????ÁππÎ®≠Ìçî?ÏïÆÏóê???„ÇåÎ≤â
 	CObjMgr::Get_Instance()->Get_Player()->Set_Target(CObjMgr::Get_Instance()->Get_LastPlayer());
-	// ∫“¿Ã æÛ¿Ω¿ª ≈∏±Í¿∏∑Œ ¿‚¿Ω
+	// ?Î∏çÎúÜ????ÍπÜÎ≤â????ÁππÎ®≠Ìçî?ÏïÆÏóê???„ÇåÎ≤â
 	CObjMgr::Get_Instance()->Get_LastPlayer()->Set_Target(CObjMgr::Get_Instance()->Get_Player());
 
 	for (int i = 0; i < 5; i++)
 	{
-		CObjMgr::Get_Instance()->
-			Add_Object(OBJ_BLOCK, CAbstractFactory<CBlock_SSH>::Create({ 25.f + i * 50.f, 300.f, 0.f}));
+		IFD_BLOCK_NORMAL( 25.f + i * 50.f, 300.f, 0.f);
 	}
 
-	CObjMgr::Get_Instance()->
-		Add_Object(OBJ_BLOCK, CAbstractFactory<CBlock_SSH>::Create({ 225.f, 350.f, 0.f }, 90.f));
+	IFD_BLOCK(225.f, 350.f, 0.f, 270.f);
+
+	for (int i = 0; i < 4; i++)
+	{
+		IFD_BLOCK_NORMAL(275.f + i * 50.f, 350.f, 0.f);
+	}
+
+	IFD_BLOCK(425.f, 300.f, 0.f, 90.f);
+
+	for (int i = 0; i < 10; i++)
+	{
+		IFD_BLOCK_NORMAL(475.f + i * 50.f, 300.f, 0.f);
+	}
+
+	IFD_BLOCK(925.f, 350.f, 0.f, 270.f);
+	IFD_BLOCK_NORMAL(975.f, 350.f, 0.f);
+	IFD_BLOCK(975.f, 400.f, 0.f, 270.f);
+	IFD_BLOCK_NORMAL(1025.f, 400.f, 0.f);
+	IFD_BLOCK(1025.f, 450.f, 0.f, 270.f);
+	IFD_BLOCK_NORMAL(1075.f, 450.f, 0.f);
+	IFD_BLOCK(1075.f, 500.f, 0.f, 270.f);
+
+	m_IterBlock = CObjMgr::Get_Instance()->Get_ObjList()[OBJ_BLOCK].begin();
+	m_IterBlock++;
 }
 
 int CSSHScene::Update()
 {
-	Key_Input();
+
 	CObjMgr::Get_Instance()->Update();
 
-	if (!m_bChange) // ∫“¿Ã ∞¯¿¸
-	{
-		for (auto& iter : CObjMgr::Get_Instance()->Get_ObjList()[OBJ_BLOCK])
-		{
-			if (m_iBlockSaveCount < m_iBlockCount)
-			{
-				m_iBlockSaveCount = m_iBlockCount;
-				break;
-			}
+	if (m_IterBlock == CObjMgr::Get_Instance()->Get_List()[OBJ_BLOCK].end())
+		return 0;
 
-			if (iter->Get_Angle() <= SSH_FIRE->Get_Angle())
-			{
-				SSH_FIRE->Set_Angle(iter->Get_Angle());
-				m_bChange = !m_bChange;
-				SSH_FIRE->Set_bRev(!m_bChange);
-				SSH_ICE->Set_bRev(m_bChange);
-				++m_iBlockCount;
+	Key_Input();
+	Offset();
 
-				if (iter->Get_Angle() <= SSH_ICE->Get_Angle())
-				{
-					SSH_ICE->Set_Angle(0.f);
-				}
-			}
-		}
+	//if (!m_bChange) // ÈÅ∫ÎçâÏî† ÊÄ®Îì≠Ïüæ‰ª•?
+	//{
+	//	//m_fCheckAngle = SSH_FIRE->Get_Angle();
 
-	}
-	else if (m_bChange) // æÛ¿Ω¿Ã ∞¯¿¸
-	{
-		for (auto& iter : CObjMgr::Get_Instance()->Get_ObjList()[OBJ_BLOCK])
-		{
-			if (iter->Get_Angle() <= SSH_ICE->Get_Angle())
-			{
-				SSH_ICE->Set_Angle(iter->Get_Angle());
-				m_bChange = !m_bChange;
-				SSH_FIRE->Set_bRev(!m_bChange);
-				SSH_ICE->Set_bRev(m_bChange);
-				++m_iBlockCount;
+	//	if ((*m_IterBlock)->Get_Angle() - 20 <= SSH_FIRE->Get_Angle() && (*m_IterBlock)->Get_Angle() + 20 >= SSH_FIRE->Get_Angle())
+	//	{
+	//		m_fCheckAngle = SSH_FIRE->Get_Angle();
+	//		SSH_FIRE->Set_Angle((*m_IterBlock)->Get_Angle());
+	//		m_bChange = !m_bChange;
+	//		SSH_FIRE->Set_bRev(!m_bChange);
+	//		SSH_ICE->Set_bRev(m_bChange);
 
-				if (iter->Get_Angle() <= SSH_FIRE->Get_Angle())
-				{
-					SSH_FIRE->Set_Angle(0.f);
-				}
-			}
-		}
-	}
+	//		if ((*m_IterBlock)->Get_Angle() <= SSH_ICE->Get_Angle())
+	//		{
+	//			SSH_ICE->Set_Angle((*m_IterBlock)->Get_Angle() - 180.f);
+	//		}
+	//		else
+	//			SSH_ICE->Set_Angle((*m_IterBlock)->Get_Angle() - 180.f);
+
+	//		++m_IterBlock;
+	//	}
+	//}
+	//else if (m_bChange) // ?Ïá±Ïì¨??ÊÄ®Îì≠Ïüæ‰ª•?
+	//{
+
+	//	//m_fCheckAngle = SSH_ICE->Get_Angle();
+
+	//	if ((*m_IterBlock)->Get_Angle() - 20 <= SSH_ICE->Get_Angle() && (*m_IterBlock)->Get_Angle() + 20 >= SSH_ICE->Get_Angle())
+	//	{
+	//		m_fCheckAngle = SSH_FIRE->Get_Angle();
+	//		SSH_ICE->Set_Angle((*m_IterBlock)->Get_Angle());
+	//		m_bChange = !m_bChange;
+	//		SSH_FIRE->Set_bRev(!m_bChange);
+	//		SSH_ICE->Set_bRev(m_bChange);
+
+	//		if ((*m_IterBlock)->Get_Angle() <= SSH_FIRE->Get_Angle())
+	//		{
+	//			SSH_FIRE->Set_Angle((*m_IterBlock)->Get_Angle() - 180.f);
+	//		}
+	//		else
+	//			SSH_FIRE->Set_Angle((*m_IterBlock)->Get_Angle() + 180.f);
+
+	//		++m_IterBlock;
+	//	}
+	//}
 
 	return 0;
 }
@@ -116,10 +144,9 @@ void CSSHScene::Render(HDC hDC)
 
 	CObjMgr::Get_Instance()->Render(hDC);
 
-	TCHAR szAngle[100]{};
-
-	swprintf_s(szAngle, L"«ˆ¿Á ∞¢µµ : %.2f", m_fCheckAngle);
-	TextOut(hDC, 30, 20, szAngle, lstrlen(szAngle));
+	TCHAR szCur[64]{};
+	swprintf_s(szCur, L"CurAngle : %.2f", m_fCheckAngle);
+	TextOut(hDC, 20, 20, szCur, lstrlen(szCur));
 }
 
 void CSSHScene::Release()
@@ -129,13 +156,16 @@ void CSSHScene::Release()
 
 void CSSHScene::Key_Input()
 {
+	if (m_IterBlock == CObjMgr::Get_Instance()->Get_List()[OBJ_BLOCK].end())
+		return;
+
 	if (CKeyMgr::Get_Instance()->Key_Down(VK_SPACE))
 	{
-		//m_bChange = !m_bChange; // ∞¢¿⁄¿« bChange¥¬ π›µÂΩ√ π›¥Îø©æﬂ «‘ ( ∞∞¿ª Ω√ ∞∞¿Ã »∏¿¸ )
+		//m_bChange = !m_bChange; // Êè∂ÏèÑÎÇØ???bChange??ÁçÑÏèÜÍº∂Ë´≠??ÁçÑÏèÜÍº∂???ÈçÆ???( Êè∂ÏèÜÎäø????Êè∂ÏèÜÎäø?????Ïùà )
 		//SSH_FIRE->Set_bRev(!m_bChange);
 		//SSH_ICE->Set_bRev(m_bChange);
 
-		//if (!m_bChange)
+		//if (!m_bChange) // ?Î∏çÎúÜ???‚ë§Î≤ä??
 		//{
 		//	if (180 < SSH_ICE->Get_Angle())
 		//	{
@@ -144,7 +174,7 @@ void CSSHScene::Key_Input()
 		//	else
 		//		SSH_FIRE->Set_Angle(SSH_ICE->Get_Angle() + 180.f);
 		//}
-		//else
+		//else // ??ÍπÜÎ≤â???‚ë§Î≤ä??
 		//{
 		//	if (180 < SSH_FIRE->Get_Angle())
 		//	{
@@ -154,6 +184,81 @@ void CSSHScene::Key_Input()
 		//		SSH_ICE->Set_Angle(SSH_FIRE->Get_Angle() + 180.f);
 		//}
 
-		//if(m_fCheckAngle )
+		if (!m_bChange) // ÈÅ∫ÎçâÏî† ÊÄ®Îì≠Ïüæ‰ª•?
+		{
+			m_fCheckAngle = SSH_FIRE->Get_Angle();
+
+			if ((*m_IterBlock)->Get_Angle() - 20 > m_fCheckAngle || (*m_IterBlock)->Get_Angle() + 20 < m_fCheckAngle)
+			{
+				SSH_FIRE->Set_Dead();
+			}
+
+			if ((*m_IterBlock)->Get_Angle() - 20 <= SSH_FIRE->Get_Angle() && (*m_IterBlock)->Get_Angle() + 20 >= SSH_FIRE->Get_Angle())
+			{
+				SSH_FIRE->Set_Angle((*m_IterBlock)->Get_Angle());
+				m_bChange = !m_bChange;
+				SSH_FIRE->Set_bRev(!m_bChange);
+				SSH_ICE->Set_bRev(m_bChange);
+
+				if ((*m_IterBlock)->Get_Angle() <= SSH_ICE->Get_Angle())
+				{
+					SSH_ICE->Set_Angle((*m_IterBlock)->Get_Angle() - 180.f);
+				}
+				else
+					SSH_ICE->Set_Angle((*m_IterBlock)->Get_Angle() - 180.f);
+
+				++m_IterBlock;
+			}
+		}
+		else if (m_bChange) // ?Ïá±Ïì¨??ÊÄ®Îì≠Ïüæ‰ª•?
+		{
+			m_fCheckAngle = SSH_ICE->Get_Angle();
+
+			if ((*m_IterBlock)->Get_Angle() - 20 > m_fCheckAngle || (*m_IterBlock)->Get_Angle() + 20 < m_fCheckAngle)
+			{
+				SSH_ICE->Set_Dead();
+			}
+
+			if ((*m_IterBlock)->Get_Angle() - 20 <= SSH_ICE->Get_Angle() && (*m_IterBlock)->Get_Angle() + 20 >= SSH_ICE->Get_Angle())
+			{
+				SSH_ICE->Set_Angle((*m_IterBlock)->Get_Angle());
+				m_bChange = !m_bChange;
+				SSH_FIRE->Set_bRev(!m_bChange);
+				SSH_ICE->Set_bRev(m_bChange);
+
+				if ((*m_IterBlock)->Get_Angle() <= SSH_FIRE->Get_Angle())
+				{
+					SSH_FIRE->Set_Angle((*m_IterBlock)->Get_Angle() - 180.f);
+				}
+				else
+					SSH_FIRE->Set_Angle((*m_IterBlock)->Get_Angle() + 180.f);
+
+				++m_IterBlock;
+			}
+		}
 	}
+}
+
+void CSSHScene::Offset()
+{
+	if (m_IterBlock == CObjMgr::Get_Instance()->Get_List()[OBJ_BLOCK].end())
+		return ;
+
+	int		iOffSetX = 400;
+	int     iOffSetY = 300;
+
+	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int     iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+	if (iOffSetX - 50 > (*m_IterBlock)->Get_Info().vPos.x + iScrollX)
+		CScrollMgr::Get_Instance()->Set_ScrollX(2.f);
+
+	if (iOffSetX + 50 < (*m_IterBlock)->Get_Info().vPos.x  + iScrollX)
+		CScrollMgr::Get_Instance()->Set_ScrollX(-2.f);
+
+	if (iOffSetY - 50 > (*m_IterBlock)->Get_Info().vPos.y + iScrollY)
+		CScrollMgr::Get_Instance()->Set_ScrollY(2.f);
+
+	if (iOffSetY + 50 < (*m_IterBlock)->Get_Info().vPos.y + iScrollY)
+		CScrollMgr::Get_Instance()->Set_ScrollY(-2.f);
 }

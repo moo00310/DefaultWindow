@@ -2,6 +2,7 @@
 #include "CPlayer_SSH_Ice.h"
 
 #include "CKeyMgr.h"
+#include "CScrollMgr.h"
 
 CPlayer_SSH_Ice::CPlayer_SSH_Ice()
 {
@@ -20,24 +21,23 @@ void CPlayer_SSH_Ice::Initialize()
     m_vPoint = { 0.f, 0.f, 0.f };
     m_vOriginPoint = m_vPoint;
 
+    m_fSpeed = 1.f;
+
     m_eRender = RENDER_GAMEOBJECT;
 }
 
 int CPlayer_SSH_Ice::Update()
-{
-    if (m_bDead)
-        return OBJ_DEAD;
-    
+{   
     D3DXMATRIX matScale, matRotZ, matTranse, matRevZ, matParrent;
 
-    // Å©±â º¯È¯ Çà·ÄÀ» ¸¸µå´Â ÇÔ¼ö
-    // D3DXMatrixScaling(°á°ú°ªÀ» ÀúÀåÇÒ Çà·ÄÀÇ ÁÖ¼Ò, X¹èÀ², Y¹èÀ², Z¹èÀ²)
+    // ??????â‘¤ìŠ¢å ‰???????Î’Â€?ç«Š???ê¿”êº‚?????????æ½??
+    // D3DXMatrixScaling(?åš¥â–²êµ§?????ï§’ê³—?é›…?í”ç‘—â“©ë¤ƒ??????åš¥ì‹³ì‡ï§??????Î’Â€?ç«Š?????ë…¿ë®??? X?ç†¬ê³£ë«–ï§??? Y?ç†¬ê³£ë«–ï§??? Z?ç†¬ê³£ë«–ï§???
 
-    // È¸Àü º¯È¯ Çà·ÄÀ» ¸¸µå´Â ÇÔ¼ö
-    // D3DXMatrixRotationZ(°á°ú°ªÀ» ÀúÀåÇÒ Çà·ÄÀÇ ÁÖ¼Ò, È¸Àü °¢µµ(¶óµğ¾È))
+    // ???????â‘¤ìŠ¢å ‰???????Î’Â€?ç«Š???ê¿”êº‚?????????æ½??
+    // D3DXMatrixRotationZ(?åš¥â–²êµ§?????ï§’ê³—?é›…?í”ç‘—â“©ë¤ƒ??????åš¥ì‹³ì‡ï§??????Î’Â€?ç«Š?????ë…¿ë®??? ???????é†«ë”†â”£????????ã…»ê¹½???)
     // 
-    // À§Ä¡ º¯È¯ Çà·ÄÀ» ¸¸µå´Â ÇÔ¼ö
-    // D3DXMatrixTranslation(°á°ú°ªÀ» ÀúÀåÇÒ Çà·ÄÀÇ ÁÖ¼Ò, xÀ§Ä¡, yÀ§Ä¡, zÀ§Ä¡)
+    // ????ì¹ë•Ÿ????â‘¤ìŠ¢å ‰???????Î’Â€?ç«Š???ê¿”êº‚?????????æ½??
+    // D3DXMatrixTranslation(?åš¥â–²êµ§?????ï§’ê³—?é›…?í”ç‘—â“©ë¤ƒ??????åš¥ì‹³ì‡ï§??????Î’Â€?ç«Š?????ë…¿ë®??? x????ì¹ë•Ÿ?? y????ì¹ë•Ÿ?? z????ì¹ë•Ÿ??
 
     D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
     D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(0.f));
@@ -46,27 +46,30 @@ int CPlayer_SSH_Ice::Update()
 
 
     if (m_fAngle > m_fMaxAngle)
+    {
         m_fAngle -= m_fAngle;
+        m_iRevCount++;
+    }
 
-    // ¹Ù²¼´Ù¸é È¸Àü
+    // ?ç†¬ê³£ë«–ï§??????ãƒ«ë´¾è«­??????
     if (m_bRev)
     {
         m_fAngle += m_fRevSpeed;
     }
 
-    // ¹Ù²îÁö ¾Ê¾Ò´Ù¸é Á¦ÀÚ¸®¿¡¼­ ´ë±â
+    // ?ç†¬ê³£ë«–ï§????? ?????ê¹…ë‰¼????ãƒ«ë´¾è«­???ï¦«ëš®??ï½…ì¹°??ì™ê°­í”????????
     if (!m_bRev)
     {
-        D3DXMatrixTranslation(&matParrent, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
+        D3DXMatrixTranslation(&matParrent, m_tInfo.vPos.x , m_tInfo.vPos.y, 0.f);
     }
-    // ¹Ù²î¾ú´Ù¸é Å¸±ê Áß½ÉÀ¸·Î °øÀü
+    // ?ç†¬ê³£ë«–ï§??????????ãƒ«ë´¾è«­?????åš¥ì‹³ì‰¶ç‘—??ê¾§í‹¡?????Î’Â€??????ëŒë²–??
     else if(m_bRev)
     {
-        // Å¸±ê(ºÒ) Áß½ÉÀ¸·Î °øÀü, 
+        // ?????? åš¥ì‹³ì‰¶ç‘—??ê¾§í‹¡?????Î’Â€??????ëŒë²–?? 
         if (CPlayer_SSH* Temp = dynamic_cast<CPlayer_SSH*>(m_pTarget))
         {
             D3DXMatrixTranslation(&matParrent, Temp->Get_vPoint().x, Temp->Get_vPoint().y, 0.f);
-            // °øÀüÇÏ´ø Å¸±êÀÇ Áß½É¸¦ º»ÀÎÀÇ Áß½ÉÀ¸·Î ³Ñ°ÜÁÜ
+            // ????ëŒë²–????Î²ë¼¯çˆ°ê»“ì­•????Î¼ë–œåª›?ìŠ™???åš¥ì‹³ì‰¶ç‘—??ê¾§í‹¡?ï¦«ëš®?çˆ°????â‘¤ìŠ¢?ë½«ì¶¯???åš¥ì‹³ì‰¶ç‘—??ê¾§í‹¡?????Î’Â€???????ë©¸ë•åš¥?
             m_tInfo.vPos = Temp->Get_vPoint();
         }
     }
@@ -86,20 +89,28 @@ void CPlayer_SSH_Ice::Late_Update()
 
 void CPlayer_SSH_Ice::Render(HDC hDC)
 {
+    if (m_bDead)
+        return;
+
+    int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+    int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
     Ellipse(hDC,
-        int(m_vPoint.x - 20.f),
-        int(m_vPoint.y - 20.f),
-        int(m_vPoint.x + 20.f),
-        int(m_vPoint.y + 20.f));
+        int(m_vPoint.x - 20.f + iScrollX),
+        int(m_vPoint.y - 20.f + iScrollY),
+        int(m_vPoint.x + 20.f + iScrollX),
+        int(m_vPoint.y + 20.f + iScrollY));
 
     TCHAR szStatus[100]{};
 
-    swprintf_s(szStatus, L"¾ó °¢µµ : %.2f", m_fAngle);
+    swprintf_s(szStatus, L"Ice's Angle : %.2f", m_fAngle);
     TextOut(hDC, 500, 500, szStatus, lstrlen(szStatus));
-    swprintf_s(szStatus, L"¾ó ¿øÀÇ À§Ä¡ X : %.2f, Y : %.2f", m_vPoint.x, m_vPoint.y);
+    swprintf_s(szStatus, L"Ice's Location X : %.2f, Y : %.2f", m_vPoint.x, m_vPoint.y);
     TextOut(hDC, 500, 520, szStatus, lstrlen(szStatus));
-    swprintf_s(szStatus, L"¾ó");
-    TextOut(hDC, (int)m_vPoint.x, (int)m_vPoint.y, szStatus, lstrlen(szStatus));
+    swprintf_s(szStatus, L"ICE");
+    TextOut(hDC, (int)m_vPoint.x + iScrollX, (int)m_vPoint.y + iScrollY, szStatus, lstrlen(szStatus));
+    swprintf_s(szStatus, L"Ice's RevCount : %d", m_iRevCount);
+    TextOut(hDC, 500, 540, szStatus, lstrlen(szStatus));
 }
 
 void CPlayer_SSH_Ice::Release()

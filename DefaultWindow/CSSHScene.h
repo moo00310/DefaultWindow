@@ -1,5 +1,8 @@
 #pragma once
 #include "CScene.h"
+
+class CObj;
+
 class CSSHScene : public CScene
 {
 public:
@@ -13,8 +16,9 @@ public:
 	void Render(HDC hDC) override;
 	void Release() override;
 
-public:
+private:
 	void Key_Input();
+	void Offset();
 
 private:
 	bool  m_bChange;
@@ -23,6 +27,7 @@ private:
 	float m_fMaxAngle;
 
 	int   m_iBlockCount;
-	int   m_iBlockSaveCount;
+
+	list<CObj*>::iterator m_IterBlock;
 };
 

@@ -49,6 +49,7 @@ bool CObjMgr::Collision_Check()
 			float fWidth = abs(m_pPlayer->Get_Info().vPos.x - obj->Get_Info().vPos.x);
 			float fHeight = abs(m_pPlayer->Get_Info().vPos.y - obj->Get_Info().vPos.y);
 			float fDiagonal = sqrtf(fWidth * fWidth + fHeight * fHeight);
+
 			if (fRadius >= fDiagonal)
 				return true;
 		});
@@ -112,9 +113,6 @@ void CObjMgr::Render(HDC hDC)
 
 		m_RenderList[i].clear();
 	}
-
-	float x = m_ObjList[OBJ_MONSTER].front()->Get_Info().vPos.x;
-	float y = m_ObjList[OBJ_MONSTER].front()->Get_Info().vPos.y;
 }
 
 void CObjMgr::Release()
