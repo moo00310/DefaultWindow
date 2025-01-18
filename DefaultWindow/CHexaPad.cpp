@@ -1,12 +1,14 @@
 #include "pch.h"
 #include "CHexaPad.h"
 #include "CSceneMgr.h"
+#include "CObjMgr.h"
 
 CHexaPad::CHexaPad()
 {
 	ZeroMemory(&m_ResetPosition, sizeof(D3DXVECTOR3));
 
 	m_fScale = 20.f;
+	m_Player = static_cast<CKDHPlayer*>(CObjMgr::Get_Instance()->Get_Player());
 }
 
 CHexaPad::~CHexaPad()
@@ -69,27 +71,27 @@ int CHexaPad::Update()
 
 	m_localScale.x = m_distance / 40.f;
 
-	switch (m_iDirection)
+	switch (m_Direction)
 	{
-	case 0:
+	case DIR_UP:
 	{
 		m_localPosition.y += m_fSpeed;
 	}
 	break;
 
-	case 1:
+	case DIR_DOWN:
 	{
 		m_localPosition.y -= m_fSpeed;
 	}
 	break;
 
-	case 2:
+	case DIR_LEFT:
 	{
 		m_localPosition.x += m_fSpeed;
 	}
 	break;
 
-	case 3:
+	case DIR_RIGHT:
 	{
 		m_localPosition.x -= m_fSpeed;
 	}
@@ -177,13 +179,13 @@ void CHexaPad::SetPlayer(CKDHPlayer* _player)
 	m_Player = _player;
 }
 
-void CHexaPad::SetDirection(int _idirection)
+void CHexaPad::SetDirection(kDIRECTION _kDIR)
 {
-	m_iDirection = _idirection;
+	m_Direction = _kDIR;
 
-	switch (m_iDirection)
+	switch (m_Direction)
 	{
-	case 0:
+	case DIR_UP:
 	{
 		// À§.
 		m_localPosition = { WINCX * 0.5f, m_fScale, 0.f };
@@ -191,7 +193,7 @@ void CHexaPad::SetDirection(int _idirection)
 	}
 	break;
 
-	case 1:
+	case DIR_DOWN:
 	{
 		// ¾Æ·¡.
 		m_localPosition = { WINCX * 0.5f, WINCY - m_fScale, 0.f };
@@ -199,7 +201,7 @@ void CHexaPad::SetDirection(int _idirection)
 	}
 	break;
 
-	case 2:
+	case DIR_LEFT:
 	{
 		// ÁÂ.
 		m_localPosition = { m_fScale, WINCY * 0.5f, 0.f };
@@ -207,7 +209,7 @@ void CHexaPad::SetDirection(int _idirection)
 	}
 	break;
 
-	case 3:
+	case DIR_RIGHT:
 	{
 		// ¿ì.
 		m_localPosition = { WINCX - m_fScale, WINCY * 0.5f, 0.f };

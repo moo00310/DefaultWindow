@@ -54,6 +54,23 @@ typedef struct tagInfo
 }INFO;
 
 
+// 시퀀스용.
+enum kSEQUENCE
+{
+	SEQUENCE_WAIT,
+	SEQUENCE_PLAY,
+	SEQUENCE_END,
+};
+
+enum kDIRECTION
+{
+	DIR_UP = 0,
+	DIR_DOWN,
+	DIR_LEFT,
+	DIR_RIGHT
+};
+
+
 // ��� ���� �Լ�
 
 // �׵� ����� ������ִ� �Լ�

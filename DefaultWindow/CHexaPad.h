@@ -1,6 +1,7 @@
 #pragma once
 #include "CObj.h"
 #include "CKDHPlayer.h"
+#include "Define.h"
 
 class CHexaPad : public CObj
 {
@@ -15,7 +16,7 @@ public:
 	void Render(HDC hDC) override;
 	void Release() override;
 	void SetPlayer(CKDHPlayer* _player);
-	void SetDirection(int _idirection);
+	void SetDirection(kDIRECTION _kDIR);
 
 private:
 	float GetDistance(D3DXVECTOR3 _info)
@@ -73,7 +74,7 @@ private:
 	// 중심 거리차이.
 	float m_distance;
 
-	int m_iDirection;
+	kDIRECTION m_Direction;
 
 	CKDHPlayer* m_Player;
 };

@@ -3,6 +3,7 @@
 #include "CKDHPlayer.h"
 #include "CAbstractFactory.h"
 #include "CObjMgr.h"
+#include "CHexaPadManager.h"
 
 CKDHScene::CKDHScene()
 {
@@ -16,17 +17,15 @@ CKDHScene::~CKDHScene()
 void CKDHScene::Initialize()
 {
 	CObj* player = CAbstractFactory<CKDHPlayer>::Create();
-	CObj* pad = CAbstractFactory<CHexaPad>::Create();
-	static_cast<CHexaPad*>(pad)->SetPlayer(static_cast<CKDHPlayer*>(player));
-	static_cast<CHexaPad*>(pad)->SetDirection(1);
-
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, player);
-	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, pad);
+
+	CreatePattern();
 }
 
 int CKDHScene::Update()
 {
 	CObjMgr::Get_Instance()->Update();
+	CHexaPadManager::Get_Instance()->OnPattern();
 	
 	return 0;
 }
@@ -49,5 +48,37 @@ void CKDHScene::Render(HDC hDC)
 
 void CKDHScene::Release()
 {
-	//CObjMgr::Get_Instance()->Release();
+	CHexaPadManager::Get_Instance()->Destroy_Instance();
+}
+
+void CKDHScene::CreatePattern()
+{
+	CSequence sequence;
+	sequence.sequence = [&]()
+		{
+			CObj* pad1 = CAbstractFactory<CHexaPad>::Create();
+			static_cast<CHexaPad*>(pad1)->SetDirection(DIR_DOWN);
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, pad1);
+
+			CObj* pad2 = CAbstractFactory<CHexaPad>::Create();
+			static_cast<CHexaPad*>(pad2)->SetDirection(DIR_UP);
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, pad2);
+		};
+	sequence.fCount = 1.f;
+
+	CHexaPadManager::Get_Instance()->AddPattern(sequence);
+
+	sequence.sequence = [&]()
+		{
+			CObj* pad1 = CAbstractFactory<CHexaPad>::Create();
+			static_cast<CHexaPad*>(pad1)->SetDirection(DIR_LEFT);
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, pad1);
+
+			CObj* pad2 = CAbstractFactory<CHexaPad>::Create();
+			static_cast<CHexaPad*>(pad2)->SetDirection(DIR_RIGHT);
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, pad2);
+		};
+	sequence.fCount = 1.f;
+
+	CHexaPadManager::Get_Instance()->AddPattern(sequence);
 }
