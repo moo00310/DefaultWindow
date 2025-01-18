@@ -35,5 +35,14 @@ public:
 
 		return pObj;
 	}
+
+	static CObj* Create(float _fX, float _fY, Direction _dir)
+	{
+		CObj* pObj = new T(_dir);
+		pObj->Set_Pos(_fX, _fY);
+		pObj->Initialize();
+
+		return pObj;
+	}
 };
 

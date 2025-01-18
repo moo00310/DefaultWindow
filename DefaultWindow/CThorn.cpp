@@ -1,9 +1,13 @@
 #include "pch.h"
 #include "CThorn.h"
 
-CThorn::CThorn() : m_tPoints{}
+CThorn::CThorn() : m_tPoints{}, e_tDir(D_END)
 {
 	
+}
+
+CThorn::CThorn(Direction _dir) :e_tDir(_dir), m_tPoints{}
+{
 }
 
 CThorn::~CThorn()
@@ -80,7 +84,7 @@ float CThorn::TranceAngle()
 	 if (m_tInfo.vPos.x < m_vMidPoint.x)
 		 angle = 2 *PI - angle;
 
-	 if (D3DXVec3Length(&temp) < 200.f)
+	 if (D3DXVec3Length(&temp) < 220.f)
 		 angle += PI;
 
 	 return angle;
