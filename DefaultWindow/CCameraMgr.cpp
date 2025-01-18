@@ -13,6 +13,7 @@ void CCameraMgr::Initailize()
 
 void CCameraMgr::Update()
 {
+
 	switch (m_eCameraState)
 	{
 	case CS_ZoomAndFollow:
@@ -23,8 +24,8 @@ void CCameraMgr::Update()
 	case CS_Shake1:
 	{
 		int shakeIntensity = 20;
-		m_Camera[C_Move_LT].x = min(max(0, rand() % (2 * shakeIntensity) - shakeIntensity),600); // -10 ~ 10 ��鸲
-		m_Camera[C_Move_LT].y = min(max(0, rand() % (2 * shakeIntensity) - shakeIntensity),600);
+		m_Camera[C_Move_LT].x = min(max(0, rand() % (2 * shakeIntensity) - shakeIntensity), 600); // -10 ~ 10 흔들림
+		m_Camera[C_Move_LT].y = min(max(0, rand() % (2 * shakeIntensity) - shakeIntensity), 600);
 		break;
 	}
 	case CS_Slow_ZoomIN:
@@ -33,11 +34,9 @@ void CCameraMgr::Update()
 	case CS_ZoomIN:
 		ZoomIn();
 		break;
-
 	case CS_Force_ZoomIN:
 		Force_ZoomIn();
 		break;
-
 	case CS_ZoomOUT:
 		if (m_ulTime + 1000 < GetTickCount64())
 		{
@@ -54,17 +53,18 @@ void CCameraMgr::Update()
 			m_Camera[C_Zoom_size] = { WINCX, WINCY };
 		}
 		break;
-
 	case CS_END:
-		m_Camera[C_Move_LT]	 =	{ 0 , 0 };
+		m_Camera[C_Move_LT] = { 0 , 0 };
 		m_Camera[C_Move_size] = { WINCX ,WINCY };
-		m_Camera[C_Zoom_LT]	 =	{ 0 , 0 };
+		m_Camera[C_Zoom_LT] = { 0 , 0 };
 		m_Camera[C_Zoom_size] = { WINCX, WINCY };
 		break;
 	default:
 		break;
 	}
 }
+	
+
 
 void CCameraMgr::Render(HDC _hDc, HDC _memDC)
 {
@@ -91,30 +91,25 @@ void CCameraMgr::ZoomIn()
 		m_Camera[C_Zoom_size] = { WINCX - 70, WINCY - 70 };
 		m_ulTime = GetTickCount64();
 	}
-	else if (m_ulTime + 350 < GetTickCount64())
-	{
-		m_eCameraState = CS_END;
-	}
-
 	else if (m_ulTime + 300 < GetTickCount64())
 	{
-		m_Camera[C_Zoom_LT] = { 15 , 15 };
-		m_Camera[C_Zoom_size] = { WINCX - 30, WINCY - 30 };
+		m_ulTime = 0;
+		m_eCameraState = CS_END;
 	}
 	else if (m_ulTime + 250 < GetTickCount64())
 	{
-		m_Camera[C_Zoom_LT] = { 20 , 20 };
-		m_Camera[C_Zoom_size] = { WINCX - 40, WINCY - 40 };
+		m_Camera[C_Zoom_LT] = { 5 , 5 };
+		m_Camera[C_Zoom_size] = { WINCX - 10, WINCY - 10 };
 	}
 	else if (m_ulTime + 200 < GetTickCount64())
 	{
-		m_Camera[C_Zoom_LT] = { 25 , 25 };
-		m_Camera[C_Zoom_size] = { WINCX - 50, WINCY - 50 };
+		m_Camera[C_Zoom_LT] = { 10 , 10 };
+		m_Camera[C_Zoom_size] = { WINCX - 20, WINCY - 20 };
 	}
 	else if (m_ulTime + 150 < GetTickCount64())
 	{
-		m_Camera[C_Zoom_LT] = { 28 , 28 };
-		m_Camera[C_Zoom_size] = { WINCX - 56, WINCY - 56 };
+		m_Camera[C_Zoom_LT] = { 20 , 20 };
+		m_Camera[C_Zoom_size] = { WINCX - 40, WINCY - 40 };
 	}
 	else if (m_ulTime + 100 < GetTickCount64())
 	{
@@ -134,63 +129,96 @@ void CCameraMgr::Slow_ZoomIn()
 	{
 		m_ulTime = GetTickCount64();
 	}
-	else if (m_ulTime + 2000 < GetTickCount64())
+	else if (m_ulTime + 1210 < GetTickCount64())
 	{
-		m_Camera[C_Zoom_LT] = { 75 , 75 };
-		m_Camera[C_Zoom_size] = { WINCX - 150, WINCY - 150 };
 		m_ulTime = 0;
 		m_eCameraState = CS_END;
 	}
-	else if (m_ulTime + 1800 < GetTickCount64())
-	{
-		m_Camera[C_Zoom_LT] = { 72 , 72 };
-		m_Camera[C_Zoom_size] = { WINCX - 144, WINCY - 144 };
-	}
-	else if (m_ulTime + 1600 < GetTickCount64())
-	{
-		m_Camera[C_Zoom_LT] = { 68 , 68 };
-		m_Camera[C_Zoom_size] = { WINCX - 136, WINCY - 136 };
-	}
-	else if (m_ulTime + 1400 < GetTickCount64())
-	{
-		m_Camera[C_Zoom_LT] = { 65 , 65 };
-		m_Camera[C_Zoom_size] = { WINCX - 130, WINCY - 130 };
-	}
 	else if (m_ulTime + 1200 < GetTickCount64())
 	{
-		m_Camera[C_Zoom_LT] = { 60 , 60 };
-		m_Camera[C_Zoom_size] = { WINCX - 120, WINCY - 120 };
+		m_Camera[C_Zoom_LT] = { 85 , 63 };
+		m_Camera[C_Zoom_size] = { WINCX - 150, WINCY - 126 };
 	}
-	else if (m_ulTime + 1000 < GetTickCount64())
+	else if (m_ulTime + 1125 < GetTickCount64())
 	{
-		m_Camera[C_Zoom_LT] = { 50 , 50 };
-		m_Camera[C_Zoom_size] = { WINCX - 100, WINCY - 100 };
+		m_Camera[C_Zoom_LT] = { 80 , 60 };
+		m_Camera[C_Zoom_size] = { WINCX - 150, WINCY - 120 };
 	}
-	else if (m_ulTime + 800 < GetTickCount64())
+	else if (m_ulTime + 1050 < GetTickCount64())
 	{
-		m_Camera[C_Zoom_LT] = { 40 , 40 };
-		m_Camera[C_Zoom_size] = { WINCX - 80, WINCY - 80 };
+		m_Camera[C_Zoom_LT] = { 75 , 54 };
+		m_Camera[C_Zoom_size] = { WINCX - 150, WINCY - 108 };
+	}
+	else if (m_ulTime + 975 < GetTickCount64())
+	{
+		m_Camera[C_Zoom_LT] = { 70 , 51 };
+		m_Camera[C_Zoom_size] = { WINCX - 140, WINCY - 102 };
+	}
+	else if (m_ulTime + 900 < GetTickCount64())
+	{
+		m_Camera[C_Zoom_LT] = { 65 , 48 };
+		m_Camera[C_Zoom_size] = { WINCX - 130, WINCY - 96 };
+	}
+	else if (m_ulTime + 825 < GetTickCount64())
+	{
+		m_Camera[C_Zoom_LT] = { 60 , 45 };
+		m_Camera[C_Zoom_size] = { WINCX - 120, WINCY - 90 };
+	}
+	else if (m_ulTime + 750 < GetTickCount64())
+	{
+		m_Camera[C_Zoom_LT] = { 55 , 42 };
+		m_Camera[C_Zoom_size] = { WINCX - 110, WINCY - 84 };
+	}
+	else if (m_ulTime + 675 < GetTickCount64())
+	{
+		m_Camera[C_Zoom_LT] = { 50 , 36 };
+		m_Camera[C_Zoom_size] = { WINCX - 100, WINCY - 72 };
 	}
 	else if (m_ulTime + 600 < GetTickCount64())
 	{
-		m_Camera[C_Zoom_LT] = { 30 , 30 };
-		m_Camera[C_Zoom_size] = { WINCX - 60, WINCY - 60 };
+		m_Camera[C_Zoom_LT] = { 45 , 33 };
+		m_Camera[C_Zoom_size] = { WINCX - 90, WINCY - 66 };
 	}
-	else if (m_ulTime + 400 < GetTickCount64())
+	else if (m_ulTime + 525 < GetTickCount64())
 	{
-		m_Camera[C_Zoom_LT] = { 20 , 20 };
-		m_Camera[C_Zoom_size] = { WINCX - 40, WINCY - 40 };
+		m_Camera[C_Zoom_LT] = { 40 , 30 };
+		m_Camera[C_Zoom_size] = { WINCX - 80, WINCY - 60 };
 	}
-	else if (m_ulTime + 200 < GetTickCount64())
+	else if (m_ulTime + 450 < GetTickCount64())
 	{
-		m_Camera[C_Zoom_LT] = { 10 , 10 };
-		m_Camera[C_Zoom_size] = { WINCX - 20, WINCY - 20 };
+		m_Camera[C_Zoom_LT] = { 35 , 27 };
+		m_Camera[C_Zoom_size] = { WINCX - 70, WINCY - 54 };
+	}
+	else if (m_ulTime + 375 < GetTickCount64())
+	{
+		m_Camera[C_Zoom_LT] = { 30 , 22 };
+		m_Camera[C_Zoom_size] = { WINCX - 60, WINCY - 44 };
+	}
+	else if (m_ulTime + 300 < GetTickCount64())
+	{
+		m_Camera[C_Zoom_LT] = { 25 , 18 };
+		m_Camera[C_Zoom_size] = { WINCX - 50, WINCY - 36 };
+	}
+	else if (m_ulTime + 225 < GetTickCount64())
+	{
+		m_Camera[C_Zoom_LT] = { 20 , 15 };
+		m_Camera[C_Zoom_size] = { WINCX - 40, WINCY - 30 };
+	}
+	else if (m_ulTime + 150 < GetTickCount64())
+	{
+		m_Camera[C_Zoom_LT] = { 15 , 12 };
+		m_Camera[C_Zoom_size] = { WINCX - 30, WINCY - 24 };
+	}
+	else if (m_ulTime + 75 < GetTickCount64())
+	{
+		m_Camera[C_Zoom_LT] = { 10 , 8 };
+		m_Camera[C_Zoom_size] = { WINCX - 20, WINCY - 16 };
 	}
 }
 
 void CCameraMgr::Force_ZoomIn()
 {
-	if (m_ulTime + 500 < GetTickCount64())
+	if (m_ulTime + 420 < GetTickCount64())
 	{
 		// ZoomIn
 		m_Camera[C_Zoom_LT] = { 75 , 75 };
@@ -198,10 +226,10 @@ void CCameraMgr::Force_ZoomIn()
 		m_ulTime = GetTickCount64();
 	}
 	else if (m_ulTime + 300 < GetTickCount64())
-	{
+	{  
+		m_ulTime = 0;
 		m_eCameraState = CS_END;
 	}
-
 	else if (m_ulTime + 250 < GetTickCount64())
 	{
 		m_Camera[C_Zoom_LT] = { 20 , 20 };

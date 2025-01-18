@@ -21,7 +21,7 @@ public:
 
 	CObj* Get_Target(OBJID eID, CObj* pDst);
 
-	bool Collision_Check();
+	bool Collision_Check(float _Dst, float _Src);
 
 public:
 	void		Add_Object(OBJID eID, CObj* pObj);

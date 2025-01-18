@@ -33,12 +33,6 @@
     <ClCompile Include="CMenu.cpp">
       <Filter>07.UnionScene\MenuScene</Filter>
     </ClCompile>
-    <ClCompile Include="COrbit.cpp">
-      <Filter>01.Moo\02.Obj</Filter>
-    </ClCompile>
-    <ClCompile Include="CThorn.cpp">
-      <Filter>01.Moo\02.Obj</Filter>
-    </ClCompile>
     <ClCompile Include="COrbit_or_bit.cpp">
       <Filter>01.Moo\00.Scene</Filter>
     </ClCompile>
@@ -110,6 +104,12 @@
     </ClCompile>
     <ClCompile Include="CHexaPadManager.cpp">
       <Filter>05.Desgin\HexaPadManager</Filter>
+    </ClCompile>
+    <ClCompile Include="COrbit.cpp">
+      <Filter>01.Moo\02.Obj\00.Orbit</Filter>
+    </ClCompile>
+    <ClCompile Include="CThorn.cpp">
+      <Filter>01.Moo\02.Obj\01.Thorn</Filter>
     </ClCompile>
     <ClCompile Include="CKDHLine.cpp">
       <Filter>04.KDH</Filter>
