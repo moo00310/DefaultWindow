@@ -17,6 +17,8 @@ public:
 	CObj* Get_LastMonster() { return m_ObjList[OBJ_MONSTER].back(); }
 	list<CObj*>* Get_ObjList() { return m_ObjList; }
 
+	list<CObj*>* Get_List() { return m_ObjList; }
+
 	CObj* Get_Target(OBJID eID, CObj* pDst);
 
 	bool Collision_Check();

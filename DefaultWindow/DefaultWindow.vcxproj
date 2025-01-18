@@ -175,6 +175,7 @@
     <ClInclude Include="CScrollMgr.h" />
     <ClInclude Include="CSequence.h" />
     <ClInclude Include="CSoundMgr.h" />
+    <ClInclude Include="CSpawner.h" />
     <ClInclude Include="CSSHScene.h" />
     <ClInclude Include="CStart.h" />
     <ClInclude Include="CThorn.h" />
@@ -211,6 +212,7 @@
     <ClCompile Include="CScrollMgr.cpp" />
     <ClCompile Include="CSequence.cpp" />
     <ClCompile Include="CSoundMgr.cpp" />
+    <ClCompile Include="CSpawner.cpp" />
     <ClCompile Include="CSSHScene.cpp" />
     <ClCompile Include="CStart.cpp" />
     <ClCompile Include="CThorn.cpp" />

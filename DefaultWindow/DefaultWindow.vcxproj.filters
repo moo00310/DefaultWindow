@@ -63,15 +63,17 @@
     <ClCompile Include="CPlayer_SSH_Fire.cpp">
       <Filter>02.SSH\01.Player</Filter>
     </ClCompile>
-    <ClCompile Include="CSquare.cpp">
-      <Filter>03.HERO\01.Player</Filter>
-    </ClCompile>
     <ClCompile Include="CRhythmWorld.cpp">
       <Filter>03.HERO\00.Scene</Filter>
     </ClCompile>
     <ClCompile Include="CSSHScene.cpp">
       <Filter>02.SSH\00.Scene</Filter>
     </ClCompile>
+    <ClCompile Include="CSquare.cpp">
+      <Filter>03.HERO\01.Obj\00.Square</Filter>
+    </ClCompile>
+    <ClCompile Include="CSpawner.cpp">
+      <Filter>03.HERO\01.Obj\01.Spawner</Filter>
     <ClCompile Include="COrbit.cpp">
       <Filter>01.Moo\02.Obj\00.Orbit</Filter>
     </ClCompile>
@@ -173,15 +175,17 @@
     <ClInclude Include="CPlayer_SSH_Ice.h">
       <Filter>02.SSH\01.Player</Filter>
     </ClInclude>
-    <ClInclude Include="CSquare.h">
-      <Filter>03.HERO\01.Player</Filter>
-    </ClInclude>
     <ClInclude Include="CStart.h">
       <Filter>07.UnionScene\StartScene</Filter>
     </ClInclude>
     <ClInclude Include="CScene.h">
       <Filter>06.Abstract\02.Scene</Filter>
     </ClInclude>
+    <ClInclude Include="CSquare.h">
+      <Filter>03.HERO\01.Obj\00.Square</Filter>
+    </ClInclude>
+    <ClInclude Include="CSpawner.h">
+      <Filter>03.HERO\01.Obj\01.Spawner</Filter>
     <ClInclude Include="COrbit.h">
       <Filter>01.Moo\02.Obj\00.Orbit</Filter>
     </ClInclude>
@@ -344,9 +348,6 @@
     <Filter Include="03.HERO\00.Scene">
       <UniqueIdentifier>{48da60f8-794d-4342-9a1f-45ad1838df6f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03.HERO\01.Player">
-      <UniqueIdentifier>{f8329e9f-4bcc-4344-90a8-c7c22c6564b2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04.KDH">
       <UniqueIdentifier>{a6bc2046-af67-4086-a5a8-70d821e105a3}</UniqueIdentifier>
     </Filter>
@@ -380,6 +381,14 @@
     <Filter Include="07.UnionScene\StartScene">
       <UniqueIdentifier>{2d29434d-419f-426f-a7b8-0b27756ab884}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03.HERO\01.Obj">
+      <UniqueIdentifier>{f8329e9f-4bcc-4344-90a8-c7c22c6564b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.HERO\01.Obj\00.Square">
+      <UniqueIdentifier>{9cae4ba8-eda0-442b-b7d1-0b5336bf0a5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.HERO\01.Obj\01.Spawner">
+      <UniqueIdentifier>{83ec092c-f517-4d34-af7b-06de2d5836ba}</UniqueIdentifier>
     <Filter Include="01.Moo\02.Obj\00.Orbit">
       <UniqueIdentifier>{b4ace08e-39bf-4c67-9927-d67c4313088d}</UniqueIdentifier>
     </Filter>

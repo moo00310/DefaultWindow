@@ -1,5 +1,7 @@
 #pragma once
 #include "CScene.h"
+#include "CSpawner.h"
+
 class CRhythmWorld :
     public CScene
 {
@@ -12,5 +14,10 @@ public:
     void Late_Update() override;
     void Render(HDC hDC) override;
     void Release() override;
+private:
+    void    Check_Hit();
+private:
+    CObj* m_pSpawner;
+    float m_fDistance;
 };
 
