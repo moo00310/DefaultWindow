@@ -40,7 +40,7 @@ void CHexaPad::Initialize()
 		vertexOrigin[i].y = vertex[i].y;
 	}
 
-	// Ç×µî Çà·Ä.
+	// í•­ë“± í–‰ë ¬.
 	D3DXMatrixIdentity(&m_MatrixPosition);
 	D3DXMatrixIdentity(&m_MatrixRotate);
 	D3DXMatrixIdentity(&m_MatrixScale);
@@ -56,10 +56,10 @@ int CHexaPad::Update()
 	m_distance = GetDistance(m_Player->GetLocalParentPosition());
 	float fPlayerDistance = GetDistance(m_Player->GetLocalPositionToWorld());
 
-	// ÇÃ·¹ÀÌ¾î Á¢ÃË È®ÀÎ.
+	// í”Œë ˆì´ì–´ ì ‘ì´‰ í™•ì¸.
 	if (fPlayerDistance <= m_fScale + m_fScale)
 	{
-		// °ÔÀÓ ¿À¹ö ÆÇÁ¤.
+		// ê²Œì„ ì˜¤ë²„ íŒì •.
 		CSceneMgr::Get_Instance()->Set_Scene(SC_KDH);
 		return 0;
 	}
@@ -103,7 +103,7 @@ int CHexaPad::Update()
 
 void CHexaPad::Late_Update()
 {
-	// Á¡µéÀ» ´Ù½Ã 0,0 ¿øÁ¡À¸·Î ÀÌµ¿½ÃÅ´.
+	// ì ë“¤ì„ ë‹¤ì‹œ 0,0 ì›ì ìœ¼ë¡œ ì´ë™ì‹œí‚´.
 	vertexOrigin[0].x = m_ResetPosition.x - m_fScale;
 	vertexOrigin[0].y = m_ResetPosition.y - m_fScale;
 
@@ -116,32 +116,32 @@ void CHexaPad::Late_Update()
 	vertexOrigin[3].x = m_ResetPosition.x - m_fScale - m_fScale;
 	vertexOrigin[3].y = m_ResetPosition.y + m_fScale;
 
-	// Å©±â Çà·Ä.
+	// í¬ê¸° í–‰ë ¬.
 	D3DXMatrixScaling(&m_MatrixScale, m_localScale.x, m_localScale.y, m_localScale.z);
 
-	// È¸Àü Çà·Ä.
+	// íšŒì „ í–‰ë ¬.
 	D3DXMatrixRotationZ(&m_MatrixRotate, D3DXToRadian(m_rotAngle));
 
-	// ÀÌµ¿ Çà·Ä.
+	// ì´ë™ í–‰ë ¬.
 	D3DXMatrixTranslation(&m_MatrixPosition, m_localPosition.x, m_localPosition.y, m_localPosition.z);
 
-	// °øÀü Çà·Ä.
+	// ê³µì „ í–‰ë ¬.
 	//D3DXMatrixRotationZ(&m_MatrixRevolution, D3DXToRadian(m_revolAngle));
 
-	// ºÎ¸ğ Çà·Ä.
+	// ë¶€ëª¨ í–‰ë ¬.
 	//D3DXMatrixTranslation(&m_MatrixParent, m_localParentPosition.x, m_localParentPosition.y, m_localParentPosition.z);
 
-	// ¿ùµå ÁÂÇ¥·Î º¯È¯.
-	// ¿ùµå Çà·Ä = Å©±â * ÀÚÀü(È¸Àü) * ÀÌµ¿ * °øÀü * ºÎ¸ğ
+	// ì›”ë“œ ì¢Œí‘œë¡œ ë³€í™˜.
+	// ì›”ë“œ í–‰ë ¬ = í¬ê¸° * ìì „(íšŒì „) * ì´ë™ * ê³µì „ * ë¶€ëª¨
 	m_MatrixWorld = m_MatrixScale * m_MatrixRotate * m_MatrixPosition * m_MatrixRevolution * m_MatrixParent;
 
-	// Á¡µéÀ» È¸Àü, ÀÌµ¿ ½ÃÄÑ¾ßÇÏ´Ï º¤ÅÍ¿Í ¿ùµå Çà·Ä °öÇÔ.
+	// ì ë“¤ì„ íšŒì „, ì´ë™ ì‹œì¼œì•¼í•˜ë‹ˆ ë²¡í„°ì™€ ì›”ë“œ í–‰ë ¬ ê³±í•¨.
 	D3DXVec3TransformCoord(&vertex[0], &vertexOrigin[0], &m_MatrixWorld);
 	D3DXVec3TransformCoord(&vertex[1], &vertexOrigin[1], &m_MatrixWorld);
 	D3DXVec3TransformCoord(&vertex[2], &vertexOrigin[2], &m_MatrixWorld);
 	D3DXVec3TransformCoord(&vertex[3], &vertexOrigin[3], &m_MatrixWorld);
 
-	// ¹æÇâÀ» ±¸ÇÔ.
+	// ë°©í–¥ì„ êµ¬í•¨.
 	D3DXVec3TransformNormal(&m_localDirection, &m_localLookAt, &m_MatrixWorld);
 }
 
@@ -187,7 +187,7 @@ void CHexaPad::SetDirection(kDIRECTION _kDIR)
 	{
 	case DIR_UP:
 	{
-		// À§.
+		// ìœ„.
 		m_localPosition = { WINCX * 0.5f, m_fScale, 0.f };
 		m_rotAngle = 180.f;
 	}
@@ -195,7 +195,7 @@ void CHexaPad::SetDirection(kDIRECTION _kDIR)
 
 	case DIR_DOWN:
 	{
-		// ¾Æ·¡.
+		// ì•„ë˜.
 		m_localPosition = { WINCX * 0.5f, WINCY - m_fScale, 0.f };
 		m_rotAngle = 0.f;
 	}
@@ -203,7 +203,7 @@ void CHexaPad::SetDirection(kDIRECTION _kDIR)
 
 	case DIR_LEFT:
 	{
-		// ÁÂ.
+		// ì¢Œ.
 		m_localPosition = { m_fScale, WINCY * 0.5f, 0.f };
 		m_rotAngle = 90.f;
 	}
@@ -211,7 +211,7 @@ void CHexaPad::SetDirection(kDIRECTION _kDIR)
 
 	case DIR_RIGHT:
 	{
-		// ¿ì.
+		// ìš°.
 		m_localPosition = { WINCX - m_fScale, WINCY * 0.5f, 0.f };
 		m_rotAngle = 270.f;
 	}

@@ -107,7 +107,7 @@ void CKDHScene::CreatePattern()
 
 void CKDHScene::AddPad(kDIRECTION _direction)
 {
-	CObj* pad1 = CAbstractFactory<CHexaPad>::Create();
-	static_cast<CHexaPad*>(pad1)->SetDirection(_direction);
-	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, pad1);
+	CObj* pad = CAbstractFactory<CHexaPad>::Create();
+	static_cast<CHexaPad*>(pad)->SetDirection(_direction);
+	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, pad);
 }
