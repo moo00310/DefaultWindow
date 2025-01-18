@@ -29,6 +29,7 @@ void CRhythmWorld::Initialize()
 int CRhythmWorld::Update()
 {
     CObjMgr::Get_Instance()->Update();
+    CSoundMgr::Get_Instance()->Update();
     return 0;
 }
 

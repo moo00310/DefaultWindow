@@ -6,7 +6,7 @@
 
 CSquare::CSquare()
 	:m_fAngle(0.f), m_fSize(0.f), m_iRotPoint(0), m_bLeft(false), m_ullWaitTime(0),
-	m_pBankPoint(nullptr), m_pNotePoint(nullptr), m_iNote(0)
+	m_pBankPoint(nullptr), m_pNotePoint(nullptr), m_iNote(0), m_fCurSpeed(0.f), m_fTime(0.f)
 {
 	ZeroMemory(&m_vLocalPoint, sizeof(m_vLocalPoint));
 	ZeroMemory(&m_vWorldPoint, sizeof(m_vWorldPoint));
@@ -43,8 +43,8 @@ void CSquare::Initialize()
 	//m_pNotePoint = CSoundMgr::Get_Instance()->PlayEvent("event:/Note");
 	//m_pBankPoint =  CSoundMgr::Get_Instance()->LoadBank("bank:/Note");
 
-	m_pNotePoint = CSoundMgr::Get_Instance()->PlayEvent("event:/Note");
-	m_pNotePoint->setParameterByName("Note", (float)(rand() % 6));
+	//m_pNotePoint = CSoundMgr::Get_Instance()->PlayEvent("event:/Note");
+	//m_pNotePoint->setParameterByName("Note", (float)(rand() % 6));
 }
 
 int CSquare::Update()
@@ -54,6 +54,7 @@ int CSquare::Update()
 
 	if (!Wait_Time())
 	{
+		Change_Speed();
 		Roll_Corners();
 		//Roll();
 	}
@@ -96,7 +97,7 @@ void CSquare::Roll_Corners()
 	if (m_bLeft)
 	{
 		//각도를 증가 시킨다.
-		m_fAngle -= D3DXToRadian(m_fSpeed);
+		m_fAngle -= D3DXToRadian(m_fCurSpeed);
 
 		//충돌 체크할 포인트 설정
 		int iCheckPoint = m_iRotPoint + 1;
@@ -109,7 +110,7 @@ void CSquare::Roll_Corners()
 		if (m_vWorldPoint[iCheckPoint].y > WINCY * 0.5f)
 		{
 			m_pNotePoint = CSoundMgr::Get_Instance()->PlayEvent("event:/Note");
-			//m_pNotePoint->setParameterByName("Note", (float)(m_iNote++));
+			m_pNotePoint->setParameterByName("Note", (float)(m_iNote++));
 			//CSoundMgr::Get_Instance()->Update();
 			//m_pNotePoint->start();
 
@@ -140,7 +141,7 @@ void CSquare::Roll_Corners()
 	else
 	{
 		//각도를 증가 시킨다.
-		m_fAngle += D3DXToRadian(m_fSpeed);
+		m_fAngle += D3DXToRadian(m_fCurSpeed);
 
 		//충돌 체크할 포인트 설정
 		int iCheckPoint = m_iRotPoint - 1;
@@ -207,6 +208,13 @@ bool CSquare::Wait_Time()
 	return m_ullWaitTime + 1000 > GetTickCount64();
 }
 
+void CSquare::Change_Speed()
+{
+	//땅에 닿았을때 느려졌다가...세워졌을 때 빨라져야함
+	m_fTime += 0.3f;
+	m_fCurSpeed = abs(sin(m_fTime)) * m_fSpeed;
+}
+
 void CSquare::Render(HDC hDC)
 {
 	//사각형
@@ -247,6 +255,9 @@ void CSquare::Render(HDC hDC)
 
 	_stprintf_s(cBuffer, _T("(O)[%.0f, %.0f]"), m_tInfo.vPos.x, m_tInfo.vPos.y);
 	TextOut(hDC, (int)m_tInfo.vPos.x, (int)m_tInfo.vPos.y, cBuffer, (int)_tcslen(cBuffer));
+
+	_stprintf_s(cBuffer, _T("CurSpeed: %.2f"), m_fCurSpeed);
+	TextOut(hDC, 0, 0, cBuffer, (int)_tcslen(cBuffer));
 }
 
 void CSquare::Release()

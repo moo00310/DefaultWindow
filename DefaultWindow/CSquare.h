@@ -27,6 +27,7 @@ private:
     void Roll();
     void Check_ScreenOut();
     bool Wait_Time();
+    void Change_Speed();
 private:
     //사각형 점 4개
     D3DXVECTOR3 m_vLocalPoint[4];
@@ -45,6 +46,9 @@ private:
     FMOD::Studio::Bank* m_pBankPoint;
 
     int         m_iNote;
+
+    float       m_fCurSpeed;
+    float       m_fTime;
 
 };
 

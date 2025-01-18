@@ -55,7 +55,7 @@ void CSpawner::Release()
 
 void CSpawner::Spawn()
 {
-	m_fSpeed = SPEED_MIN + (rand() % (SPEED_MAX - SPEED_MIN + 1));
+	m_fSpeed = 4.f;//SPEED_MIN + (rand() % (SPEED_MAX - SPEED_MIN + 1));
 
 	m_pLeftSquare = CAbstractFactory<CSquare>::Create(11 * SIDE, WINCY * 0.5f - SIDE * 0.5f);
 	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, m_pLeftSquare);
