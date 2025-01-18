@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CObjMgr.h"
+#include "CThorn.h"
 
 CObjMgr* CObjMgr::m_pInstance = nullptr;
 
@@ -129,4 +130,13 @@ void CObjMgr::Delete_ID(OBJID eID)
 		Safe_Delete(pObj);
 
 	m_ObjList[eID].clear();
+}
+
+void CObjMgr::Dead_Monster(Direction eID)
+{
+	for_each(m_ObjList[OBJ_MONSTER].begin(), m_ObjList[OBJ_MONSTER].end(), [=](CObj* monster)
+		{
+			if(static_cast<CThorn*>(monster)->GetDir() == eID)
+				monster->Set_Dead();
+		});
 }

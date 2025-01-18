@@ -129,22 +129,38 @@ void COrbit_or_bit::CheckBpm()
 
 void COrbit_or_bit::SwapThron(int _count)
 {
-	if (_count % 4 == 0)
-	{
-		CObjMgr::Get_Instance()->Delete_ID(OBJ_MONSTER);
-	}
 	if (_count % 4 == 1)
 	{
-		CObjMgr::Get_Instance()->Delete_ID(OBJ_MONSTER);
-	}
-	if (_count % 4 == 2)
-	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CThorn>::Create(545.f, 153.f, D_RIght));
+		CObjMgr::Get_Instance()->Dead_Monster(D_RIght);
+		DrawRight(_count/4);
 	}
 	if (_count % 4 == 3)
 	{
-		//CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CThorn>::Create(274.f, 493.f));
+		CObjMgr::Get_Instance()->Dead_Monster(D_LEFT);
+		DrawLeft(_count/4);
 	}
+}
+
+void COrbit_or_bit::DrawRight(int _count)
+{
+	if (_count == 0)
+	{
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CThorn>::Create(545.f, 153.f, D_RIght));
+	}
+	if (_count == 1)
+	{
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CThorn>::Create(555.f, 134.f, D_RIght));
+	}
+	if (_count == 2)
+	{
+
+	}
+		
+}
+
+void COrbit_or_bit::DrawLeft(int _count)
+{
+	//CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CThorn>::Create(274.f, 493.f, D_LEFT));
 }
 
 void COrbit_or_bit::CameraMovement(int _count)

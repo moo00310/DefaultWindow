@@ -15,6 +15,7 @@ public:
 
 public:
 	float TranceAngle();
+	Direction GetDir() { return m_eDir; }
 
 private:
 	D3DXVECTOR3 m_vPoints[3];
@@ -23,6 +24,6 @@ private:
 
 	POINT m_tPoints[3];
 
-	Direction e_tDir;
+	Direction m_eDir;
 };
 

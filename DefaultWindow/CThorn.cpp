@@ -1,12 +1,12 @@
 #include "pch.h"
 #include "CThorn.h"
 
-CThorn::CThorn() : m_tPoints{}, e_tDir(D_END)
+CThorn::CThorn() : m_tPoints{}, m_eDir(D_END)
 {
 	
 }
 
-CThorn::CThorn(Direction _dir) :e_tDir(_dir), m_tPoints{}
+CThorn::CThorn(Direction _dir) :m_eDir(_dir), m_tPoints{}
 {
 }
 
@@ -31,6 +31,11 @@ void CThorn::Initialize()
 
 int CThorn::Update()
 {
+	if (m_bDead)
+	{
+		return OBJ_DEAD;
+	}
+
 	D3DXMATRIX		matRotZ, matTrans1, matTrans2, matScale;
 
 	D3DXMatrixScaling(&matScale, 1.35f, 1.35f, 1.35f);
