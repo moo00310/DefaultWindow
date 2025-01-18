@@ -33,6 +33,12 @@
     <ClCompile Include="CMenu.cpp">
       <Filter>07.UnionScene\MenuScene</Filter>
     </ClCompile>
+    <ClCompile Include="COrbit.cpp">
+      <Filter>01.Moo\02.Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="CThorn.cpp">
+      <Filter>01.Moo\02.Obj</Filter>
+    </ClCompile>
     <ClCompile Include="COrbit_or_bit.cpp">
       <Filter>01.Moo\00.Scene</Filter>
     </ClCompile>
@@ -74,6 +80,31 @@
     </ClCompile>
     <ClCompile Include="CScrollMgr.cpp">
       <Filter>05.Desgin\ScrollMgr</Filter>
+    <ClCompile Include="CPlayer_SSH_Fire.cpp">
+      <Filter>02.SSH\01.Player\00. Player_SSH\01. Fire</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer_SSH_Ice.cpp">
+      <Filter>02.SSH\01.Player\00. Player_SSH\02. Ice</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer_SSH.cpp">
+      <Filter>02.SSH\01.Player\00. Player_SSH\00. SSH</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlock_SSH.cpp">
+      <Filter>02.SSH\02. Block\00. Block</Filter>
+    <ClCompile Include="CKDHPlayer.cpp">
+      <Filter>04.KDH\01.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CKDHScene.cpp">
+      <Filter>04.KDH\00.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CHexaPad.cpp">
+      <Filter>04.KDH</Filter>
+    </ClCompile>
+    <ClCompile Include="CSequence.cpp">
+      <Filter>04.KDH</Filter>
+    </ClCompile>
+    <ClCompile Include="CHexaPadManager.cpp">
+      <Filter>05.Desgin\HexaPadManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +190,98 @@
     </ClInclude>
     <ClInclude Include="CScrollMgr.h">
       <Filter>05.Desgin\ScrollMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CCameraMgr.h">
+      <Filter>05.Desgin\CCameraMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CKeyMgr.h">
+      <Filter>05.Desgin\KeyMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CSceneMgr.h">
+      <Filter>05.Desgin\SceneMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CSoundMgr.h">
+      <Filter>05.Desgin\SoundMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CObjMgr.h">
+      <Filter>05.Desgin\ObjMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer_moo.h">
+      <Filter>01.Moo\01.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="COrbit_or_bit.h">
+      <Filter>01.Moo\00.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>99.Trash</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>99.Trash</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>99.Trash</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultWindow.h">
+      <Filter>99.Trash</Filter>
+    </ClInclude>
+    <ClInclude Include="CMainGame.h">
+      <Filter>00.MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="CObj.h">
+      <Filter>06.Abstract\00.Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>06.Abstract\01.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CMenu.h">
+      <Filter>07.UnionScene\MenuScene</Filter>
+    </ClInclude>
+    <ClInclude Include="COrbit.h">
+      <Filter>01.Moo\02.Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="CThorn.h">
+      <Filter>01.Moo\02.Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="CRhythmWorld.h">
+      <Filter>03.HERO\00.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CSSHScene.h">
+      <Filter>02.SSH\00.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CSquare.h">
+      <Filter>03.HERO\01.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CStart.h">
+      <Filter>07.UnionScene\StartScene</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene.h">
+      <Filter>06.Abstract\02.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer_SSH_Fire.h">
+      <Filter>02.SSH\01.Player\00. Player_SSH\01. Fire</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer_SSH_Ice.h">
+      <Filter>02.SSH\01.Player\00. Player_SSH\02. Ice</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer_SSH.h">
+      <Filter>02.SSH\01.Player\00. Player_SSH\00. SSH</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlock_SSH.h">
+      <Filter>02.SSH\02. Block\00. Block</Filter>
+    <ClInclude Include="CKDHPlayer.h">
+      <Filter>04.KDH\01.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CKDHScene.h">
+      <Filter>04.KDH\00.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CHexaPad.h">
+      <Filter>04.KDH</Filter>
+    </ClInclude>
+    <ClInclude Include="CSequence.h">
+      <Filter>04.KDH</Filter>
+    </ClInclude>
+    <ClInclude Include="CHexaPadManager.h">
+      <Filter>05.Desgin\HexaPadManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -265,6 +388,25 @@
     </Filter>
     <Filter Include="05.Desgin\ScrollMgr">
       <UniqueIdentifier>{051ed0ef-fd34-4a5d-8549-0f9187bb4775}</UniqueIdentifier>
+    <Filter Include="02.SSH\01.Player\00. Player_SSH">
+      <UniqueIdentifier>{6912844c-e7b2-49cb-a4cc-631a0e2817dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.SSH\01.Player\00. Player_SSH\01. Fire">
+      <UniqueIdentifier>{e5e63c7e-4f14-4377-92f3-2e08c3882b13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.SSH\01.Player\00. Player_SSH\02. Ice">
+      <UniqueIdentifier>{9fafcb73-861d-4ee0-be25-4da15a8512f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.SSH\01.Player\00. Player_SSH\00. SSH">
+      <UniqueIdentifier>{308bfdee-229f-431a-aa54-6730e8d70a30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.SSH\02. Block">
+      <UniqueIdentifier>{890553af-539a-4e21-984c-752f115cf2c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.SSH\02. Block\00. Block">
+      <UniqueIdentifier>{ad649063-7bbe-4b6b-9c64-b2fb50ff231c}</UniqueIdentifier>
+    <Filter Include="05.Desgin\HexaPadManager">
+      <UniqueIdentifier>{f82f0090-4314-4ef6-b9bd-029872c44efa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

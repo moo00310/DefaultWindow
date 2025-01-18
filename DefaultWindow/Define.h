@@ -17,11 +17,14 @@
 #define SSH_FIRE dynamic_cast<CPlayer_SSH*>(CObjMgr::Get_Instance()->Get_LastPlayer())
 #define SSH_ICE  dynamic_cast<CPlayer_SSH*>(CObjMgr::Get_Instance()->Get_Player())
 
+#define REV_SPEED 3.f
+
 extern HWND		g_hWnd;
 
-enum SCENEID { SC_START, SC_MENU, SC_MOO, SC_SSH, SC_HERO, SC_END };
-enum OBJID { OBJ_PLAYER, OBJ_BULLET, OBJ_MONSTER, OBJ_MOUSE, OBJ_SHIELD, OBJ_BUTTON, OBJ_END };
-enum RENDERID { RENDER_BACKGROUND, RENDER_GAMEOBJECT, RENDER_UI, RENDER_EFFECT, RENDER_END };
+
+enum SCENEID { SC_START, SC_MENU, SC_MOO, SC_KDH, SC_SSH,  SC_HERO, SC_END };
+enum OBJID { OBJ_PLAYER, OBJ_BULLET, OBJ_MONSTER, OBJ_MOUSE, OBJ_SHIELD, OBJ_BUTTON, OBJ_BLOCK, OBJ_END };
+enum RENDERID { RENDER_BACKGROUND, RENDER_GAMEOBJECT, RENDER_GAMEOBJECT_FRONT, RENDER_UI, RENDER_EFFECT, RENDER_END };
 
 enum CarmeraState { CS_ZoomAndFollow, CS_Shake1, CS_Shake2, CS_ZoomIN, CS_Slow_ZoomIN, CS_Force_ZoomIN, CS_ZoomOUT,CS_END };
 enum Carmera {C_Move_LT, C_Move_size, C_Zoom_LT, C_Zoom_size, C_End };
@@ -50,7 +53,7 @@ typedef struct tagInfo
 {
 	D3DXVECTOR3		vDir;
 	D3DXVECTOR3		vLook;
-	D3DXVECTOR3		vNormal;	// ¹ý¼± º¤ÅÍ(¹æÇâ º¤ÅÍ)
+	D3DXVECTOR3		vNormal;	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 
 	D3DXVECTOR3		vPos;
 
@@ -59,28 +62,44 @@ typedef struct tagInfo
 }INFO;
 
 
-// Çà·Ä °ü·Ã ÇÔ¼ö
 
-// Ç×µî Çà·ÄÀ» ¸¸µé¾îÁÖ´Â ÇÔ¼ö
-// D3DXMatrixIdentity(Ç×µî Çà·ÄÀ» ¸¸µé±â À§ÇÑ Çà·ÄÀÇ ÁÖ¼Ò)
+// ì‹œí€€ìŠ¤ìš©.
+enum kSEQUENCE
+{
+	SEQUENCE_WAIT,
+	SEQUENCE_PLAY,
+	SEQUENCE_END,
+};
+
+enum kDIRECTION
+{
+	DIR_UP = 0,
+	DIR_DOWN,
+	DIR_LEFT,
+	DIR_RIGHT
+};
+
+
+// ï¿½×µï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½?ï¿½Ô¼ï¿½
+// D3DXMatrixIdentity(ï¿½×µï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½Ö¼ï¿½)
 // D3DXMatrixIdentity(&m_tInfo.matWorld);
 
-// Å©±â º¯È¯ Çà·ÄÀ» ¸¸µå´Â ÇÔ¼ö
-// D3DXMatrixScaling(°á°ú°ªÀ» ÀúÀåÇÒ Çà·ÄÀÇ ÁÖ¼Ò, X¹èÀ², Y¹èÀ², Z¹èÀ²)
+// Å©ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½Ô¼ï¿½
+// D3DXMatrixScaling(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½Ö¼ï¿½, Xï¿½ï¿½ï¿½ï¿½, Yï¿½ï¿½ï¿½ï¿½, Zï¿½ï¿½ï¿½ï¿½)
 // D3DXMATRIX		matScale;
 // D3DXMatrixScaling(&matScale, 1.f, 2.f, 1.f);
 
-// È¸Àü º¯È¯ Çà·ÄÀ» ¸¸µå´Â ÇÔ¼ö
-// D3DXMatrixRotationZ(°á°ú°ªÀ» ÀúÀåÇÒ Çà·ÄÀÇ ÁÖ¼Ò, È¸Àü °¢µµ(¶óµð¾È))
+// È¸ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½Ô¼ï¿½
+// D3DXMatrixRotationZ(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½Ö¼ï¿½, È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½))
 // D3DXMATRIX		matRotZ, matRevZ;
 // D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(angle));
 
-// À§Ä¡ º¯È¯ Çà·ÄÀ» ¸¸µå´Â ÇÔ¼ö
-// D3DXMatrixTranslation(°á°ú°ªÀ» ÀúÀåÇÒ Çà·ÄÀÇ ÁÖ¼Ò, xÀ§Ä¡, yÀ§Ä¡, zÀ§Ä¡)
+// ï¿½ï¿½Ä¡ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½Ô¼ï¿½
+// D3DXMatrixTranslation(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½Ö¼ï¿½, xï¿½ï¿½Ä¡, yï¿½ï¿½Ä¡, zï¿½ï¿½Ä¡)
 // D3DXMATRIX		matTrans;
 // D3DXMatrixTranslation(&matTrans, 400.f, 300.f, 0.f);
 
-// dx¿¡¼­ Á¦°øÇÏ´Â Çà·Ä°ü·Ã ÇÔ¼öµéÀº °¡Àå Ã¹¹øÂ° ÀÛ¾÷À¸·Î °á°ú °ªÀ» ÀúÀåÇÒ Çà·ÄÀ» Ç×µî Çà·Ä·Î ¸¸µç´Ù.
+// dxï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½Ä°ï¿½ï¿½ï¿½?ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¹ï¿½ï¿½Â° ï¿½Û¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½?ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½×µï¿½ ï¿½ï¿½Ä·ï¿½?ï¿½ï¿½ï¿½ï¿½ï¿½?
 
 // D3DXMATRIX		matScale, matRotZ, matTrans;
 // 
@@ -90,6 +109,6 @@ typedef struct tagInfo
 // 
 // m_tInfo.matWorld = matScale * matRotZ * matTrans;
 
-// º¤ÅÍ¿Í Çà·ÄÀÇ °ö¼ÀÀ» ¼öÇà½ÃÄÑÁÖ´Â ÇÔ¼ö
-// D3DXVec3TransformCoord(°á°ú °ªÀ» ÀúÀåÇÒ º¤ÅÍÀÇ ÁÖ¼Ò(À§Ä¡), °ö¼ÀÀ» ¼öÇàÇÒ À§Ä¡ º¤ÅÍ, Çà·Ä);
-// D3DXVec3TransformNormal(°á°ú °ªÀ» ÀúÀåÇÒ º¤ÅÍÀÇ ÁÖ¼Ò(¹æÇâ), °ö¼ÀÀ» ¼öÇàÇÒ ¹æÇâ º¤ÅÍ, Çà·Ä);
+// ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½?ï¿½Ô¼ï¿½
+// D3DXVec3TransformCoord(ï¿½ï¿½ï¿½?ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½(ï¿½ï¿½Ä¡), ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½?;
+// D3DXVec3TransformNormal(ï¿½ï¿½ï¿½?ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½(ï¿½ï¿½ï¿½ï¿½), ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½?;

@@ -17,6 +17,12 @@ public:
 	void Key_Input();
 
 private:
-	bool m_bChange;
+	bool  m_bChange;
+
+	float m_fCheckAngle;
+	float m_fMaxAngle;
+
+	int   m_iBlockCount;
+	int   m_iBlockSaveCount;
 };
 
