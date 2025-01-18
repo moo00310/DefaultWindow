@@ -5,7 +5,7 @@
 class CCameraMgr
 {
 private:
-	CCameraMgr() : m_eCameraState(CS_END), m_pPlayer(nullptr), m_bIsReverce(false), m_Camera{}
+	CCameraMgr() : m_eCameraState(CS_END), m_pPlayer(nullptr), m_bIsReverce(false), m_Camera{}, m_ulTime(0)
 	{}
 	~CCameraMgr() {}
 
@@ -37,6 +37,11 @@ public:
 	void Set_State(CarmeraState _eState) { m_eCameraState = _eState; }
 	void Is_Reverce(bool _reverce) { m_bIsReverce = _reverce; }
 
+private:
+	void ZoomIn();
+	void Slow_ZoomIn();
+	void Force_ZoomIn();
+
 public:
 	static CCameraMgr* m_pInstance;
 	CarmeraState m_eCameraState;
@@ -44,6 +49,7 @@ public:
 	POINT m_Camera[C_End];
 
 	bool m_bIsReverce;
+	ULONG64 m_ulTime;
 };
 
 

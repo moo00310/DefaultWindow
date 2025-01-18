@@ -16,7 +16,7 @@ void CPlayer_moo::Initialize()
 {
 	m_tInfo.vPos = { 153.f, 153.f, 0.f };
 	m_tInfo.vDir = { 1.f, 0.f, 0.f };
-	m_fSpeed = 0.5f;
+	m_fSpeed = 1.5f;
 
 	m_Diagonal = 220.f;
 

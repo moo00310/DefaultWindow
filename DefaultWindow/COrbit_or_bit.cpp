@@ -33,9 +33,6 @@ void COrbit_or_bit::Initialize()
 	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CThorn>::Create(180.f, 300.f));
 	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CThorn>::Create(120.f, 260.f));
 
-
-	// 카메라 플레이어 추적
-	//CScrollMgr::Get_Instance()->Init_Scroll(-500.f, -500.f);
 	CCameraMgr::Get_Instance()->Initailize();
 }
 
@@ -53,11 +50,11 @@ int COrbit_or_bit::Update()
 	}
 	if (CKeyMgr::Get_Instance()->Key_Down(VK_F1))
 	{
-		CCameraMgr::Get_Instance()->Set_State(CS_Shake2);
+		CCameraMgr::Get_Instance()->Set_State(CS_Force_ZoomIN);
 	}
 	if (CKeyMgr::Get_Instance()->Key_Down(VK_F2))
 	{
-		CCameraMgr::Get_Instance()->Set_State(CS_END);
+		CCameraMgr::Get_Instance()->Set_State(CS_ZoomIN);
 	}
 
 	// 이동
