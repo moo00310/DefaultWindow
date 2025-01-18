@@ -2,6 +2,7 @@
 #include "CHexaPad.h"
 #include "CSceneMgr.h"
 #include "CObjMgr.h"
+#include "CHexaPadManager.h"
 
 CHexaPad::CHexaPad()
 {
@@ -63,13 +64,13 @@ int CHexaPad::Update()
 	if (fPlayerDistance <= m_fScale + m_fScale)
 	{
 		// 게임 오버 판정.
-		CSceneMgr::Get_Instance()->Set_Scene(SC_KDH);
-		return 0;
+		//CSceneMgr::Get_Instance()->Set_Scene(SC_HERO);
+		return OBJ_DEAD;
 	}
 
-	if (fDistance <= 0.f)
+	if (fDistance <= 2.f)
 	{
-		return 0;
+		return OBJ_DEAD;
 	}
 
 	m_localScale.x = fDistance / 40.f;
@@ -146,6 +147,19 @@ void CHexaPad::Late_Update()
 
 	// 방향을 구함.
 	D3DXVec3TransformNormal(&m_localDirection, &m_localLookAt, &m_MatrixWorld);
+
+	// 플레이어와 거리 차이.
+	float fPlayerDistance = GetDistance(m_Player->GetLocalPositionToWorld());
+
+	// 플레이어 접촉 확인.
+	if (fPlayerDistance <= m_fScale + m_fScale)
+	{
+		// 게임 오버 판정.
+		// 씬 재시작.
+		CSceneMgr::Get_Instance()->Set_Scene(SC_HERO);
+		CSceneMgr::Get_Instance()->Set_Scene(SC_KDH);
+		return;
+	}
 }
 
 void CHexaPad::Render(HDC hDC)
@@ -191,7 +205,7 @@ void CHexaPad::SetDirection(kDIRECTION _kDIR)
 	case DIR_UP:
 	{
 		// 위.
-		m_localPosition = { WINCX * 0.5f, m_fScale, 0.f };
+		m_localPosition = { WINCX * 0.5f, -50.f, 0.f };
 		m_rotAngle = 180.f;
 	}
 	break;
@@ -199,7 +213,7 @@ void CHexaPad::SetDirection(kDIRECTION _kDIR)
 	case DIR_DOWN:
 	{
 		// 아래.
-		m_localPosition = { WINCX * 0.5f, WINCY - m_fScale, 0.f };
+		m_localPosition = { WINCX * 0.5f, WINCY + 50.f, 0.f };
 		m_rotAngle = 0.f;
 	}
 	break;
@@ -207,7 +221,7 @@ void CHexaPad::SetDirection(kDIRECTION _kDIR)
 	case DIR_LEFT:
 	{
 		// 좌.
-		m_localPosition = { m_fScale, WINCY * 0.5f, 0.f };
+		m_localPosition = { -50.f, WINCY * 0.5f, 0.f };
 		m_rotAngle = 90.f;
 	}
 	break;
@@ -215,7 +229,7 @@ void CHexaPad::SetDirection(kDIRECTION _kDIR)
 	case DIR_RIGHT:
 	{
 		// 우.
-		m_localPosition = { WINCX - m_fScale, WINCY * 0.5f, 0.f };
+		m_localPosition = { WINCX + 50.f, WINCY * 0.5f, 0.f };
 		m_rotAngle = 270.f;
 	}
 	break;

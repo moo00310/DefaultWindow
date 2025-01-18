@@ -53,7 +53,9 @@ void CKDHScene::Render(HDC hDC)
 
 void CKDHScene::Release()
 {
+	CHexaPadManager::Get_Instance()->ClearPattern();
 	CHexaPadManager::Get_Instance()->Destroy_Instance();
+	CObjMgr::Get_Instance()->Release();
 }
 
 void CKDHScene::CreatePattern()
@@ -61,10 +63,17 @@ void CKDHScene::CreatePattern()
 	CSequence sequence;
 	sequence.sequence = [&]()
 		{
+		};
+	sequence.fCount = 1.5f;
+
+	CHexaPadManager::Get_Instance()->AddPattern(sequence);
+
+	sequence.sequence = [&]()
+		{
 			AddPad(DIR_DOWN);
 			AddPad(DIR_UP);
 		};
-	sequence.fCount = 1.f;
+	sequence.fCount = 0.5f;
 
 	CHexaPadManager::Get_Instance()->AddPattern(sequence);
 
@@ -73,15 +82,43 @@ void CKDHScene::CreatePattern()
 			AddPad(DIR_LEFT);
 			AddPad(DIR_RIGHT);
 		};
-	sequence.fCount = 1.f;
+	sequence.fCount = 0.8f;
 
 	CHexaPadManager::Get_Instance()->AddPattern(sequence);
 
 	sequence.sequence = [&]()
 		{
-			AddPad(DIR_UP);			
+			AddPad(DIR_DOWN);
+			AddPad(DIR_UP);
 		};
-	sequence.fCount = 0.4f;
+	sequence.fCount = 0.5f;
+
+	CHexaPadManager::Get_Instance()->AddPattern(sequence);
+
+	sequence.sequence = [&]()
+		{
+			AddPad(DIR_LEFT);
+			AddPad(DIR_RIGHT);
+		};
+	sequence.fCount = 0.8f;
+
+	CHexaPadManager::Get_Instance()->AddPattern(sequence);
+
+	sequence.sequence = [&]()
+		{
+			AddPad(DIR_DOWN);
+			AddPad(DIR_UP);
+		};
+	sequence.fCount = 0.5f;
+
+	CHexaPadManager::Get_Instance()->AddPattern(sequence);
+
+	sequence.sequence = [&]()
+		{
+			AddPad(DIR_LEFT);
+			AddPad(DIR_RIGHT);
+		};
+	sequence.fCount = 0.8f;
 
 	CHexaPadManager::Get_Instance()->AddPattern(sequence);
 
