@@ -176,6 +176,11 @@ void CStick::Check_Hit()
 	list<CObj*> LeftList = CObjMgr::Get_Instance()->Get_List()[OBJ_MONSTER];
 	list<CObj*> RightList = CObjMgr::Get_Instance()->Get_List()[OBJ_BULLET];
 		
+	if (!LeftList.size() || !RightList.size())
+	{
+		return;
+	}
+
 	CObj* pLeft = LeftList.back();
 	CObj* pRight = RightList.back();
 

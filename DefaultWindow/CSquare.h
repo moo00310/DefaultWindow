@@ -32,6 +32,8 @@ private:
     void Change_Speed();
     void Fall();
     void OnVertexTouch();
+    void Check_RollTime();
+    void Set_RollTime();
 private:
     //사각형 점 4개
     D3DXVECTOR3 m_arrLocalPoint[4];
@@ -55,6 +57,10 @@ private:
     float       m_fTime;
 
     bool        m_bFall;
+
+    ULONGLONG   m_ullNextRollTime;
+    ULONGLONG   m_arrRollTime[5];
+    int         m_iRollCount;
 
 };
 

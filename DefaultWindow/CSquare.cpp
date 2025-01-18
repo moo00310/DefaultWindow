@@ -6,13 +6,16 @@
 
 CSquare::CSquare()
 	:m_fAngle(0.f), m_iRotPoint(0), m_bRollLeft(false), m_ullWaitTime(0), m_bFall(false),
-	m_pBankPoint(nullptr), m_pNotePoint(nullptr), m_iNote(0), m_fCurSpeed(0.f), m_fTime(0.f)
+	m_pBankPoint(nullptr), m_pNotePoint(nullptr), m_iNote(0), m_fCurSpeed(0.f), m_fTime(0.f),
+	m_ullNextRollTime(0), m_iRollCount(0)
 {
 	ZeroMemory(&m_arrLocalPoint, sizeof(m_arrLocalPoint));
 	ZeroMemory(&m_arrWorldPoint, sizeof(m_arrWorldPoint));
 
 	ZeroMemory(&m_vLocalPoint_Center, sizeof(D3DXVECTOR3));
 	ZeroMemory(&m_vWorldPoint_Center, sizeof(D3DXVECTOR3));
+
+	ZeroMemory(&m_arrRollTime, sizeof(m_arrRollTime));
 }
 
 CSquare::~CSquare()
@@ -36,6 +39,8 @@ void CSquare::Set_RollLeft(bool _b)
 
 void CSquare::Initialize()
 {
+	Set_RollTime();
+
 	m_eRender = RENDER_GAMEOBJECT;
 
 	//m_fSize = SIDE;
@@ -89,8 +94,9 @@ int CSquare::Update()
 
 	if (!m_bFall)
 	{
-		Change_Speed();
-		Roll_Corners();
+		Check_RollTime();
+		//Change_Speed();
+		//Roll_Corners();
 	}
 	else
 	{
@@ -134,7 +140,7 @@ void CSquare::Roll_Corners()
 	if (m_bRollLeft)
 	{
 		//각도를 증가 시킨다.
-		m_fAngle -= D3DXToRadian(m_fCurSpeed);
+		m_fAngle -= D3DXToRadian(90.f);
 
 		//충돌 체크할 포인트 설정
 		int iCheckPoint = m_iRotPoint + 1;
@@ -184,7 +190,7 @@ void CSquare::Roll_Corners()
 	else
 	{
 		//각도를 증가 시킨다.
-		m_fAngle += D3DXToRadian(m_fCurSpeed);
+		m_fAngle += D3DXToRadian(90.f);
 
 		//충돌 체크할 포인트 설정
 		int iCheckPoint = m_iRotPoint - 1;
@@ -273,6 +279,28 @@ void CSquare::OnVertexTouch()
 	{
 		m_bFall = true;
 	}
+}
+
+void CSquare::Check_RollTime()
+{
+	if (m_ullNextRollTime < GetTickCount64())
+	{
+		m_ullNextRollTime = m_arrRollTime[++m_iRollCount];
+		Roll_Corners();
+	}
+}
+
+void CSquare::Set_RollTime()
+{
+	ULONGLONG ullStartTime = GetTickCount64();
+
+	m_arrRollTime[0] = ullStartTime + 1000;
+	m_arrRollTime[1] = ullStartTime + 2000;
+	m_arrRollTime[2] = ullStartTime + 3000;
+	m_arrRollTime[3] = ullStartTime + 4000;
+	m_arrRollTime[4] = ullStartTime + 5000;
+
+	m_ullNextRollTime = m_arrRollTime[0];
 }
 
 void CSquare::Render(HDC hDC)
