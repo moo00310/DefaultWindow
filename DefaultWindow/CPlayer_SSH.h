@@ -32,6 +32,7 @@ protected:
 	D3DXVECTOR3 m_vOriginPoint;
 
 	bool  m_bRev;
+	int   m_iRevCount; //HP?
 	float m_fMaxAngle;
 	float m_fRevSpeed;
 };

@@ -2,6 +2,7 @@
 #include "CPlayer_SSH_Fire.h"
 
 #include "CKeyMgr.h"
+#include "CScrollMgr.h"
 
 CPlayer_SSH_Fire::CPlayer_SSH_Fire()
 {
@@ -20,24 +21,21 @@ void CPlayer_SSH_Fire::Initialize()
     m_vOriginPoint = m_vPoint;
 
     m_eRender = RENDER_GAMEOBJECT;
-    m_bRev = true; // µÑ Áß ÇÏ³ª´Â ÀÏ´Ü µ¹¾Æ¾ßÇÏ±â¶§¹®¿¡ Æ®·ç
+    m_bRev = true; // ??ä»¥??ì„êµ¹???ì‡°ë–’ ?ëš¯ë¸˜?ì‡³ë¸¯æ¹²ê³•ë¸£è‡¾ëª„ë¿‰ ?ëªƒï¼ˆ
 }
 
 int CPlayer_SSH_Fire::Update()
 {
-    if (m_bDead)
-        return OBJ_DEAD;
-
     D3DXMATRIX matScale, matRotZ, matTranse, matRevZ, matParrent;
 
-    // Å©±â º¯È¯ Çà·ÄÀ» ¸¸µå´Â ÇÔ¼ö
-    // D3DXMatrixScaling(°á°ú°ªÀ» ÀúÀåÇÒ Çà·ÄÀÇ ÁÖ¼Ò, X¹èÀ², Y¹èÀ², Z¹èÀ²)
+    // ?Ñˆë¦° è¹‚Â€???ë°ì ¹??ï§ëš®ë±¶???â‘¥ë‹”
+    // D3DXMatrixScaling(å¯ƒê³Œë‚µåª›ë¯ªì“£ ?Â€?Î½ë¸· ?ë°ì ¹??äºŒì‡±ëƒ¼, Xè«›ê³—ì‘‰, Yè«›ê³—ì‘‰, Zè«›ê³—ì‘‰)
 
-    // È¸Àü º¯È¯ Çà·ÄÀ» ¸¸µå´Â ÇÔ¼ö
-    // D3DXMatrixRotationZ(°á°ú°ªÀ» ÀúÀåÇÒ Çà·ÄÀÇ ÁÖ¼Ò, È¸Àü °¢µµ(¶óµğ¾È))
+    // ?ëš¯ìŸ¾ è¹‚Â€???ë°ì ¹??ï§ëš®ë±¶???â‘¥ë‹”
+    // D3DXMatrixRotationZ(å¯ƒê³Œë‚µåª›ë¯ªì“£ ?Â€?Î½ë¸· ?ë°ì ¹??äºŒì‡±ëƒ¼, ?ëš¯ìŸ¾ åª›ê³·ë£„(?ì‡°ëµ’??)
     // 
-    // À§Ä¡ º¯È¯ Çà·ÄÀ» ¸¸µå´Â ÇÔ¼ö
-    // D3DXMatrixTranslation(°á°ú°ªÀ» ÀúÀåÇÒ Çà·ÄÀÇ ÁÖ¼Ò, xÀ§Ä¡, yÀ§Ä¡, zÀ§Ä¡)
+    // ?ê¾©íŠ‚ è¹‚Â€???ë°ì ¹??ï§ëš®ë±¶???â‘¥ë‹”
+    // D3DXMatrixTranslation(å¯ƒê³Œë‚µåª›ë¯ªì“£ ?Â€?Î½ë¸· ?ë°ì ¹??äºŒì‡±ëƒ¼, x?ê¾©íŠ‚, y?ê¾©íŠ‚, z?ê¾©íŠ‚)
 
     D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
     D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(0.f));
@@ -45,26 +43,30 @@ int CPlayer_SSH_Fire::Update()
     D3DXMatrixRotationZ(&matRevZ, D3DXToRadian(m_fAngle));
 
     if (m_fAngle > m_fMaxAngle)
+    {
         m_fAngle -= m_fAngle;
+        m_iRevCount++;
+    }
+        
 
-    //°øÀüÀÌ¶ó¸é °øÀü
+    //æ€¨ë“­ìŸ¾?ëŒ€ì”ªï§?æ€¨ë“­ìŸ¾
     if (m_bRev)
     {
         m_fAngle += m_fRevSpeed;
     }
 
-    //¹Ù²îÁö ¾Ê¾Ò´Ù¸é Á¦ÀÚ¸®
+    //è«›ë¶¾Â€ëš¯? ?ë”†ë¸¯?ã…»ãˆƒ ?ì’–ì˜„ç”±?
     if (!m_bRev)
     {
         D3DXMatrixTranslation(&matParrent, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
     }
-    // ¹Ù²¼´Ù¸é Å¸±êÁß½ÉÀ¸·Î °øÀü
+    // è«›ë¶½í·?ã…»ãˆƒ ?Â€æºê»‹ì¨·?ÑŠì‘æ¿¡?æ€¨ë“­ìŸ¾
     else if (m_bRev)
     {
         if (CPlayer_SSH* Temp = dynamic_cast<CPlayer_SSH*>(m_pTarget))
         {
             D3DXMatrixTranslation(&matParrent, Temp->Get_vPoint().x, Temp->Get_vPoint().y, 0.f);
-            // °øÀüÇÏ´ø À§Ä¡¸¦ ¿ø·¡ À§Ä¡¿¡ ³Ñ°ÜÁà¼­ Å¸±êÀÌ ±× À§Ä¡ Áß½ÉÀ¸·Î °øÀüÇÒ ¼ö ÀÖµµ·Ï ÇÔ
+            // æ€¨ë“­ìŸ¾?ì„ëœ• ?ê¾©íŠ‚ç‘œ??ë¨®ì˜’ ?ê¾©íŠ‚???ì„êº¼ä»¥ì„ê½Œ ?Â€æºê»‹ì”  æ´¹??ê¾©íŠ‚ ä»¥ë¬’ë––?ì‡°ì¤ˆ æ€¨ë“­ìŸ¾?????ëˆë£„æ¿¡???
             m_tInfo.vPos = Temp->Get_vPoint();
         }
     }
@@ -84,20 +86,28 @@ void CPlayer_SSH_Fire::Late_Update()
 
 void CPlayer_SSH_Fire::Render(HDC hDC)
 {
+    if (m_bDead)
+        return;
+
+    int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+    int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
     Ellipse(hDC,
-        int(m_vPoint.x - 20.f),
-        int(m_vPoint.y - 20.f),
-        int(m_vPoint.x + 20.f),
-        int(m_vPoint.y + 20.f));
+        int(m_vPoint.x - 20.f + iScrollX),
+        int(m_vPoint.y - 20.f + iScrollY),
+        int(m_vPoint.x + 20.f + iScrollX),
+        int(m_vPoint.y + 20.f + iScrollY));
 
     TCHAR szStatus[100]{};
 
-    swprintf_s(szStatus, L"ºÒ °¢µµ : %.2f", m_fAngle);
+    swprintf_s(szStatus, L"Fire's Angle : %.2f", m_fAngle);
     TextOut(hDC, 500, 20, szStatus, lstrlen(szStatus));
-    swprintf_s(szStatus, L"¿øÀÇ À§Ä¡ X : %.2f, Y : %.2f", m_vPoint.x, m_vPoint.y);
+    swprintf_s(szStatus, L"Fire's Location X : %.2f, Y : %.2f", m_vPoint.x, m_vPoint.y);
     TextOut(hDC, 500, 40, szStatus, lstrlen(szStatus));
-    swprintf_s(szStatus, L"ºÒ");
-    TextOut(hDC, (int)m_vPoint.x, (int)m_vPoint.y, szStatus, lstrlen(szStatus));
+    swprintf_s(szStatus, L"Fire");
+    TextOut(hDC, (int)m_vPoint.x + iScrollX, (int)m_vPoint.y + iScrollY, szStatus, lstrlen(szStatus));
+    swprintf_s(szStatus, L"Fire's RevCount : %d", m_iRevCount);
+    TextOut(hDC, 500, 60, szStatus, lstrlen(szStatus));
 }
 
 void CPlayer_SSH_Fire::Release()

@@ -48,15 +48,6 @@
     <ClCompile Include="CMenu.cpp">
       <Filter>07.UnionScene\MenuScene</Filter>
     </ClCompile>
-    <ClCompile Include="CPlayer_SSH.cpp">
-      <Filter>02.SSH\01.Player</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayer_SSH_Ice.cpp">
-      <Filter>02.SSH\01.Player</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayer_SSH_Fire.cpp">
-      <Filter>02.SSH\01.Player</Filter>
-    </ClCompile>
     <ClCompile Include="CRhythmWorld.cpp">
       <Filter>03.HERO\00.Scene</Filter>
     </ClCompile>
@@ -120,6 +111,15 @@
     <ClCompile Include="CStick.cpp">
       <Filter>03.HERO\01.Obj\02.Stick</Filter>
     </ClCompile>
+    <ClCompile Include="CPlayer_SSH.cpp">
+      <Filter>02.SSH\01.Player\00. Player_SSH\00. SSH</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer_SSH_Fire.cpp">
+      <Filter>02.SSH\01.Player\00. Player_SSH\01. Fire</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer_SSH_Ice.cpp">
+      <Filter>02.SSH\01.Player\00. Player_SSH\02. Ice</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Define.h" />
@@ -177,15 +177,6 @@
     </ClInclude>
     <ClInclude Include="CSSHScene.h">
       <Filter>02.SSH\00.Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayer_SSH.h">
-      <Filter>02.SSH\01.Player</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayer_SSH_Fire.h">
-      <Filter>02.SSH\01.Player</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayer_SSH_Ice.h">
-      <Filter>02.SSH\01.Player</Filter>
     </ClInclude>
     <ClInclude Include="CStart.h">
       <Filter>07.UnionScene\StartScene</Filter>
@@ -300,15 +291,6 @@
     </ClInclude>
     <ClInclude Include="CHexaPadManager.h">
       <Filter>05.Desgin\HexaPadManager</Filter>
-    </ClInclude>
-    <ClInclude Include="CMemoryPoolMgr.h">
-      <Filter>05.Desgin\MemoeyPoolMgr</Filter>
-    </ClInclude>
-    <ClInclude Include="CKDHLine.h">
-      <Filter>04.KDH</Filter>
-    </ClInclude>
-    <ClInclude Include="CStick.h">
-      <Filter>03.HERO\01.Obj\02.Stick</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

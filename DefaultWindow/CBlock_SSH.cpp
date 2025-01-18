@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "CBlock_SSH.h"
 
+#include "CScrollMgr.h"
+
 CBlock_SSH::CBlock_SSH()
 {
 }
@@ -30,7 +32,7 @@ int CBlock_SSH::Update()
 
     D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
     D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(0.f));
-    D3DXMatrixTranslation(&matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, m_tInfo.vPos.z);
+    D3DXMatrixTranslation(&matTrans, m_tInfo.vPos.x + CScrollMgr::Get_Instance()->Get_ScrollX(), m_tInfo.vPos.y + CScrollMgr::Get_Instance()->Get_ScrollY(), m_tInfo.vPos.z);
 
     m_tInfo.matWorld = matScale * matRotZ * matTrans;
 
