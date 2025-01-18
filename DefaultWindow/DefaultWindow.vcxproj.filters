@@ -1,4 +1,4 @@
-﻿<Project>
+<Project>
   <ItemGroup>
     <ClCompile Include="CKeyMgr.cpp">
       <Filter>05.Desgin\KeyMgr</Filter>
@@ -74,6 +74,7 @@
     </ClCompile>
     <ClCompile Include="CSpawner.cpp">
       <Filter>03.HERO\01.Obj\01.Spawner</Filter>
+	</ClCompile>
     <ClCompile Include="COrbit.cpp">
       <Filter>01.Moo\02.Obj\00.Orbit</Filter>
     </ClCompile>
@@ -82,6 +83,7 @@
     </ClCompile>
     <ClCompile Include="CScrollMgr.cpp">
       <Filter>05.Desgin\ScrollMgr</Filter>
+	</ClCompile>
     <ClCompile Include="CPlayer_SSH_Fire.cpp">
       <Filter>02.SSH\01.Player\00. Player_SSH\01. Fire</Filter>
     </ClCompile>
@@ -93,6 +95,7 @@
     </ClCompile>
     <ClCompile Include="CBlock_SSH.cpp">
       <Filter>02.SSH\02. Block\00. Block</Filter>
+	</ClCompile>
     <ClCompile Include="CKDHPlayer.cpp">
       <Filter>04.KDH\01.Player</Filter>
     </ClCompile>
@@ -186,6 +189,7 @@
     </ClInclude>
     <ClInclude Include="CSpawner.h">
       <Filter>03.HERO\01.Obj\01.Spawner</Filter>
+	</ClInclude>
     <ClInclude Include="COrbit.h">
       <Filter>01.Moo\02.Obj\00.Orbit</Filter>
     </ClInclude>
@@ -272,6 +276,7 @@
     </ClInclude>
     <ClInclude Include="CBlock_SSH.h">
       <Filter>02.SSH\02. Block\00. Block</Filter>
+	</ClInclude>
     <ClInclude Include="CKDHPlayer.h">
       <Filter>04.KDH\01.Player</Filter>
     </ClInclude>
@@ -389,6 +394,7 @@
     </Filter>
     <Filter Include="03.HERO\01.Obj\01.Spawner">
       <UniqueIdentifier>{83ec092c-f517-4d34-af7b-06de2d5836ba}</UniqueIdentifier>
+	</Filter>
     <Filter Include="01.Moo\02.Obj\00.Orbit">
       <UniqueIdentifier>{b4ace08e-39bf-4c67-9927-d67c4313088d}</UniqueIdentifier>
     </Filter>
@@ -397,6 +403,7 @@
     </Filter>
     <Filter Include="05.Desgin\ScrollMgr">
       <UniqueIdentifier>{051ed0ef-fd34-4a5d-8549-0f9187bb4775}</UniqueIdentifier>
+	</Filter>
     <Filter Include="02.SSH\01.Player\00. Player_SSH">
       <UniqueIdentifier>{6912844c-e7b2-49cb-a4cc-631a0e2817dd}</UniqueIdentifier>
     </Filter>
@@ -414,6 +421,7 @@
     </Filter>
     <Filter Include="02.SSH\02. Block\00. Block">
       <UniqueIdentifier>{ad649063-7bbe-4b6b-9c64-b2fb50ff231c}</UniqueIdentifier>
+	</Filter>
     <Filter Include="05.Desgin\HexaPadManager">
       <UniqueIdentifier>{f82f0090-4314-4ef6-b9bd-029872c44efa}</UniqueIdentifier>
     </Filter>

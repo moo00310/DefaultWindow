@@ -26,8 +26,8 @@ void CMainGame::Initialize()
 	SelectObject(m_memDC, m_hBit);
   
 
-	//CSceneMgr::Get_Instance()->Set_Scene(SC_HERO);
-	CSceneMgr::Get_Instance()->Set_Scene(SC_SSH);
+	CSceneMgr::Get_Instance()->Set_Scene(SC_HERO);
+	//CSceneMgr::Get_Instance()->Set_Scene(SC_SSH);
 }
 
 void CMainGame::Update()
