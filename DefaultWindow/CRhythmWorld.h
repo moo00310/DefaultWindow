@@ -16,6 +16,7 @@ public:
     void Release() override;
 private:
     void    Check_Hit();
+    void    Draw_Outline(HDC hDC);
 private:
     CObj* m_pSpawner;
     float m_fDistance;

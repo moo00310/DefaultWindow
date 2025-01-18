@@ -1,9 +1,12 @@
 #include "pch.h"
 #include "CStick.h"
 #include "CKeyMgr.h"
+#include "CSpawner.h"
+#include "CSquare.h"
+#include "CObjMgr.h"
 
 CStick::CStick()
-	:m_bFly(false)
+	:m_bFly(false), m_iScore(0), m_fDistance(0)
 {
 	ZeroMemory(&m_arrLocalPoint, sizeof(m_arrLocalPoint));
 	ZeroMemory(&m_arrWorldPoint, sizeof(m_arrWorldPoint));
@@ -43,11 +46,11 @@ int CStick::Update()
         return OBJ_DEAD;
 
 	Input_Key();
-	Check_ScreenOut();
+	/*Check_ScreenOut();
 	if (m_bFly)
 	{
 		Fly();
-	}
+	}*/
 
 	Update_WorldMatrix();
     return OBJ_NOEVENT;
@@ -78,13 +81,22 @@ void CStick::Render(HDC hDC)
 	POINT tPointArr[4] = {};
 	for (int i = 0; i < 4; ++i)
 	{
-		tPointArr[i].x = m_arrWorldPoint[i].x;
-		tPointArr[i].y = m_arrWorldPoint[i].y;
+		tPointArr[i].x = (LONG)m_arrWorldPoint[i].x;
+		tPointArr[i].y = (LONG)m_arrWorldPoint[i].y;
 	}
-	Polygon(hDC, tPointArr, 4);
+	Polygon(hDC, tPointArr, 4); 
 
 	SelectObject(hDC, hOldBrush);
 	DeleteObject(hBrush);
+
+	//디버깅
+	TCHAR cBuffer[64]; //저장할 문자열 버퍼
+
+	_stprintf_s(cBuffer, _T("Distance: %.2f"), m_fDistance);
+	TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.35f), cBuffer, (int)_tcslen(cBuffer));
+
+	_stprintf_s(cBuffer, _T("Score: %d"), m_iScore);
+	TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.15f), cBuffer, (int)_tcslen(cBuffer));
 
 }
 
@@ -119,7 +131,8 @@ void CStick::Input_Key()
 
 	if (CKeyMgr::Get_Instance()->Key_Up(VK_SPACE))
 	{
-		m_bFly = true;
+		Check_Hit();
+		//m_bFly = true;
 	}
 }
 
@@ -155,5 +168,38 @@ void CStick::Check_ScreenOut()
 	{
 		m_tInfo.vPos = m_vOriginPosition;
 		m_bFly = false;
+	}
+}
+
+void CStick::Check_Hit()
+{
+	list<CObj*> LeftList = CObjMgr::Get_Instance()->Get_List()[OBJ_MONSTER];
+	list<CObj*> RightList = CObjMgr::Get_Instance()->Get_List()[OBJ_BULLET];
+		
+	CObj* pLeft = *LeftList.begin();
+	CObj* pRight = *RightList.begin();
+
+	if (!pLeft || !pRight)
+	{
+		m_fDistance = WINCX;
+		return;
+	}
+
+	D3DXVECTOR3 vLeft{};
+	D3DXVECTOR3 vRight{};
+	if (CSquare* pLeftSquare = dynamic_cast<CSquare*>(pLeft))
+	{
+		vLeft = pLeftSquare->Get_World_Center();
+	}
+	if (CSquare* pRightSquare = dynamic_cast<CSquare*>(pRight))
+	{
+		vRight = pRightSquare->Get_World_Center();
+	}
+
+	m_fDistance = abs(vLeft.x - vRight.x);
+
+	if (m_fDistance < 10.f)
+	{
+		++m_iScore;
 	}
 }

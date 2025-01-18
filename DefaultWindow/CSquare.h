@@ -1,20 +1,22 @@
 #pragma once
 #include "CObj.h"
 
-#define SIDE (WINCX/12)
+#define SIDE (WINCX/9)
 #define SPEED_MIN 2
-#define SPEED_MAX 4
+#define SPEED_MAX 10
+#define ROLL_COUNT 5
+#define FALL_SPEED 50.f
 
 class CSquare :
     public CObj
 {
 public:
-    void Set_RollLeft(bool _b) { m_bLeft = _b; }
-    void Set_Speed(float _fSpeed) { m_fSpeed = _fSpeed; }
-    D3DXVECTOR3 Get_World_Center() { return m_vWorldPoint_Center; }
-public:
     CSquare();
     virtual ~CSquare();
+public:
+    void Set_RollLeft(bool _b);
+    void Set_Speed(float _fSpeed) { m_fSpeed = _fSpeed; }
+    D3DXVECTOR3 Get_World_Center() { return m_vWorldPoint_Center; }
 public:
     void Initialize() override;
     int Update() override;
@@ -28,6 +30,8 @@ private:
     void Check_ScreenOut();
     bool Wait_Time();
     void Change_Speed();
+    void Fall();
+    void OnVertexTouch();
 private:
     //사각형 점 4개
     D3DXVECTOR3 m_arrLocalPoint[4];
@@ -39,7 +43,7 @@ private:
     float       m_fAngle;
     //float       m_fSize;
     int         m_iRotPoint;
-    bool        m_bLeft;
+    bool        m_bRollLeft;
     ULONGLONG   m_ullWaitTime;
 
     FMOD::Studio::EventInstance* m_pNotePoint;
@@ -49,6 +53,8 @@ private:
 
     float       m_fCurSpeed;
     float       m_fTime;
+
+    bool        m_bFall;
 
 };
 

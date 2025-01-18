@@ -5,7 +5,7 @@
 #include "CSoundMgr.h"
 
 CSquare::CSquare()
-	:m_fAngle(0.f), m_iRotPoint(0), m_bLeft(false), m_ullWaitTime(0),
+	:m_fAngle(0.f), m_iRotPoint(0), m_bRollLeft(false), m_ullWaitTime(0), m_bFall(false),
 	m_pBankPoint(nullptr), m_pNotePoint(nullptr), m_iNote(0), m_fCurSpeed(0.f), m_fTime(0.f)
 {
 	ZeroMemory(&m_arrLocalPoint, sizeof(m_arrLocalPoint));
@@ -18,6 +18,20 @@ CSquare::CSquare()
 CSquare::~CSquare()
 {
 	Release();
+}
+
+void CSquare::Set_RollLeft(bool _b)
+{
+	m_bRollLeft = _b;
+
+	if (m_bRollLeft)
+	{
+		m_iRotPoint = 3;
+	}
+	else
+	{
+		m_iRotPoint = 2;
+	}
 }
 
 void CSquare::Initialize()
@@ -36,7 +50,15 @@ void CSquare::Initialize()
 
 	Update_WorldMatrix();
 
-	m_iRotPoint = 3;
+	//if (m_bLeft)
+	//{
+	//	m_iRotPoint = 3;
+	//}
+	//else
+	//{
+	//	m_iRotPoint = 2;
+	//}
+	
 
 	m_ullWaitTime = GetTickCount64();
 
@@ -54,12 +76,16 @@ int CSquare::Update()
 
 	if (!Wait_Time())
 	{
-		Change_Speed();
-		Roll_Corners();
-		//Roll();
+		if (!m_bFall)
+		{
+			Change_Speed();
+			Roll_Corners();
+		}
+		else
+		{
+			Fall();
+		}
 	}
-
-
 	Update_WorldMatrix();
 
 	return OBJ_NOEVENT;
@@ -94,7 +120,7 @@ void CSquare::Update_WorldMatrix()
 
 void CSquare::Roll_Corners()
 {
-	if (m_bLeft)
+	if (m_bRollLeft)
 	{
 		//각도를 증가 시킨다.
 		m_fAngle -= D3DXToRadian(m_fCurSpeed);
@@ -115,11 +141,11 @@ void CSquare::Roll_Corners()
 		//충돌 체크할 포인트가 충돌하면 
 		if (m_arrWorldPoint[iCheckPoint].y > WINCY * 0.5f)
 		{
-			m_pNotePoint = CSoundMgr::Get_Instance()->PlayEvent("event:/Note");
-			m_pNotePoint->setParameterByName("Note", (float)(m_iNote++));
-			//CSoundMgr::Get_Instance()->Update();
-			//m_pNotePoint->start();
-
+			if (m_iNote < 5)
+			{
+				m_pNotePoint = CSoundMgr::Get_Instance()->PlayEvent("event:/Note");
+			}
+			OnVertexTouch();
 			//현재 회전의 중점으로 하는 포인트에 따라, 사각형의 중점을 이동 시킨다.[하드코딩, 규칙을 못 찾음]
 			//처음 시작점(3) 포인트 차이만큼 이동시키는 것 같긴함
 			switch (m_iRotPoint)
@@ -159,6 +185,7 @@ void CSquare::Roll_Corners()
 		//충돌 체크할 포인트가 충돌하면
 		if (m_arrWorldPoint[iCheckPoint].y > WINCY * 0.5f)
 		{
+			OnVertexTouch();
 			//현재 회전의 중점으로 하는 포인트에 따라, 사각형의 중점을 이동 시킨다.[하드코딩, 규칙을 못 찾음]
 			//처음 시작점(3) 포인트 차이만큼 이동시키는 것 같긴함
 			switch (m_iRotPoint)
@@ -221,6 +248,20 @@ void CSquare::Change_Speed()
 	m_fCurSpeed = abs(sin(m_fTime)) * m_fSpeed;
 }
 
+void CSquare::Fall()
+{
+	m_tInfo.vPos += {0.f, FALL_SPEED, 0.f};
+}
+
+void CSquare::OnVertexTouch()
+{
+	m_pNotePoint->setParameterByName("Note", (float)(m_iNote++));
+	if (m_iNote == ROLL_COUNT + 1)
+	{
+		m_bFall = true;
+	}
+}
+
 void CSquare::Render(HDC hDC)
 {
 	//사각형
@@ -268,7 +309,7 @@ void CSquare::Render(HDC hDC)
 	//}
 
 	// 문자열로 변환하여 출력 준비
-	for (int i = 0; i < 4; ++i)
+	/*for (int i = 0; i < 4; ++i)
 	{
 		_stprintf_s(cBuffer, _T("(%d)"), i);
 		TextOut(hDC, (int)m_arrWorldPoint[i].x, (int)m_arrWorldPoint[i].y, cBuffer, (int)_tcslen(cBuffer));
@@ -278,7 +319,7 @@ void CSquare::Render(HDC hDC)
 	TextOut(hDC, (int)m_tInfo.vPos.x, (int)m_tInfo.vPos.y, cBuffer, (int)_tcslen(cBuffer));
 
 	_stprintf_s(cBuffer, _T("CurSpeed: %.2f"), m_fCurSpeed);
-	TextOut(hDC, 0, 0, cBuffer, (int)_tcslen(cBuffer));
+	TextOut(hDC, 0, 0, cBuffer, (int)_tcslen(cBuffer));*/
 }
 
 void CSquare::Release()
@@ -288,7 +329,7 @@ void CSquare::Release()
 
 	if (CSpawner* pSpawner = dynamic_cast<CSpawner*>(pObj))
 	{
-		if (m_bLeft)
+		if (m_bRollLeft)
 		{
 			pSpawner->Set_LeftSquare(nullptr);
 		}
@@ -301,5 +342,5 @@ void CSquare::Release()
 
 void CSquare::Late_Update()
 {
-	Check_ScreenOut();
+	//Check_ScreenOut();
 }

@@ -26,6 +26,7 @@ private:
     void Set_BackPosition();
     void Fly();
     void Check_ScreenOut();
+    void Check_Hit();
 private:
     //사각형 점 4개
     D3DXVECTOR3 m_arrLocalPoint[4];
@@ -40,5 +41,7 @@ private:
 
     //발사여부
     bool        m_bFly;
+    float       m_fDistance;
+    int         m_iScore;
 };
 

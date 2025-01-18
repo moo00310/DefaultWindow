@@ -7,10 +7,10 @@ public:
     CSpawner();
     virtual ~CSpawner();
 public:
-    CObj*   Get_LeftSqure() { return m_pLeftSquare; }
-    CObj*   Get_RightSqure() { return m_pRightSquare; }
-    void    Set_LeftSquare(CObj* _pObj) { m_pLeftSquare = _pObj; }
-    void    Set_RightSquare(CObj* _pObj) { m_pRightSquare = _pObj; }
+    CObj*   Get_LeftSqure() { return m_pRightSpawn; }
+    CObj*   Get_RightSqure() { return m_pLeftSpawn; }
+    void    Set_LeftSquare(CObj* _pObj) { m_pRightSpawn = _pObj; }
+    void    Set_RightSquare(CObj* _pObj) { m_pLeftSpawn = _pObj; }
 
 public:
     void Initialize() override;
@@ -20,9 +20,11 @@ public:
     void Release() override;
 private:
     void Spawn();
+    void Check_SpawnTime();
+    void Remove_OldSquare();
 public:
     ULONGLONG   m_ullLastSpawnTime;
-    CObj*       m_pLeftSquare;
-    CObj*       m_pRightSquare;
+    CObj*       m_pRightSpawn;
+    CObj*       m_pLeftSpawn;
 };
 
