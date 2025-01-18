@@ -19,5 +19,6 @@ private:
 private:
     CObj* m_pSpawner;
     float m_fDistance;
+    int   m_iScore;
 };
 

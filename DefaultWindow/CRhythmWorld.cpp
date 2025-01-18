@@ -8,7 +8,7 @@
 #include "CSoundMgr.h"
 
 CRhythmWorld::CRhythmWorld()
-    :m_pSpawner(nullptr), m_fDistance(0.f)
+    :m_pSpawner(nullptr), m_fDistance(0.f), m_iScore(0)
 {
 }
 
@@ -29,18 +29,15 @@ void CRhythmWorld::Initialize()
 int CRhythmWorld::Update()
 {
     CObjMgr::Get_Instance()->Update();
-    CSoundMgr::Get_Instance()->Update();
+    Check_Hit();
+    CKeyMgr::Get_Instance()->Update();
+    //CSoundMgr::Get_Instance()->Update();
     return 0;
 }
 
 void CRhythmWorld::Late_Update()
 {
     CObjMgr::Get_Instance()->Late_Update();
-
-    Check_Hit();
-
-    CKeyMgr::Get_Instance()->Update();
-
 }
 
 void CRhythmWorld::Render(HDC hDC)
@@ -48,10 +45,14 @@ void CRhythmWorld::Render(HDC hDC)
     MoveToEx(hDC, 0, int(WINCY * 0.5f), nullptr);
     LineTo(hDC, int(WINCX), int(WINCY * 0.5f));
 
-    TCHAR cBuffer[64]; //ÀúÀåÇÒ ¹®ÀÚ¿­ ¹öÆÛ
+    TCHAR cBuffer[64]; //ì €ìž¥í•  ë¬¸ìžì—´ ë²„í¼
 
     _stprintf_s(cBuffer, _T("Distance: %.2f"), m_fDistance);
     TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.35f), cBuffer, (int)_tcslen(cBuffer));
+
+    _stprintf_s(cBuffer, _T("Score: %d"), m_iScore);
+    TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.15f), cBuffer, (int)_tcslen(cBuffer));
+
 
     CObjMgr::Get_Instance()->Render(hDC);
 }
@@ -96,6 +97,11 @@ void CRhythmWorld::Check_Hit()
             }
 
             m_fDistance = abs(vLeft.x - vRight.x);
+
+            if (m_fDistance < 10.f)
+            {
+                ++m_iScore;
+            }
         }
     }
 }

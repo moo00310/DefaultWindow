@@ -85,7 +85,7 @@ void CSquare::Update_WorldMatrix()
 	D3DXMatrixIdentity(&matTrans);
 	D3DXMatrixTranslation(&matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, m_tInfo.vPos.z);
 
-	// Çà·Ä Á¶ÇÕ: ½ºÄÉÀÏ * (Áß½É ÀÌµ¿ * È¸Àü * ¿øÀ§Ä¡ ÀÌµ¿) * ÃÖÁ¾ ÀÌµ¿
+	// í–‰ë ¬ ì¡°í•©: ìŠ¤ì¼€ì¼ * (ì¤‘ì‹¬ ì´ë™ * íšŒì „ * ì›ìœ„ì¹˜ ì´ë™) * ìµœì¢… ì´ë™
 	m_tInfo.matWorld = matScale * (matTransMove * matRotZ * matTransBack) * matTrans;
 
 	//m_tInfo.matWorld = matScale * matRotZ * matTrans;
@@ -96,17 +96,23 @@ void CSquare::Roll_Corners()
 {
 	if (m_bLeft)
 	{
-		//°¢µµ¸¦ Áõ°¡ ½ÃÅ²´Ù.
+		//ê°ë„ë¥¼ ì¦ê°€ ì‹œí‚¨ë‹¤.
 		m_fAngle -= D3DXToRadian(m_fCurSpeed);
 
-		//Ãæµ¹ Ã¼Å©ÇÒ Æ÷ÀÎÆ® ¼³Á¤
+		//ì¶©ëŒ ì²´í¬í•  í¬ì¸íŠ¸ ì„¤ì •
 		int iCheckPoint = m_iRotPoint + 1;
 		if (iCheckPoint > 3)
 		{
 			iCheckPoint = 0;
 		}
 
-		//Ãæµ¹ Ã¼Å©ÇÒ Æ÷ÀÎÆ®°¡ Ãæµ¹ÇÏ¸é
+		//if (abs(m_vWorldPoint[iCheckPoint].y - WINCY * 0.5f) < 1e-6f)
+		//{
+		//	m_pNotePoint = CSoundMgr::Get_Instance()->PlayEvent("event:/Note");
+		//	m_pNotePoint->setParameterByName("Note", (float)(m_iNote++));
+		//}
+
+		//ì¶©ëŒ ì²´í¬í•  í¬ì¸íŠ¸ê°€ ì¶©ëŒí•˜ë©´ 
 		if (m_vWorldPoint[iCheckPoint].y > WINCY * 0.5f)
 		{
 			m_pNotePoint = CSoundMgr::Get_Instance()->PlayEvent("event:/Note");
@@ -114,8 +120,8 @@ void CSquare::Roll_Corners()
 			//CSoundMgr::Get_Instance()->Update();
 			//m_pNotePoint->start();
 
-			//ÇöÀç È¸ÀüÀÇ ÁßÁ¡À¸·Î ÇÏ´Â Æ÷ÀÎÆ®¿¡ µû¶ó, »ç°¢ÇüÀÇ ÁßÁ¡À» ÀÌµ¿ ½ÃÅ²´Ù.[ÇÏµåÄÚµù, ±ÔÄ¢À» ¸ø Ã£À½]
-			//Ã³À½ ½ÃÀÛÁ¡(3) Æ÷ÀÎÆ® Â÷ÀÌ¸¸Å­ ÀÌµ¿½ÃÅ°´Â °Í °°±äÇÔ
+			//í˜„ìž¬ íšŒì „ì˜ ì¤‘ì ìœ¼ë¡œ í•˜ëŠ” í¬ì¸íŠ¸ì— ë”°ë¼, ì‚¬ê°í˜•ì˜ ì¤‘ì ì„ ì´ë™ ì‹œí‚¨ë‹¤.[í•˜ë“œì½”ë”©, ê·œì¹™ì„ ëª» ì°¾ìŒ]
+			//ì²˜ìŒ ì‹œìž‘ì (3) í¬ì¸íŠ¸ ì°¨ì´ë§Œí¼ ì´ë™ì‹œí‚¤ëŠ” ê²ƒ ê°™ê¸´í•¨
 			switch (m_iRotPoint)
 			{
 			case 0:
@@ -134,27 +140,27 @@ void CSquare::Roll_Corners()
 				break;
 			}
 
-			//Ã¼Å© ÇÏ´ø Æ÷ÀÎÆ®·Î È¸Àü ÁßÁ¡À» º¯°æ
+			//ì²´í¬ í•˜ë˜ í¬ì¸íŠ¸ë¡œ íšŒì „ ì¤‘ì ì„ ë³€ê²½
 			m_iRotPoint = iCheckPoint;
 		}
 	}
 	else
 	{
-		//°¢µµ¸¦ Áõ°¡ ½ÃÅ²´Ù.
+		//ê°ë„ë¥¼ ì¦ê°€ ì‹œí‚¨ë‹¤.
 		m_fAngle += D3DXToRadian(m_fCurSpeed);
 
-		//Ãæµ¹ Ã¼Å©ÇÒ Æ÷ÀÎÆ® ¼³Á¤
+		//ì¶©ëŒ ì²´í¬í•  í¬ì¸íŠ¸ ì„¤ì •
 		int iCheckPoint = m_iRotPoint - 1;
 		if (iCheckPoint < 0)
 		{
 			iCheckPoint = 3;
 		}
 
-		//Ãæµ¹ Ã¼Å©ÇÒ Æ÷ÀÎÆ®°¡ Ãæµ¹ÇÏ¸é
+		//ì¶©ëŒ ì²´í¬í•  í¬ì¸íŠ¸ê°€ ì¶©ëŒí•˜ë©´
 		if (m_vWorldPoint[iCheckPoint].y > WINCY * 0.5f)
 		{
-			//ÇöÀç È¸ÀüÀÇ ÁßÁ¡À¸·Î ÇÏ´Â Æ÷ÀÎÆ®¿¡ µû¶ó, »ç°¢ÇüÀÇ ÁßÁ¡À» ÀÌµ¿ ½ÃÅ²´Ù.[ÇÏµåÄÚµù, ±ÔÄ¢À» ¸ø Ã£À½]
-			//Ã³À½ ½ÃÀÛÁ¡(3) Æ÷ÀÎÆ® Â÷ÀÌ¸¸Å­ ÀÌµ¿½ÃÅ°´Â °Í °°±äÇÔ
+			//í˜„ìž¬ íšŒì „ì˜ ì¤‘ì ìœ¼ë¡œ í•˜ëŠ” í¬ì¸íŠ¸ì— ë”°ë¼, ì‚¬ê°í˜•ì˜ ì¤‘ì ì„ ì´ë™ ì‹œí‚¨ë‹¤.[í•˜ë“œì½”ë”©, ê·œì¹™ì„ ëª» ì°¾ìŒ]
+			//ì²˜ìŒ ì‹œìž‘ì (3) í¬ì¸íŠ¸ ì°¨ì´ë§Œí¼ ì´ë™ì‹œí‚¤ëŠ” ê²ƒ ê°™ê¸´í•¨
 			switch (m_iRotPoint)
 			{
 			case 0:
@@ -173,7 +179,7 @@ void CSquare::Roll_Corners()
 				break;
 			}
 
-			//Ã¼Å© ÇÏ´ø Æ÷ÀÎÆ®·Î È¸Àü ÁßÁ¡À» º¯°æ
+			//ì²´í¬ í•˜ë˜ í¬ì¸íŠ¸ë¡œ íšŒì „ ì¤‘ì ì„ ë³€ê²½
 			m_iRotPoint = iCheckPoint;
 		}
 	}
@@ -181,17 +187,17 @@ void CSquare::Roll_Corners()
 
 void CSquare::Roll()
 {
-	float fAngle = D3DXToRadian(1.f);  // °¢µµ Áõ°¡ (1µµ¾¿)
-	float fL = m_fSize * 2.f;  // ÇÑ º¯ÀÇ ±æÀÌ
-	float fR = fL * sqrtf(2.f);  // ´ë°¢¼± Àý¹Ý ±æÀÌ
+	float fAngle = D3DXToRadian(1.f);  // ê°ë„ ì¦ê°€ (1ë„ì”©)
+	float fL = m_fSize * 2.f;  // í•œ ë³€ì˜ ê¸¸ì´
+	float fR = fL * sqrtf(2.f);  // ëŒ€ê°ì„  ì ˆë°˜ ê¸¸ì´
 
-	m_fAngle += fAngle;  // °¢µµ Áõ°¡
+	m_fAngle += fAngle;  // ê°ë„ ì¦ê°€
 
 	float fY = WINCY * 0.5f - m_fSize * 0.5f;
 
-	// ÁßÁ¡ÀÇ À§Ä¡ °è»ê
-	m_tInfo.vPos.x = m_fSize * m_fAngle;  // ÁßÁ¡ÀÇ ¼öÆò ÀÌµ¿
-	m_tInfo.vPos.y = float(fY - m_fSize * (1 + (sqrtf(2.f) - 1) * cos(PI * m_fAngle)));  // ÁßÁ¡ÀÇ ¼öÁ÷ ÀÌµ¿
+	// ì¤‘ì ì˜ ìœ„ì¹˜ ê³„ì‚°
+	m_tInfo.vPos.x = m_fSize * m_fAngle;  // ì¤‘ì ì˜ ìˆ˜í‰ ì´ë™
+	m_tInfo.vPos.y = float(fY - m_fSize * (1 + (sqrtf(2.f) - 1) * cos(PI * m_fAngle)));  // ì¤‘ì ì˜ ìˆ˜ì§ ì´ë™
 
 }
 
@@ -210,14 +216,14 @@ bool CSquare::Wait_Time()
 
 void CSquare::Change_Speed()
 {
-	//¶¥¿¡ ´ê¾ÒÀ»¶§ ´À·ÁÁ³´Ù°¡...¼¼¿öÁ³À» ¶§ »¡¶óÁ®¾ßÇÔ
+	//ë•…ì— ë‹¿ì•˜ì„ë•Œ ëŠë ¤ì¡Œë‹¤ê°€...ì„¸ì›Œì¡Œì„ ë•Œ ë¹¨ë¼ì ¸ì•¼í•¨
 	m_fTime += 0.3f;
 	m_fCurSpeed = abs(sin(m_fTime)) * m_fSpeed;
 }
 
 void CSquare::Render(HDC hDC)
 {
-	//»ç°¢Çü
+	//ì‚¬ê°í˜•
 	for (int i = 0; i < 4; ++i)
 	{
 		D3DXVec3TransformCoord(&m_vWorldPoint[i], &m_vLocalPoint[i], &m_tInfo.matWorld);
@@ -228,8 +234,23 @@ void CSquare::Render(HDC hDC)
 	LineTo(hDC, (int)m_vWorldPoint[2].x, (int)m_vWorldPoint[2].y);
 	LineTo(hDC, (int)m_vWorldPoint[3].x, (int)m_vWorldPoint[3].y);
 	LineTo(hDC, (int)m_vWorldPoint[0].x, (int)m_vWorldPoint[0].y);
-	
-	//ÁßÁ¡
+
+	//ì‚¬ê°í˜• ìƒ‰ì¹ 
+	HBRUSH hBrush = CreateSolidBrush(RGB(0, 0, 0));
+	HBRUSH hOldBrush = (HBRUSH)SelectObject(hDC, hBrush);
+
+	POINT tPointArr[4] = {};
+	for (int i = 0; i < 4; ++i)
+	{
+		tPointArr[i].x = m_vWorldPoint[i].x;
+		tPointArr[i].y = m_vWorldPoint[i].y;
+	}
+	Polygon(hDC, tPointArr, 4);
+
+	SelectObject(hDC, hOldBrush);
+	DeleteObject(hBrush);
+
+	//ì¤‘ì 
 	D3DXVec3TransformCoord(&m_vWorldPoint_Center, &m_vLocalPoint_Center, &m_tInfo.matWorld);
 	int iEllipseSize = (int)(m_fSize * 0.25f);
 	Ellipse(hDC, 
@@ -238,15 +259,15 @@ void CSquare::Render(HDC hDC)
 		(int)(m_vWorldPoint_Center.x + iEllipseSize),
 		(int)(m_vWorldPoint_Center.y + iEllipseSize));
 
-	TCHAR cBuffer[64]; //ÀúÀåÇÒ ¹®ÀÚ¿­ ¹öÆÛ
-	//// ¹®ÀÚ¿­·Î º¯È¯ÇÏ¿© Ãâ·Â ÁØºñ
+	TCHAR cBuffer[64]; //ì €ìž¥í•  ë¬¸ìžì—´ ë²„í¼
+	//// ë¬¸ìžì—´ë¡œ ë³€í™˜í•˜ì—¬ ì¶œë ¥ ì¤€ë¹„
 	//for (int i = 0; i < 4; ++i)
 	//{
 	//	_stprintf_s(cBuffer, _T("(%d)[%.0f, %.0f]"), i, m_vWorldPoint[i].x, m_vWorldPoint[i].y);
 	//	TextOut(hDC, (int)m_vWorldPoint[i].x, (int)m_vWorldPoint[i].y, cBuffer, (int)_tcslen(cBuffer));
 	//}
 
-	// ¹®ÀÚ¿­·Î º¯È¯ÇÏ¿© Ãâ·Â ÁØºñ
+	// ë¬¸ìžì—´ë¡œ ë³€í™˜í•˜ì—¬ ì¶œë ¥ ì¤€ë¹„
 	for (int i = 0; i < 4; ++i)
 	{
 		_stprintf_s(cBuffer, _T("(%d)"), i);
