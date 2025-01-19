@@ -5,7 +5,8 @@
 #define SPEED_MIN 2
 #define SPEED_MAX 10
 #define ROLL_COUNT 6
-#define FALL_SPEED 50.f
+#define FALL_SPEED 10.f
+#define GOUP_SPEED 5.f
 #define LERP_SPEED 0.2f
 
 class CSquare :
@@ -15,6 +16,7 @@ public:
     CSquare();
     virtual ~CSquare();
 public:
+    void Set_Assembled() { m_bAssembled = true; }
     void Set_RollLeft(bool _b);
     void Set_Speed(float _fSpeed) { m_fSpeed = _fSpeed; }
     D3DXVECTOR3 Get_World_Center() { return m_vWorldPoint_Center; }
@@ -34,6 +36,7 @@ private:
     bool Wait_Time();
     void Change_Speed();
     void Fall();
+    void Go_Up();
     void OnVertexTouch();
     void Check_RollTime();
 private:
@@ -66,6 +69,8 @@ private:
 
     bool        m_bLerp;
     float       m_fTargetAngle;
+
+    bool        m_bAssembled;
 
 };
 

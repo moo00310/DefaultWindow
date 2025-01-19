@@ -159,8 +159,8 @@ void CSpawner::Set_SpawnTime()
 {
 	for (int i = 0; i < SPAWN_COUNT; ++i)
 	{
-		m_arrSpawnInfo[i].ullSpawnTime = m_ullStartTime + 5000 * (i + 1);
-		m_arrSpawnInfo[i].ullTimeInterval = BEAT_4;
+		m_arrSpawnInfo[i].ullSpawnTime = m_ullStartTime + 2500 * (i + 1);
+		m_arrSpawnInfo[i].ullTimeInterval = BEAT_2;
 	}
 
 	Set_SpawnInfo(0, 5000, BEAT_3);

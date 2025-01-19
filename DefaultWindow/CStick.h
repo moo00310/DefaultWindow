@@ -1,11 +1,14 @@
 #pragma once
 #include "CObj.h"
 
-#define STICK_WIDTH 10
-#define STICK_HEIGHT 50
+#define STICK_WIDTH 30
+#define STICK_HEIGHT 100
 
-#define PULL_LENGTH 30.0f // 뒤로 당기는 길이를 정의
-#define FLY_SPEED 50.f
+#define PULL_LENGTH 100.0f // 뒤로 당기는 길이를 정의
+#define FLY_SPEED 100.f
+
+#define JUDGE_WINDOW 50.f
+#define FLY_INTERVAL 500
 
 class CStick :
     public CObj
@@ -27,6 +30,8 @@ private:
     void Fly();
     void Check_ScreenOut();
     void Check_Hit();
+    void Assemble_Parts();
+    void Check_ResetPosition();
 private:
     //사각형 점 4개
     D3DXVECTOR3 m_arrLocalPoint[4];
@@ -43,5 +48,8 @@ private:
     bool        m_bFly;
     float       m_fDistance;
     int         m_iScore;
+    
+    //발사한 시간
+    ULONGLONG   m_ullLastFlyTime;
 };
 

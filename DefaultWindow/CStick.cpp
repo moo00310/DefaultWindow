@@ -4,9 +4,11 @@
 #include "CSpawner.h"
 #include "CSquare.h"
 #include "CObjMgr.h"
+#include "CAbstractFactory.h"
+#include "CSoundMgr.h"
 
 CStick::CStick()
-	:m_bFly(false), m_iScore(0), m_fDistance(0)
+	:m_bFly(false), m_iScore(0), m_fDistance(0), m_ullLastFlyTime(0)
 {
 	ZeroMemory(&m_arrLocalPoint, sizeof(m_arrLocalPoint));
 	ZeroMemory(&m_arrWorldPoint, sizeof(m_arrWorldPoint));
@@ -46,11 +48,12 @@ int CStick::Update()
         return OBJ_DEAD;
 
 	Input_Key();
-	/*Check_ScreenOut();
+	//Check_ScreenOut();
+	Check_ResetPosition();
 	if (m_bFly)
 	{
 		Fly();
-	}*/
+	}
 
 	Update_WorldMatrix();
     return OBJ_NOEVENT;
@@ -126,13 +129,25 @@ void CStick::Input_Key()
 {
 	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_SPACE))
 	{
-		m_tInfo.vPos = m_vWorldBackPosition;
+		if (m_bFly)
+		{
+			return;
+		}
+
+		m_tInfo.vPos -= 0.1f * (m_tInfo.vPos - m_vWorldBackPosition);
+		//m_tInfo.vPos = m_vWorldBackPosition;
 	}
 
 	if (CKeyMgr::Get_Instance()->Key_Up(VK_SPACE))
 	{
+		if (m_bFly)
+		{
+			return;
+		}
+
 		Check_Hit();
-		//m_bFly = true;
+		m_bFly = true;
+		m_ullLastFlyTime = GetTickCount64();
 	}
 }
 
@@ -178,14 +193,16 @@ void CStick::Check_Hit()
 		
 	if (!LeftList.size() || !RightList.size())
 	{
+		CSoundMgr::Get_Instance()->PlayEvent("event:/Built_Fail");
 		return;
 	}
 
-	CObj* pLeft = LeftList.back();
-	CObj* pRight = RightList.back();
+	CObj* pLeft = *LeftList.begin();
+	CObj* pRight = *RightList.begin();
 
 	if (!pLeft || !pRight)
 	{
+		CSoundMgr::Get_Instance()->PlayEvent("event:/Built_Fail");
 		m_fDistance = WINCX;
 		return;
 	}
@@ -203,8 +220,53 @@ void CStick::Check_Hit()
 
 	m_fDistance = abs(vLeft.x - vRight.x);
 
-	if (m_fDistance < 10.f)
+	if (m_fDistance < JUDGE_WINDOW)
 	{
 		++m_iScore;
+		Assemble_Parts();
+		CSoundMgr::Get_Instance()->PlayEvent("event:/Built_Success");
+	}
+	else
+	{
+		CSoundMgr::Get_Instance()->PlayEvent("event:/Built_Fail");
+	}
+}
+
+void CStick::Assemble_Parts()
+{
+	list<CObj*> LeftList = CObjMgr::Get_Instance()->Get_List()[OBJ_MONSTER];
+	list<CObj*> RightList = CObjMgr::Get_Instance()->Get_List()[OBJ_BULLET];
+
+	if (!LeftList.size() || !RightList.size())
+	{
+		return;
+	}
+
+	CObj* pLeft = *LeftList.begin();
+	CObj* pRight = *RightList.begin();
+
+	pLeft->Set_Dead();
+	pRight->Set_Dead();
+
+	CObj* pObj = CAbstractFactory<CSquare>::Create(WINCX * 0.5f, WINCY * 0.4f);
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BLOCK, pObj);
+	if (CSquare* pSquare = dynamic_cast<CSquare*>(pObj))
+	{
+		pSquare->Set_Assembled();
+	}
+
+	//pLeft->Set_Pos(WINCX * 0.5f, WINCY * 0.1f);
+	//pRight->Set_Pos(WINCX * 0.5f, WINCY * 0.1f);
+}
+
+void CStick::Check_ResetPosition()
+{
+	if (m_bFly)
+	{
+		if (m_ullLastFlyTime + FLY_INTERVAL < GetTickCount64())
+		{
+			m_tInfo.vPos = m_vOriginPosition;
+			m_bFly = false;
+		}
 	}
 }

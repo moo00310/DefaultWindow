@@ -28,7 +28,7 @@ void CRhythmWorld::Initialize()
     CObjMgr::Get_Instance()->Add_Object(OBJ_SHIELD, m_pSpawner);
 
     CObj* pObj(nullptr);
-    pObj = CAbstractFactory<CStick>::Create(WINCX * 0.5f, WINCY * 0.9f);
+    pObj = CAbstractFactory<CStick>::Create(WINCX * 0.5f, WINCY * 0.7f);
     CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, pObj);
 }
 
@@ -61,7 +61,7 @@ void CRhythmWorld::Render(HDC hDC)
 
     CObjMgr::Get_Instance()->Render(hDC);
 
-    //Draw_Outline(hDC);
+    Draw_Outline(hDC);
 }
 
 void CRhythmWorld::Release()

@@ -7,7 +7,7 @@
 CSquare::CSquare()
 	:m_fAngle(0.f), m_iRotPoint(0), m_bRollLeft(false), m_ullWaitTime(0), m_bFall(false),
 	m_pBankPoint(nullptr), m_pNotePoint(nullptr), m_iNote(0), m_fCurSpeed(0.f), m_fTime(0.f),
-	m_ullNextRollTime(0), m_iRollCount(0), m_bLerp(false), m_fTargetAngle(0.f)
+	m_ullNextRollTime(0), m_iRollCount(0), m_bLerp(false), m_fTargetAngle(0.f), m_bAssembled(false)
 
 {
 	ZeroMemory(&m_arrLocalPoint, sizeof(m_arrLocalPoint));
@@ -92,8 +92,11 @@ int CSquare::Update()
 			Fall();
 		}
 	}*/
-
-	if (!m_bFall)
+	if (m_bAssembled)
+	{
+		Go_Up();
+	}
+	else if (!m_bFall)
 	{
 		Check_RollTime();
 		//Change_Speed();
@@ -278,6 +281,11 @@ void CSquare::Fall()
 	m_tInfo.vPos += {0.f, FALL_SPEED, 0.f};
 }
 
+void CSquare::Go_Up()
+{
+	m_tInfo.vPos -= {0.f, GOUP_SPEED, 0.f};
+}
+
 void CSquare::OnVertexTouch()
 {
 	m_pNotePoint->setParameterByName("Note", (float)(m_iNote++));
@@ -361,15 +369,17 @@ void CSquare::Render(HDC hDC)
 	SelectObject(hDC, hOldBrush);
 	DeleteObject(hBrush);
 
-	//중점
-	D3DXVec3TransformCoord(&m_vWorldPoint_Center, &m_vLocalPoint_Center, &m_tInfo.matWorld);
-	int iEllipseSize = (int)(SIDE * 0.25f);
-	Ellipse(hDC, 
-		(int)(m_vWorldPoint_Center.x - iEllipseSize),
-		(int)(m_vWorldPoint_Center.y - iEllipseSize),
-		(int)(m_vWorldPoint_Center.x + iEllipseSize),
-		(int)(m_vWorldPoint_Center.y + iEllipseSize));
-
+	if (!m_bAssembled)
+	{
+		//중점
+		D3DXVec3TransformCoord(&m_vWorldPoint_Center, &m_vLocalPoint_Center, &m_tInfo.matWorld);
+		int iEllipseSize = (int)(SIDE * 0.25f);
+		Ellipse(hDC,
+			(int)(m_vWorldPoint_Center.x - iEllipseSize),
+			(int)(m_vWorldPoint_Center.y - iEllipseSize),
+			(int)(m_vWorldPoint_Center.x + iEllipseSize),
+			(int)(m_vWorldPoint_Center.y + iEllipseSize));
+	}	
 	//TCHAR cBuffer[64]; //저장할 문자열 버퍼
 	//// 문자열로 변환하여 출력 준비
 	//for (int i = 0; i < 4; ++i)
@@ -394,20 +404,20 @@ void CSquare::Render(HDC hDC)
 
 void CSquare::Release()
 {
-	list<CObj*> List = CObjMgr::Get_Instance()->Get_List()[OBJ_SHIELD];
-	CObj* pObj = *List.begin();
+	//list<CObj*> List = CObjMgr::Get_Instance()->Get_List()[OBJ_SHIELD];
+	//CObj* pObj = *List.begin();
 
-	if (CSpawner* pSpawner = dynamic_cast<CSpawner*>(pObj))
-	{
-		if (m_bRollLeft)
-		{
-			pSpawner->Set_LeftSquare(nullptr);
-		}
-		else
-		{
-			pSpawner->Set_RightSquare(nullptr);
-		}
-	}
+	//if (CSpawner* pSpawner = dynamic_cast<CSpawner*>(pObj))
+	//{
+	//	if (m_bRollLeft)
+	//	{
+	//		pSpawner->Set_LeftSquare(nullptr);
+	//	}
+	//	else
+	//	{
+	//		pSpawner->Set_RightSquare(nullptr);
+	//	}
+	//}
 }
 
 void CSquare::Late_Update()
