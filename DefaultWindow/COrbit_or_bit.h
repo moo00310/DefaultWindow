@@ -28,7 +28,7 @@ private:
 	CObj* m_pOrbit;
 
 	FMOD::Studio::EventInstance* m_BGM;
-	int m_iTimeLine;
+
 
 	chrono::system_clock::time_point m_tBeatStart; // 다음 박자 (마이크로초)와 비교할 직전 타임 스탬프
 	chrono::microseconds m_llTimeChecker;
@@ -37,5 +37,6 @@ private:
 
 	int m_iBeatCount;
 
+	int m_iHitCount;
 };
 

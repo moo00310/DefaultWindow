@@ -45,15 +45,16 @@ CObj* CObjMgr::Get_Target(OBJID eID, CObj* pDst)
 bool CObjMgr::Collision_Check(OBJID _eID, float _Dst, float _Src)
 {
 	m_pPlayer = m_ObjList[OBJ_PLAYER].front();
-	for_each(m_ObjList[_eID].begin(), m_ObjList[_eID].end(), [&](CObj* obj)
-		{
-			float fRadius = (_Dst + _Src) * 0.5f;
-			float fWidth = abs(m_pPlayer->Get_Info().vPos.x - obj->Get_Info().vPos.x);
-			float fHeight = abs(m_pPlayer->Get_Info().vPos.y - obj->Get_Info().vPos.y);
-			float fDiagonal = sqrtf(fWidth * fWidth + fHeight * fHeight);
-			if (fRadius >= fDiagonal)
-				return true;
-		});
+	float fRadius = (_Dst + _Src) * 0.5f;
+
+	for (CObj* obj : m_ObjList[_eID]) {
+		float fWidth = abs(m_pPlayer->Get_Info().vPos.x - obj->Get_Info().vPos.x);
+		float fHeight = abs(m_pPlayer->Get_Info().vPos.y - obj->Get_Info().vPos.y);
+		float fDiagonal = sqrtf(fWidth * fWidth + fHeight * fHeight);
+
+		if (fRadius >= fDiagonal)
+			return true; 
+	}
 
 	return false;
 }

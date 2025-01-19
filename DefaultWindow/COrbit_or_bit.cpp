@@ -10,7 +10,7 @@
 #include "CCameraMgr.h"
 #include "CScrollMgr.h"
 
-COrbit_or_bit::COrbit_or_bit() : m_pPlayer(nullptr), m_pOrbit(nullptr), m_iTimeLine(0), m_BGM(nullptr), m_iBeatCount(0),
+COrbit_or_bit::COrbit_or_bit() : m_pPlayer(nullptr), m_pOrbit(nullptr), m_iHitCount(0), m_BGM(nullptr), m_iBeatCount(0),
 m_bRightTimeBeat(false), m_llTimeChecker(0)
 {
 }
@@ -68,7 +68,10 @@ int COrbit_or_bit::Update()
 void COrbit_or_bit::Late_Update()
 {
 	CObjMgr::Get_Instance()->Late_Update();
-	bool isCol = CObjMgr::Get_Instance()->Collision_Check(OBJ_MOUSE, 20, 15);
+	if (CObjMgr::Get_Instance()->Collision_Check(OBJ_MOUSE, 20, 15))
+	{
+		m_iHitCount++;
+	}
 }
 
 void COrbit_or_bit::Render(HDC hDC)
@@ -90,12 +93,10 @@ void COrbit_or_bit::Render(HDC hDC)
 	TextOut(hDC, 450, 50, szBuffer, (int)_tcslen(szBuffer));
 
 	TCHAR szBuffer1[128];
-	_stprintf_s(szBuffer1, _T("X : %d \t Y : %d"), (int)Get_Mouse().x, (int)Get_Mouse().y);
+	_stprintf_s(szBuffer1, _T("HitCount : %d"), m_iHitCount);
 	SetTextColor(hDC, RGB(0, 0, 0));
 	SetBkMode(hDC, TRANSPARENT);
 	TextOut(hDC, 50, 50, szBuffer1, (int)_tcslen(szBuffer1));
-
-	
 
 	CObjMgr::Get_Instance()->Render(hDC);
 }

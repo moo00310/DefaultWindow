@@ -5,6 +5,7 @@
 #include "CRhythmWorld.h"
 #include "CSSHScene.h"
 #include "CKDHScene.h"
+#include "CMenu.h"
 
 CSceneMgr* CSceneMgr::m_pInstance = nullptr;
 
@@ -48,13 +49,9 @@ void CSceneMgr::Set_Scene(SCENEID eID)
 			m_pScene = new CKDHScene();
 			break;
 
-		/*	case SC_EDIT:
-			m_pScene = new CMyEdit;
+		case SC_MENU:
+			m_pScene = new CMenu;
 			break;
-
-		case SC_STAGE:
-			m_pScene = new CStage;
-			break;*/
 		}
 
 		m_pScene->Initialize();
