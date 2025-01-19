@@ -113,8 +113,8 @@ void CObjMgr::Render(HDC hDC)
 		m_RenderList[i].clear();
 	}
 
-	float x = m_ObjList[OBJ_MONSTER].front()->Get_Info().vPos.x;
-	float y = m_ObjList[OBJ_MONSTER].front()->Get_Info().vPos.y;
+	/*float x = m_ObjList[OBJ_MONSTER].front()->Get_Info().vPos.x;
+	float y = m_ObjList[OBJ_MONSTER].front()->Get_Info().vPos.y;*/
 }
 
 void CObjMgr::Release()

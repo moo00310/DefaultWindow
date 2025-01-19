@@ -3,13 +3,18 @@
 #include "CKDHPlayer.h"
 #include "CHexaPad.h"
 
+#define ROTATE_SPEED 1.f
+
+extern float g_RevolAngle;
+extern bool g_bRotateAngle;
+
 class CKDHScene : public CScene
 {
 public:
 	CKDHScene();
 	virtual ~CKDHScene();
 
-	// CSceneÀ»(¸¦) ÅëÇØ »ó¼ÓµÊ
+	// CSceneì„(ë¥¼) í†µí•´ ìƒì†ë¨
 	void Initialize() override;
 	int Update() override;
 	void Late_Update() override;
@@ -19,5 +24,7 @@ public:
 private:
 	void CreatePattern();
 	void AddPad(kDIRECTION _direction);
+	float m_fChangeCount;
+	DWORD m_dwTick;
 };
 

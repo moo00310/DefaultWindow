@@ -2,12 +2,14 @@
 #include "CHexaPad.h"
 #include "CSceneMgr.h"
 #include "CObjMgr.h"
+#include "CHexaPadManager.h"
+#include "CKDHScene.h"
 
 CHexaPad::CHexaPad()
 {
 	ZeroMemory(&m_ResetPosition, sizeof(D3DXVECTOR3));
 
-	m_fScale = 20.f;
+	m_fScale = 10.f;
 	m_Player = static_cast<CKDHPlayer*>(CObjMgr::Get_Instance()->Get_Player());
 }
 
@@ -20,18 +22,19 @@ void CHexaPad::Initialize()
 	m_eRender = RENDER_GAMEOBJECT;
 
 	m_localLookAt = { 1.f, 0.f, 0.f };
-	m_localScale = { 1.f, 1.f, 0.f };
+	m_localScale = { 1.f, 50.f, 0.f };
+	m_localPosition = { 360.f, 0.f, 0.f };
 
 	vertex[0].x = m_localPosition.x - m_fScale;
 	vertex[0].y = m_localPosition.y - m_fScale;
 
 	vertex[1].x = m_localPosition.x + m_fScale;
-	vertex[1].y = m_localPosition.y - m_fScale;
+	vertex[1].y = m_localPosition.y - m_fScale - m_fScale;
 
-	vertex[2].x = m_localPosition.x + m_fScale + m_fScale;
-	vertex[2].y = m_localPosition.y + m_fScale;
+	vertex[2].x = m_localPosition.x + m_fScale;
+	vertex[2].y = m_localPosition.y + m_fScale + m_fScale;
 
-	vertex[3].x = m_localPosition.x - m_fScale - m_fScale;
+	vertex[3].x = m_localPosition.x - m_fScale;
 	vertex[3].y = m_localPosition.y + m_fScale;
 
 	for (int i = 0; i < 4; i++)
@@ -40,7 +43,7 @@ void CHexaPad::Initialize()
 		vertexOrigin[i].y = vertex[i].y;
 	}
 
-	// «◊µÓ «‡∑ƒ.
+	// Ìï≠Îì± ÌñâÎ†¨.
 	D3DXMatrixIdentity(&m_MatrixPosition);
 	D3DXMatrixIdentity(&m_MatrixRotate);
 	D3DXMatrixIdentity(&m_MatrixScale);
@@ -49,100 +52,96 @@ void CHexaPad::Initialize()
 	D3DXMatrixIdentity(&m_MatrixWorld);
 
 	m_fSpeed = 4.f;
+	m_rovAngle = 0.f;
+	m_rotAngle = 0.f;
 }
 
 int CHexaPad::Update()
 {
-	m_distance = GetDistance(m_Player->GetLocalParentPosition());
+	// ÌîåÎ†àÏù¥Ïñ¥ Î∂ÄÎ™®ÏôÄ Í±∞Î¶¨ Ï∞®Ïù¥.
+	float fDistance = GetDistance(m_Player->GetLocalParentPosition());
+
+	// ÌîåÎ†àÏù¥Ïñ¥ÏôÄ Í±∞Î¶¨ Ï∞®Ïù¥.
 	float fPlayerDistance = GetDistance(m_Player->GetLocalPositionToWorld());
 
-	// «√∑π¿ÃæÓ ¡¢√À »Æ¿Œ.
-	if (fPlayerDistance <= m_fScale + m_fScale)
+	// ÌîåÎ†àÏù¥Ïñ¥ Ï†ëÏ¥â ÌôïÏù∏.
+	if (fPlayerDistance <= m_fScale + m_fScale + m_fScale)
 	{
-		// ∞‘¿” ø¿πˆ ∆«¡§.
-		CSceneMgr::Get_Instance()->Set_Scene(SC_KDH);
-		return 0;
+		// Í≤åÏûÑ Ïò§Î≤Ñ ÌåêÏ†ï.
+		//CSceneMgr::Get_Instance()->Set_Scene(SC_HERO);
+		return OBJ_DEAD;
 	}
 
-	if (m_distance <= 0.f)
+	if (fDistance <= 2.f)
 	{
-		return 0;
+		return OBJ_DEAD;
 	}
 
-	m_localScale.x = m_distance / 40.f;
+	m_localScale.y = fDistance / 20.f;
 
-	switch (m_Direction)
-	{
-	case DIR_UP:
-	{
-		m_localPosition.y += m_fSpeed;
-	}
-	break;
-
-	case DIR_DOWN:
-	{
-		m_localPosition.y -= m_fSpeed;
-	}
-	break;
-
-	case DIR_LEFT:
-	{
-		m_localPosition.x += m_fSpeed;
-	}
-	break;
-
-	case DIR_RIGHT:
-	{
-		m_localPosition.x -= m_fSpeed;
-	}
-	break;
-	}
+	m_localPosition.x -= m_fSpeed;
+	//m_localPosition -= m_localDirection * m_fSpeed;
 
 	return 0;
 }
 
 void CHexaPad::Late_Update()
 {
-	// ¡°µÈ¿ª ¥ŸΩ√ 0,0 ø¯¡°¿∏∑Œ ¿ÃµøΩ√≈¥.
+	m_rovAngle = m_rovOriginAngle + g_RevolAngle;
+
+	// Ï†êÎì§ÏùÑ Îã§Ïãú 0,0 ÏõêÏ†êÏúºÎ°ú Ïù¥ÎèôÏãúÌÇ¥.
 	vertexOrigin[0].x = m_ResetPosition.x - m_fScale;
 	vertexOrigin[0].y = m_ResetPosition.y - m_fScale;
 
 	vertexOrigin[1].x = m_ResetPosition.x + m_fScale;
-	vertexOrigin[1].y = m_ResetPosition.y - m_fScale;
+	vertexOrigin[1].y = m_ResetPosition.y - m_fScale - m_fScale;
 
-	vertexOrigin[2].x = m_ResetPosition.x + m_fScale + m_fScale;
-	vertexOrigin[2].y = m_ResetPosition.y + m_fScale;
+	vertexOrigin[2].x = m_ResetPosition.x + m_fScale;
+	vertexOrigin[2].y = m_ResetPosition.y + m_fScale + m_fScale;
 
-	vertexOrigin[3].x = m_ResetPosition.x - m_fScale - m_fScale;
+	vertexOrigin[3].x = m_ResetPosition.x - m_fScale;
 	vertexOrigin[3].y = m_ResetPosition.y + m_fScale;
 
-	// ≈©±‚ «‡∑ƒ.
+	// ÌÅ¨Í∏∞ ÌñâÎ†¨.
 	D3DXMatrixScaling(&m_MatrixScale, m_localScale.x, m_localScale.y, m_localScale.z);
 
-	// »∏¿¸ «‡∑ƒ.
+	// ÌöåÏ†Ñ ÌñâÎ†¨.
 	D3DXMatrixRotationZ(&m_MatrixRotate, D3DXToRadian(m_rotAngle));
 
-	// ¿Ãµø «‡∑ƒ.
+	// Ïù¥Îèô ÌñâÎ†¨.
 	D3DXMatrixTranslation(&m_MatrixPosition, m_localPosition.x, m_localPosition.y, m_localPosition.z);
 
-	// ∞¯¿¸ «‡∑ƒ.
-	//D3DXMatrixRotationZ(&m_MatrixRevolution, D3DXToRadian(m_revolAngle));
+	// Í≥µÏ†Ñ ÌñâÎ†¨.
+	D3DXMatrixRotationZ(&m_MatrixRevolution, D3DXToRadian(m_rovAngle));
 
-	// ∫Œ∏ «‡∑ƒ.
-	//D3DXMatrixTranslation(&m_MatrixParent, m_localParentPosition.x, m_localParentPosition.y, m_localParentPosition.z);
+	// Î∂ÄÎ™® ÌñâÎ†¨.
+	D3DXMatrixTranslation(&m_MatrixParent, m_Player->GetLocalParentPosition().x, m_Player->GetLocalParentPosition().y, m_Player->GetLocalParentPosition().z);
 
-	// ø˘µÂ ¡¬«•∑Œ ∫Ø»Ø.
-	// ø˘µÂ «‡∑ƒ = ≈©±‚ * ¿⁄¿¸(»∏¿¸) * ¿Ãµø * ∞¯¿¸ * ∫Œ∏
+	// ÏõîÎìú Ï¢åÌëúÎ°ú Î≥ÄÌôò.
+	// ÏõîÎìú ÌñâÎ†¨ = ÌÅ¨Í∏∞ * ÏûêÏ†Ñ(ÌöåÏ†Ñ) * Ïù¥Îèô * Í≥µÏ†Ñ * Î∂ÄÎ™®
 	m_MatrixWorld = m_MatrixScale * m_MatrixRotate * m_MatrixPosition * m_MatrixRevolution * m_MatrixParent;
 
-	// ¡°µÈ¿ª »∏¿¸, ¿Ãµø Ω√ƒ—æﬂ«œ¥œ ∫§≈ÕøÕ ø˘µÂ «‡∑ƒ ∞ˆ«‘.
+	// Ï†êÎì§ÏùÑ ÌöåÏ†Ñ, Ïù¥Îèô ÏãúÏºúÏïºÌïòÎãà Î≤°ÌÑ∞ÏôÄ ÏõîÎìú ÌñâÎ†¨ Í≥±Ìï®.
 	D3DXVec3TransformCoord(&vertex[0], &vertexOrigin[0], &m_MatrixWorld);
 	D3DXVec3TransformCoord(&vertex[1], &vertexOrigin[1], &m_MatrixWorld);
 	D3DXVec3TransformCoord(&vertex[2], &vertexOrigin[2], &m_MatrixWorld);
 	D3DXVec3TransformCoord(&vertex[3], &vertexOrigin[3], &m_MatrixWorld);
 
-	// πÊ«‚¿ª ±∏«‘.
+	// Î∞©Ìñ•ÏùÑ Íµ¨Ìï®.
 	D3DXVec3TransformNormal(&m_localDirection, &m_localLookAt, &m_MatrixWorld);
+
+	// ÌîåÎ†àÏù¥Ïñ¥ÏôÄ Í±∞Î¶¨ Ï∞®Ïù¥.
+	float fPlayerDistance = GetDistance(m_Player->GetLocalPositionToWorld());
+
+	// ÌîåÎ†àÏù¥Ïñ¥ Ï†ëÏ¥â ÌôïÏù∏.
+	if (fPlayerDistance <= m_fScale + m_fScale)
+	{
+		// Í≤åÏûÑ Ïò§Î≤Ñ ÌåêÏ†ï.
+		// Ïî¨ Ïû¨ÏãúÏûë.
+		/*CSceneMgr::Get_Instance()->Set_Scene(SC_HERO);
+		CSceneMgr::Get_Instance()->Set_Scene(SC_KDH);*/
+		return;
+	}
 }
 
 void CHexaPad::Render(HDC hDC)
@@ -187,33 +186,29 @@ void CHexaPad::SetDirection(kDIRECTION _kDIR)
 	{
 	case DIR_UP:
 	{
-		// ¿ß.
-		m_localPosition = { WINCX * 0.5f, m_fScale, 0.f };
-		m_rotAngle = 180.f;
+		// ÏúÑ.
+		m_rovOriginAngle = 270.f;
 	}
 	break;
 
 	case DIR_DOWN:
 	{
-		// æ∆∑°.
-		m_localPosition = { WINCX * 0.5f, WINCY - m_fScale, 0.f };
-		m_rotAngle = 0.f;
+		// ÏïÑÎûò.
+		m_rovOriginAngle = 90.f;
 	}
 	break;
 
 	case DIR_LEFT:
 	{
-		// ¡¬.
-		m_localPosition = { m_fScale, WINCY * 0.5f, 0.f };
-		m_rotAngle = 90.f;
+		// Ï¢å.
+		m_rovOriginAngle = 180.f;
 	}
 	break;
 
 	case DIR_RIGHT:
 	{
-		// øÏ.
-		m_localPosition = { WINCX - m_fScale, WINCY * 0.5f, 0.f };
-		m_rotAngle = 270.f;
+		// Ïö∞.
+		m_rovOriginAngle = 0.f;
 	}
 	break;
 	}

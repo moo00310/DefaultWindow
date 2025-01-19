@@ -27,7 +27,7 @@ void CMainGame::Initialize()
   
 
 	//CSceneMgr::Get_Instance()->Set_Scene(SC_HERO);
-	CSceneMgr::Get_Instance()->Set_Scene(SC_SSH);
+	CSceneMgr::Get_Instance()->Set_Scene(SC_KDH);
 }
 
 void CMainGame::Update()

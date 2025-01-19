@@ -9,7 +9,7 @@ public:
 	CHexaPad();
 	virtual ~CHexaPad();
 
-	// CObjÀ»(¸¦) ÅëÇØ »ó¼ÓµÊ
+	// CObjì„(ë¥¼) í†µí•´ ìƒì†ë¨
 	void Initialize() override;
 	int Update() override;
 	void Late_Update() override;
@@ -21,58 +21,71 @@ public:
 private:
 	float GetDistance(D3DXVECTOR3 _info)
 	{
-		D3DXVECTOR3 result = { m_localPosition.x - _info.x,  m_localPosition.y - _info.y, m_localPosition.z - _info.z };
+		D3DXVECTOR3 result = GetLocalPositionToWorld() - _info;
 
-		return sqrtf((result.x * result.x) + (result.y * result.y));
+		return D3DXVec3Length(&result);
+	}
+
+	// ë‚˜ì˜ ìœ„ì¹˜ë¥¼ ë¡œì»¬ ì¢Œí‘œì—ì„œ ì›”ë“œ ì¢Œí‘œë¡œ ë³€í™˜.
+	D3DXVECTOR3 GetLocalPositionToWorld()
+	{
+		D3DXMatrixTranslation(&m_MatrixPosition, m_localPosition.x, m_localPosition.y, m_localPosition.z);
+		D3DXMatrixTranslation(&m_MatrixParent, m_Player->GetLocalParentPosition().x, m_Player->GetLocalParentPosition().y, m_Player->GetLocalParentPosition().z);
+		D3DXMatrixRotationZ(&m_MatrixRevolution, D3DXToRadian(m_rovAngle));
+
+		m_MatrixWorld = m_MatrixPosition * m_MatrixRevolution * m_MatrixParent;
+
+		return { m_MatrixWorld.m[3][0], m_MatrixWorld.m[3][1], m_MatrixWorld.m[3][2] };
 	}
 
 private:
-	// ¿øÁ¡.
+	// ì›ì .
 	D3DXVECTOR3 m_ResetPosition;
 
-	// ÇÃ·¹ÀÌ¾î À§Ä¡.
+	// í”Œë ˆì´ì–´ ìœ„ì¹˜.
 	D3DXVECTOR3 m_localPosition;
 
-	// ÇÃ·¹ÀÌ¾î ¹Ù¶óº¸´Â °÷.
+	// í”Œë ˆì´ì–´ ë°”ë¼ë³´ëŠ” ê³³.
 	D3DXVECTOR3 m_localLookAt;
 
-	// ÇÃ·¹ÀÌ¾î ¹æÇâ.
+	// í”Œë ˆì´ì–´ ë°©í–¥.
 	D3DXVECTOR3 m_localDirection;
 
-	// ÇÃ·¹ÀÌ¾î Å©±â.
+	// í”Œë ˆì´ì–´ í¬ê¸°.
 	D3DXVECTOR3 m_localScale;
 
-	// À§Ä¡ Çà·Ä.
+	// ìœ„ì¹˜ í–‰ë ¬.
 	D3DXMATRIX m_MatrixPosition;
 
-	// È¸Àü Çà·Ä.
+	// íšŒì „ í–‰ë ¬.
 	D3DXMATRIX m_MatrixRotate;
 
-	// Å©±â Çà·Ä.
+	// í¬ê¸° í–‰ë ¬.
 	D3DXMATRIX m_MatrixScale;
 
-	// °øÀü Çà·Ä.
+	// ê³µì „ í–‰ë ¬.
 	D3DXMATRIX m_MatrixRevolution;
 
-	// ºÎ¸ğ Çà·Ä.
+	// ë¶€ëª¨ í–‰ë ¬.
 	D3DXMATRIX m_MatrixParent;
 
-	// ¿ùµå Çà·Ä.
+	// ì›”ë“œ í–‰ë ¬.
 	D3DXMATRIX m_MatrixWorld;
 
-	// ¹öÅØ½º.
+	// ë²„í…ìŠ¤.
 	D3DXVECTOR3 vertex[4];
 
-	// ±âÁ¸ ¹öÅØ½º.
+	// ê¸°ì¡´ ë²„í…ìŠ¤.
 	D3DXVECTOR3 vertexOrigin[4];
 
-	// ³» Å©±â.
+	// ë‚´ í¬ê¸°.
 	float m_fScale;
 
 	float m_rotAngle;
 
-	// Áß½É °Å¸®Â÷ÀÌ.
-	float m_distance;
+	float m_rovAngle;
+
+	float m_rovOriginAngle;
 
 	kDIRECTION m_Direction;
 

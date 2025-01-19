@@ -155,6 +155,7 @@
     <ClInclude Include="CBlock_SSH.h" />
     <ClInclude Include="CCameraMgr.h" />
     <ClInclude Include="CHexaPad.h" />
+    <ClInclude Include="CKDHLine.h" />
     <ClInclude Include="CKDHPlayer.h" />
     <ClInclude Include="CKDHScene.h" />
     <ClInclude Include="CKeyMgr.h" />
@@ -192,6 +193,7 @@
     <ClCompile Include="CBlock_SSH.cpp" />
     <ClCompile Include="CCameraMgr.cpp" />
     <ClCompile Include="CHexaPad.cpp" />
+    <ClCompile Include="CKDHLine.cpp" />
     <ClCompile Include="CKDHPlayer.cpp" />
     <ClCompile Include="CKDHScene.cpp" />
     <ClCompile Include="CKeyMgr.cpp" />
