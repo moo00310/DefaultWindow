@@ -155,10 +155,12 @@
     <ClInclude Include="CBlock_SSH.h" />
     <ClInclude Include="CCameraMgr.h" />
     <ClInclude Include="CHexaPad.h" />
+    <ClInclude Include="CKDHLine.h" />
     <ClInclude Include="CKDHPlayer.h" />
     <ClInclude Include="CKDHScene.h" />
     <ClInclude Include="CKeyMgr.h" />
     <ClInclude Include="CMainGame.h" />
+    <ClInclude Include="CMemoryPoolMgr.h" />
     <ClInclude Include="CMenu.h" />
     <ClInclude Include="CObj.h" />
     <ClInclude Include="CObjMgr.h" />
@@ -193,10 +195,12 @@
     <ClCompile Include="CBlock_SSH.cpp" />
     <ClCompile Include="CCameraMgr.cpp" />
     <ClCompile Include="CHexaPad.cpp" />
+    <ClCompile Include="CKDHLine.cpp" />
     <ClCompile Include="CKDHPlayer.cpp" />
     <ClCompile Include="CKDHScene.cpp" />
     <ClCompile Include="CKeyMgr.cpp" />
     <ClCompile Include="CMainGame.cpp" />
+    <ClCompile Include="CMemoryPoolMgr.cpp" />
     <ClCompile Include="CMenu.cpp" />
     <ClCompile Include="CObj.cpp" />
     <ClCompile Include="CObjMgr.cpp" />

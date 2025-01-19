@@ -6,7 +6,7 @@ public:
 	CKDHPlayer();
 	virtual ~CKDHPlayer();
 
-	// CPlayerÀ»(¸¦) ÅëÇØ »ó¼ÓµÊ
+	// CPlayerì„(ë¥¼) í†µí•´ ìƒì†ë¨
 	void Initialize() override;
 	int Update() override;
 	void Late_Update() override;
@@ -19,7 +19,7 @@ public:
 		return m_localParentPosition;
 	}
 
-	// ³ªÀÇ À§Ä¡¸¦ ·ÎÄÃ ÁÂÇ¥¿¡¼­ ¿ùµå ÁÂÇ¥·Î º¯È¯.
+	// ë‚˜ì˜ ìœ„ì¹˜ë¥¼ ë¡œì»¬ ì¢Œí‘œì—ì„œ ì›”ë“œ ì¢Œí‘œë¡œ ë³€í™˜.
 	D3DXVECTOR3 GetLocalPositionToWorld()
 	{
 		D3DXMatrixTranslation(&m_MatrixPosition, m_localPosition.x, m_localPosition.y, m_localPosition.z);
@@ -32,67 +32,91 @@ public:
 	}
 
 private:
-	// ¿øÁ¡.
+	// ì›ì .
 	D3DXVECTOR3 m_ResetPosition;
 
-	// ÇÃ·¹ÀÌ¾î À§Ä¡.
+	// í”Œë ˆì´ì–´ ìœ„ì¹˜.
 	D3DXVECTOR3 m_localPosition;
 
-	// ºÎ¸ğ À§Ä¡.
+	// ë¶€ëª¨ ìœ„ì¹˜.
 	D3DXVECTOR3 m_localParentPosition;
 
-	// ÇÃ·¹ÀÌ¾î ¹Ù¶óº¸´Â °÷.
+	// í”Œë ˆì´ì–´ ë°”ë¼ë³´ëŠ” ê³³.
 	D3DXVECTOR3 m_localLookAt;
 
-	// ÇÃ·¹ÀÌ¾î ¹æÇâ.
+	// í”Œë ˆì´ì–´ ë°©í–¥.
 	D3DXVECTOR3 m_localDirection;
 
-	// ÇÃ·¹ÀÌ¾î Å©±â.
+	// í”Œë ˆì´ì–´ í¬ê¸°.
 	D3DXVECTOR3 m_localScale;
 
-	// À§Ä¡ Çà·Ä.
+	// ìì‹ ìœ„ì¹˜ í–‰ë ¬.
 	D3DXMATRIX m_MatrixPosition;
 
-	// È¸Àü Çà·Ä.
+	// ìì‹ íšŒì „ í–‰ë ¬.
 	D3DXMATRIX m_MatrixRotate;
 
-	// Å©±â Çà·Ä.
+	// ìì‹ í¬ê¸° í–‰ë ¬.
 	D3DXMATRIX m_MatrixScale;
 
-	// °øÀü Çà·Ä.
+	// ìì‹ ê³µì „ í–‰ë ¬.
 	D3DXMATRIX m_MatrixRevolution;
 
-	// ºÎ¸ğ Çà·Ä.
+	// ìì‹ ë¶€ëª¨ í–‰ë ¬.
 	D3DXMATRIX m_MatrixParent;
 
-	// ¿ùµå Çà·Ä.
+	// ìì‹ ì›”ë“œ í–‰ë ¬.
 	D3DXMATRIX m_MatrixWorld;
 
-	// ¹öÅØ½º.
+	// ë¶€ëª¨ í¬ê¸° ë²¡í„°.
+	D3DXVECTOR3 m_localParentScale;
+
+	// ë¶€ëª¨ ì›”ë“œ í–‰ë ¬.
+	D3DXMATRIX m_MatrixParentWorld;
+
+	// ë¶€ëª¨ ìœ„ì¹˜ í–‰ë ¬.
+	D3DXMATRIX m_MatrixParentPosition;
+
+	// ë¶€ëª¨ í¬ê¸° í–‰ë ¬.
+	D3DXMATRIX m_MatrixParentScale;
+
+	// ë²„í…ìŠ¤.
 	D3DXVECTOR3 vertex[3];
 
-	// ±âÁ¸ ¹öÅØ½º.
+	// ê¸°ì¡´ ë²„í…ìŠ¤.
 	D3DXVECTOR3 vertexOrigin[3];
 
-	// ºÎ¸ğ Å©±â.
+	// ë¶€ëª¨ ë²„í…ìŠ¤.
+	D3DXVECTOR3 parentVertex[2];
+
+	// ë¶€ëª¨ ê¸°ì¡´ ë²„í…ìŠ¤.
+	D3DXVECTOR3 parentVertexOrigin[2];
+
+	// ë¶€ëª¨ í¬ê¸°.
 	float m_fParentScale;
 
-	// ³» Å©±â.
+	// ë‚´ í¬ê¸°.
 	float m_fScale;
 
-	// °øÀü °¢µµ.
+	// ê³µì „ ê°ë„.
 	float m_revolAngle;
 
-	// ÀÚÀü °¢µµ.
+	// ìì „ ê°ë„.
 	float m_rotAngle;
 
-	// ½ºÄÉÀÏ Áõ°¡°ª.
+	// ìŠ¤ì¼€ì¼ ì¦ê°€ê°’.
 	float m_moreScale;
 
-	// °øÀü ¼Óµµ.
+	// ê³µì „ ì†ë„.
 	float m_revolSpeed;
 
-	// ÀÚÀü ¼Óµµ.
+	float m_revOriginAngle;
+
+	// ìì „ ì†ë„.
 	float m_rotSpeed;
+
+	// ë¶€ëª¨ ëŠ˜ì–´ë‚˜ëŠ” ì†ë„.
+	float m_ratioSpeed;
+	float m_ratio;
 };
 

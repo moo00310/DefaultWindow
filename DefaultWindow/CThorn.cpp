@@ -1,9 +1,13 @@
 #include "pch.h"
 #include "CThorn.h"
 
-CThorn::CThorn() : m_tPoints{}
+CThorn::CThorn() : m_tPoints{}, m_eDir(D_END)
 {
 	
+}
+
+CThorn::CThorn(Direction _dir) :m_eDir(_dir), m_tPoints{}
+{
 }
 
 CThorn::~CThorn()
@@ -27,9 +31,14 @@ void CThorn::Initialize()
 
 int CThorn::Update()
 {
+	if (m_bDead)
+	{
+		return OBJ_DEAD;
+	}
+
 	D3DXMATRIX		matRotZ, matTrans1, matTrans2, matScale;
 
-	D3DXMatrixScaling(&matScale, 1.35f, 1.35f, 1.35f);
+	D3DXMatrixScaling(&matScale, 1.3f, 1.3f, 1.3f);
 	D3DXMatrixRotationZ(&matRotZ, m_fAngle);
 	D3DXMatrixTranslation(&matTrans2, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
 
@@ -80,7 +89,7 @@ float CThorn::TranceAngle()
 	 if (m_tInfo.vPos.x < m_vMidPoint.x)
 		 angle = 2 *PI - angle;
 
-	 if (D3DXVec3Length(&temp) < 200.f)
+	 if (D3DXVec3Length(&temp) < 220.f)
 		 angle += PI;
 
 	 return angle;

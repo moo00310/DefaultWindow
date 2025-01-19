@@ -2,6 +2,7 @@
 #include "CKDHPlayer.h"
 #include "CKeyMgr.h"
 #include "CObjMgr.h"
+#include "CKDHScene.h"
 
 CKDHPlayer::CKDHPlayer()
 {
@@ -20,14 +21,17 @@ void CKDHPlayer::Initialize()
 	m_fParentScale = 30.f;
 	m_fScale = 10.f;
 
-	// ∫Œ∏ ¿ßƒ°.
+	// Î∂ÄÎ™® ÏúÑÏπò.
 	m_localParentPosition = { WINCX * 0.5f, WINCY * 0.5f, 0.f };
 
-	// ∫Œ∏ ±‚¡ÿ ≥™¿« ¿ßƒ°.
+	// Î∂ÄÎ™® Í∏∞Ï§Ä ÎÇòÏùò ÏúÑÏπò.
 	m_localPosition = { 50.f, 0.f, 0.f };
 
 	m_localLookAt = { 0.f, -1.f, 0.f };
 	m_localScale = { 1.f, 1.f, 0.f };
+
+	// Î∂ÄÎ™® ÌÅ¨Í∏∞.
+	m_localParentScale = { 1.f, 1.f, 0.f };
 
 	vertex[0].x = m_localPosition.x;
 	vertex[0].y = m_localPosition.y - m_fScale;
@@ -38,8 +42,13 @@ void CKDHPlayer::Initialize()
 	vertex[2].x = m_localPosition.x + m_fScale;
 	vertex[2].y = m_localPosition.y + m_fScale;
 
-	/*vertex[3].x = m_localPosition.x - m_scale;
-	vertex[3].y = m_localPosition.y + m_scale;*/
+	// top, left
+	parentVertex[0].x = m_localParentPosition.x - m_fParentScale;
+	parentVertex[0].y = m_localParentPosition.y - m_fParentScale;
+
+	// right, bottom
+	parentVertex[1].x = m_localParentPosition.x + m_fParentScale;
+	parentVertex[1].y = m_localParentPosition.y + m_fParentScale;
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -47,20 +56,32 @@ void CKDHPlayer::Initialize()
 		vertexOrigin[i].y = vertex[i].y;
 	}
 
-	// «◊µÓ «‡∑ƒ.
+	for (int i = 0; i < 2; i++)
+	{
+		parentVertexOrigin[i].x = parentVertex[i].x;
+		parentVertexOrigin[i].y = parentVertex[i].y;
+	}
+
+	// Ìï≠Îì± ÌñâÎ†¨.
 	D3DXMatrixIdentity(&m_MatrixPosition);
 	D3DXMatrixIdentity(&m_MatrixRotate);
 	D3DXMatrixIdentity(&m_MatrixScale);
 	D3DXMatrixIdentity(&m_MatrixRevolution);
 	D3DXMatrixIdentity(&m_MatrixParent);
 	D3DXMatrixIdentity(&m_MatrixWorld);
+	D3DXMatrixIdentity(&m_MatrixParentWorld);
+	D3DXMatrixIdentity(&m_MatrixParentPosition);
+	D3DXMatrixIdentity(&m_MatrixParentScale);
 
 	m_fSpeed = 5.f;
 	m_revolAngle = 0.f;
+	m_revOriginAngle = 0.f;
 	m_rotAngle = 90.f;
 	m_moreScale = 0.1f;
 	m_revolSpeed = 5.f;
 	m_rotSpeed = 1.f;
+	m_ratioSpeed = 5.f;
+	m_ratio = 0.f;
 }
 
 int CKDHPlayer::Update()
@@ -72,7 +93,9 @@ int CKDHPlayer::Update()
 
 void CKDHPlayer::Late_Update()
 {
-	// ¡°µÈ¿ª ¥ŸΩ√ 0,0 ø¯¡°¿∏∑Œ ¿ÃµøΩ√≈¥.
+	m_revolAngle = m_revOriginAngle + g_RevolAngle;
+
+	// Ï†êÎì§ÏùÑ Îã§Ïãú 0,0 ÏõêÏ†êÏúºÎ°ú Ïù¥ÎèôÏãúÌÇ¥.
 	vertexOrigin[0].x = m_ResetPosition.x;
 	vertexOrigin[0].y = m_ResetPosition.y - m_fScale;
 
@@ -82,48 +105,61 @@ void CKDHPlayer::Late_Update()
 	vertexOrigin[2].x = m_ResetPosition.x + m_fScale;
 	vertexOrigin[2].y = m_ResetPosition.y + m_fScale;
 
-	/*vertexOrigin[3].x = m_ResetPosition.x - m_scale;
-	vertexOrigin[3].y = m_ResetPosition.y + m_scale;*/
+	parentVertexOrigin[0].x = m_ResetPosition.x - m_fParentScale;
+	parentVertexOrigin[0].y = m_ResetPosition.y - m_fParentScale;
 
-	// ≈©±‚ «‡∑ƒ.
+	parentVertexOrigin[1].x = m_ResetPosition.x + m_fParentScale;
+	parentVertexOrigin[1].y = m_ResetPosition.y + m_fParentScale;
+
+	// ÌÅ¨Í∏∞ ÌñâÎ†¨.
 	D3DXMatrixScaling(&m_MatrixScale, m_localScale.x, m_localScale.y, m_localScale.z);
 
-	// »∏¿¸ «‡∑ƒ.
+	// ÌöåÏ†Ñ ÌñâÎ†¨.
 	D3DXMatrixRotationZ(&m_MatrixRotate, D3DXToRadian(m_rotAngle));
 
-	// ¿Ãµø «‡∑ƒ.
+	// Ïù¥Îèô ÌñâÎ†¨.
 	D3DXMatrixTranslation(&m_MatrixPosition, m_localPosition.x, m_localPosition.y, m_localPosition.z);
 
-	// ∞¯¿¸ «‡∑ƒ.
+	// Í≥µÏ†Ñ ÌñâÎ†¨.
 	D3DXMatrixRotationZ(&m_MatrixRevolution, D3DXToRadian(m_revolAngle));
 
-	// ∫Œ∏ «‡∑ƒ.
+	// Î∂ÄÎ™® ÌñâÎ†¨.
 	D3DXMatrixTranslation(&m_MatrixParent, m_localParentPosition.x, m_localParentPosition.y, m_localParentPosition.z);
 
-	// ø˘µÂ ¡¬«•∑Œ ∫Ø»Ø.
-	// ø˘µÂ «‡∑ƒ = ≈©±‚ * ¿⁄¿¸(»∏¿¸) * ¿Ãµø * ∞¯¿¸ * ∫Œ∏
+	// ÏõîÎìú Ï¢åÌëúÎ°ú Î≥ÄÌôò.
+	// ÏõîÎìú ÌñâÎ†¨ = ÌÅ¨Í∏∞ * ÏûêÏ†Ñ(ÌöåÏ†Ñ) * Ïù¥Îèô * Í≥µÏ†Ñ * Î∂ÄÎ™®
 	m_MatrixWorld = m_MatrixScale * m_MatrixRotate * m_MatrixPosition * m_MatrixRevolution * m_MatrixParent;
 
-	// ¡°µÈ¿ª »∏¿¸, ¿Ãµø Ω√ƒ—æﬂ«œ¥œ ∫§≈ÕøÕ ø˘µÂ «‡∑ƒ ∞ˆ«‘.
+	// Ï†êÎì§ÏùÑ ÌöåÏ†Ñ, Ïù¥Îèô ÏãúÏºúÏïºÌïòÎãà Î≤°ÌÑ∞ÏôÄ ÏõîÎìú ÌñâÎ†¨ Í≥±Ìï®.
 	D3DXVec3TransformCoord(&vertex[0], &vertexOrigin[0], &m_MatrixWorld);
 	D3DXVec3TransformCoord(&vertex[1], &vertexOrigin[1], &m_MatrixWorld);
 	D3DXVec3TransformCoord(&vertex[2], &vertexOrigin[2], &m_MatrixWorld);
 	//D3DXVec3TransformCoord(&vertex[3], &vertexOrigin[3], &m_MatrixWorld);
 
-	// πÊ«‚¿ª ±∏«‘.
+	// Î∞©Ìñ•ÏùÑ Íµ¨Ìï®.
 	D3DXVec3TransformNormal(&m_localDirection, &m_localLookAt, &m_MatrixWorld);
 
-	D3DXVECTOR3 d = GetLocalPositionToWorld();
-	int a = 10;
+	// Î∂ÄÎ™®Ï™Ω Í≥ÑÏÇ∞.
+	D3DXMatrixScaling(&m_MatrixParentScale, m_localParentScale.x, m_localParentScale.y, m_localParentScale.z);
+	D3DXMatrixTranslation(&m_MatrixParentPosition, m_localParentPosition.x, m_localParentPosition.y, m_localParentPosition.z);
+
+	m_MatrixParentWorld = m_MatrixParentScale * m_MatrixParentPosition;
+
+	D3DXVec3TransformCoord(&parentVertex[0], &parentVertexOrigin[0], &m_MatrixParentWorld);
+	D3DXVec3TransformCoord(&parentVertex[1], &parentVertexOrigin[1], &m_MatrixParentWorld);
+
+	m_ratio += m_ratioSpeed;
+	m_localParentScale.x = 1.f * cosf(D3DXToRadian(m_ratio));
+	m_localParentScale.y = 1.f * cosf(D3DXToRadian(m_ratio));
 }
 
 void CKDHPlayer::Render(HDC hDC)
 {
 	Ellipse(hDC,
-		m_localParentPosition.x - m_fParentScale,
-		m_localParentPosition.y - m_fParentScale,
-		m_localParentPosition.x + m_fParentScale,
-		m_localParentPosition.y + m_fParentScale);
+		parentVertex[0].x,
+		parentVertex[0].y,
+		parentVertex[1].x,
+		parentVertex[1].y);
 
 	MoveToEx(hDC,
 		vertex[0].x,
@@ -137,10 +173,6 @@ void CKDHPlayer::Render(HDC hDC)
 	LineTo(hDC,
 		vertex[2].x,
 		vertex[2].y);
-
-	/*LineTo(g_DubbleBufferHDC,
-		vertex[3].x,
-		vertex[3].y);*/
 
 	LineTo(hDC,
 		vertex[0].x,
@@ -175,13 +207,13 @@ void CKDHPlayer::Key_Input()
 
 	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_LEFT))
 	{
-		m_revolAngle -= m_revolSpeed;
+		m_revOriginAngle -= m_revolSpeed;
 		//m_rotAngle -= m_rotSpeed;
 	}
 
 	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_RIGHT))
 	{
-		m_revolAngle += m_revolSpeed;
+		m_revOriginAngle += m_revolSpeed;
 		//m_rotAngle -= m_rotSpeed;
 	}
 

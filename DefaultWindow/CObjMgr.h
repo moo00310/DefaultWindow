@@ -21,7 +21,7 @@ public:
 
 	CObj* Get_Target(OBJID eID, CObj* pDst);
 
-	bool Collision_Check();
+	bool Collision_Check(OBJID _eID, float _Dst, float _Src);
 
 public:
 	void		Add_Object(OBJID eID, CObj* pObj);
@@ -31,6 +31,7 @@ public:
 	void		Release();
 
 	void		Delete_ID(OBJID eID);
+	void		Dead_Thorn(Direction eID);
 
 public:
 	static CObjMgr* Get_Instance()

@@ -34,14 +34,14 @@ public:
     void Release();
 
 public:
-    FMOD::Studio::EventInstance* PlayEvent(const char* _EventPath); // ÀÌº¥Æ®¸¦ Àç»ıÇÏ°í ±× ÀÌº¥Æ®ÀÇ Æ÷ÀÎÅÍ¸¦ ¹İÈ¯
-    FMOD::Studio::Bank* LoadBank(const char* _BankFilePath); // ¹ğÅ©¸¦ ·ÎµåÇÏ°í ±× ¹ğÅ©ÀÇ Æ÷ÀÎÅÍ¸¦ ¹İÈ¯
-    // Bank ÆÄÀÏÀº Fmod ½ºÆ©µğ¿À¿¡¼­ ºôµåÇÑ ¿Àµğ¿À µ¥ÀÌÅÍ¸¦ ÀúÀåÇÏ´Â ÄÁÅ×ÀÌ³Ê·Î, 
-    // »ç¿ë ÈÄ, ´õ ÀÌ»ó ÇÊ¿ä¾ø¾îÁø Bank´Â ¾ÀÀÇ ¸±¸®Áî¿¡¼­ Unload ÇÔ¼ö¸¦ È£ÃâÇØÁÖ¾î¾ß ÇÑ´Ù.
+    FMOD::Studio::EventInstance* PlayEvent(const char* _EventPath); // ì´ë²¤íŠ¸ë¥¼ ì¬ìƒí•˜ê³  ê·¸ ì´ë²¤íŠ¸ì˜ í¬ì¸í„°ë¥¼ ë°˜í™˜
+    FMOD::Studio::Bank* LoadBank(const char* _BankFilePath); // ë±…í¬ë¥¼ ë¡œë“œí•˜ê³  ê·¸ ë±…í¬ì˜ í¬ì¸í„°ë¥¼ ë°˜í™˜
+    // Bank íŒŒì¼ì€ Fmod ìŠ¤íŠœë””ì˜¤ì—ì„œ ë¹Œë“œí•œ ì˜¤ë””ì˜¤ ë°ì´í„°ë¥¼ ì €ì¥í•˜ëŠ” ì»¨í…Œì´ë„ˆë¡œ, 
+    // ì‚¬ìš© í›„, ë” ì´ìƒ í•„ìš”ì—†ì–´ì§„ BankëŠ” ì”¬ì˜ ë¦´ë¦¬ì¦ˆì—ì„œ Unload í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•´ì£¼ì–´ì•¼ í•œë‹¤.
 
 private:
     static CSoundMgr* m_pInstance;
 
-    FMOD::System* m_pCoreSystem; // ¼ö¾÷¶§ »ç¿ëÇß´ø ±âº» Fmod ÄÚ¾î ½Ã½ºÅÛ
-    FMOD::Studio::System* m_pStudioSystem; // Fmod Studio¿Í ¿¬µ¿À» À§ÇØ ÇÊ¿äÇÑ ½ºÆ©µğ¿À ½Ã½ºÅÛ
+    FMOD::System* m_pCoreSystem; // ìˆ˜ì—…ë•Œ ì‚¬ìš©í–ˆë˜ ê¸°ë³¸ Fmod ì½”ì–´ ì‹œìŠ¤í…œ
+    FMOD::Studio::System* m_pStudioSystem; // Fmod Studioì™€ ì—°ë™ì„ ìœ„í•´ í•„ìš”í•œ ìŠ¤íŠœë””ì˜¤ ì‹œìŠ¤í…œ
 };

@@ -6,6 +6,7 @@
 #include "CKeyMgr.h"
 #include "CCameraMgr.h"
 #include "CScrollMgr.h"
+#include "CMemoryPoolMgr.h"
 
 CMainGame::CMainGame() 
 	: m_longTime(GetTickCount64()), m_iFPS(0), m_hDC(nullptr), m_hBit(nullptr), m_memDC(nullptr)
@@ -25,9 +26,8 @@ void CMainGame::Initialize()
 	m_memDC = CreateCompatibleDC(m_hDC);
 	SelectObject(m_memDC, m_hBit);
   
-
-	CSceneMgr::Get_Instance()->Set_Scene(SC_HERO);
-	//CSceneMgr::Get_Instance()->Set_Scene(SC_SSH);
+	CMemoryPoolMgr::Get_Instance(500, 100);
+	CSceneMgr::Get_Instance()->Set_Scene(SC_START);
 }
 
 void CMainGame::Update()
@@ -69,6 +69,7 @@ void CMainGame::Release()
 	CKeyMgr::Destroy_Instance();
 	CSceneMgr::Destroy_Instance();
 	CObjMgr::DestroyInstance();
+	CMemoryPoolMgr::Destroy_Instance();
 	CSoundMgr::Destroy_Instance();
 	CCameraMgr::Destroy_Instance();
 	CScrollMgr::Destroy_Instance();
