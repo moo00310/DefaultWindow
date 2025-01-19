@@ -111,6 +111,9 @@
     <ClCompile Include="CThorn.cpp">
       <Filter>01.Moo\02.Obj\01.Thorn</Filter>
     </ClCompile>
+    <ClCompile Include="CMemoryPoolMgr.cpp">
+      <Filter>05.Desgin\MemoeyPoolMgr</Filter>
+    </ClCompile>
     <ClCompile Include="CKDHLine.cpp">
       <Filter>04.KDH</Filter>
     </ClCompile>
@@ -295,6 +298,9 @@
     <ClInclude Include="CHexaPadManager.h">
       <Filter>05.Desgin\HexaPadManager</Filter>
     </ClInclude>
+    <ClInclude Include="CMemoryPoolMgr.h">
+      <Filter>05.Desgin\MemoeyPoolMgr</Filter>
+    </ClInclude>
     <ClInclude Include="CKDHLine.h">
       <Filter>04.KDH</Filter>
     </ClInclude>
@@ -430,6 +436,9 @@
     </Filter>
     <Filter Include="05.Desgin\HexaPadManager">
       <UniqueIdentifier>{f82f0090-4314-4ef6-b9bd-029872c44efa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Desgin\MemoeyPoolMgr">
+      <UniqueIdentifier>{22b44ca8-f5e1-480b-a5e2-512367e9d9a0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
