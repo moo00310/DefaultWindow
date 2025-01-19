@@ -6,6 +6,8 @@
 #include "CObjMgr.h"
 #include "CHexaPadManager.h"
 #include "CSoundMgr.h"
+#include "CKeyMgr.h"
+#include "CSceneMgr.h"
 
 bool g_bRotateAngle = false;
 float g_RevolAngle = 0.f;
@@ -69,6 +71,11 @@ int CKDHScene::Update()
 		g_bRotateAngle = !g_bRotateAngle;
 		m_dwTick = GetTickCount();
 	}
+
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_BACK))
+	{
+		CSceneMgr::Get_Instance()->Set_Scene(SC_MENU);
+	}
 	
 	return 0;
 }
@@ -94,7 +101,7 @@ void CKDHScene::Release()
 	CHexaPadManager::Get_Instance()->ClearPattern();
 	CHexaPadManager::Get_Instance()->Destroy_Instance();
 	CObjMgr::Get_Instance()->Release();
-	CSoundMgr::Get_Instance()->Release();
+	CSoundMgr::Get_Instance()->Stop_All_Event();
 }
 
 void CKDHScene::CreatePattern()

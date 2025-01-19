@@ -70,7 +70,7 @@ void CRhythmWorld::Render(HDC hDC)
     MoveToEx(hDC, 0, int(WINCY * 0.5f), nullptr);
     LineTo(hDC, int(WINCX), int(WINCY * 0.5f));
 
-    TCHAR cBuffer[64]; //저장할 문자열 버퍼
+    TCHAR cBuffer[64]; //?�?�할 문자??버퍼
 
     //_stprintf_s(cBuffer, _T("Distance: %.2f"), m_fDistance);
     //TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.35f), cBuffer, (int)_tcslen(cBuffer));
@@ -150,12 +150,12 @@ void CRhythmWorld::Draw_Outline(HDC hDC)
     HPEN hPen = CreatePen(PS_SOLID, 150, RGB(0, 255, 0));
     HGDIOBJ oldPen = SelectObject(hDC, hPen);
 
-    // 화면 테두리 그리기
-    MoveToEx(hDC, 0, 0, NULL);           // 왼쪽 상단으로 이동
-    LineTo(hDC, WINCX, 0);               // 위쪽 테두리
-    LineTo(hDC, WINCX, WINCY);           // 오른쪽 테두리
-    LineTo(hDC, 0, WINCY);               // 아래쪽 테두리
-    LineTo(hDC, 0, 0);                   // 왼쪽 테두리 (원점으로 돌아감)
+    // ?�면 ?�두�?그리�?
+    MoveToEx(hDC, 0, 0, NULL);           // ?�쪽 ?�단?�로 ?�동
+    LineTo(hDC, WINCX, 0);               // ?�쪽 ?�두�?
+    LineTo(hDC, WINCX, WINCY);           // ?�른�??�두�?
+    LineTo(hDC, 0, WINCY);               // ?�래�??�두�?
+    LineTo(hDC, 0, 0);                   // ?�쪽 ?�두�?(?�점?�로 ?�아�?
 
     SelectObject(hDC, oldPen);
     DeleteObject(hPen);

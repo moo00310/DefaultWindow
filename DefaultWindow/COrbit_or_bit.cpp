@@ -9,6 +9,7 @@
 #include "CKeyMgr.h"
 #include "CCameraMgr.h"
 #include "CScrollMgr.h"
+#include "CSceneMgr.h"
 
 COrbit_or_bit::COrbit_or_bit() : m_pPlayer(nullptr), m_pOrbit(nullptr), m_iHitCount(0), m_BGM(nullptr), m_iBeatCount(0),
 m_bRightTimeBeat(false), m_llTimeChecker(0), m_eLevel(L_END)
@@ -51,9 +52,10 @@ int COrbit_or_bit::Update()
 		CSoundMgr::Get_Instance()->Update();
 		m_iBeatCount = 59;
 	}
-	if (CKeyMgr::Get_Instance()->Key_Down(VK_F2))
+
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_BACK))
 	{
-	
+		CSceneMgr::Get_Instance()->Set_Scene(SC_MENU);
 	}
 
 	return 0;
@@ -64,7 +66,7 @@ void COrbit_or_bit::Late_Update()
 	CObjMgr::Get_Instance()->Late_Update();
 	if (CObjMgr::Get_Instance()->Collision_Check(OBJ_MOUSE, 10, 10))
 	{
-		//LevelDown(m_eLevel);
+		LevelDown(m_eLevel);
 		m_iBeatCount;
 		m_iHitCount++;
 	}
@@ -100,32 +102,33 @@ void COrbit_or_bit::Render(HDC hDC)
 void COrbit_or_bit::Release()
 {
 	CObjMgr::Get_Instance()->Release();
+	CSoundMgr::Get_Instance()->Stop_All_Event();
 }
 
 
-// 대 채 영 선생님의 BPM을 통한 박자 구하기 로직
+// ?� �????�생?�의 BPM???�한 박자 구하�?로직
 void COrbit_or_bit::CheckBpm()
 {
 	using namespace std::chrono;
 
-	// 직전 박자에서 몇 초 지났는지 값을 받음
+	// 직전 박자?�서 �?�?지?�는지 값을 받음
 	m_llTimeChecker = duration_cast<microseconds>(system_clock::now() - m_tBeatStart); 
 	
-	if (m_llTimeChecker.count() >= STAGE1BPMSEC) // 이전 박자에서 다음 박자가 나와야 하는 (마이크로초) 시간 만큼 지났으면
+	if (m_llTimeChecker.count() >= STAGE1BPMSEC) // ?�전 박자?�서 ?�음 박자가 ?��????�는 (마이?�로�? ?�간 만큼 지?�으�?
 	{
-		if (m_bRightTimeBeat == false) // 아래 구문 1번만 수행되게 하려고 추가함 없어도 될지도
+		if (m_bRightTimeBeat == false) // ?�래 구문 1번만 ?�행?�게 ?�려�?추�????�어???��???
 		{
-			m_tBeatStart += microseconds(STAGE1BPMSEC); // 이전 타임스탬프에 1박 지난 만큼의 초 더해줌
-			m_tTimerRightTime = system_clock::now(); // 밑의 if문 용 **
+			m_tBeatStart += microseconds(STAGE1BPMSEC); // ?�전 ?�?�스?�프??1�?지??만큼??�??�해�?
+			m_tTimerRightTime = system_clock::now(); // 밑의 if�???**
 			CameraMovement(++m_iBeatCount);
 			SwapThron(m_iBeatCount);
 			SetSpeed(m_iBeatCount);
-			m_bRightTimeBeat = true; // 지금 정박입니다~
+			m_bRightTimeBeat = true; // 지�??�박?�니??
 		}
 	}
-	if (duration_cast<milliseconds>(system_clock::now() - m_tTimerRightTime).count() > 80) // 80마이크로초만큼 true인 시간 유지 후
+	if (duration_cast<milliseconds>(system_clock::now() - m_tTimerRightTime).count() > 80) // 80마이?�로초만??true???�간 ?��? ??
 	{
-		m_bRightTimeBeat = false; // 저희 정박 이제 문 닫습니다~
+		m_bRightTimeBeat = false; // ?�???�박 ?�제 �??�습?�다~
 	}
 }
 
@@ -164,7 +167,7 @@ void COrbit_or_bit::SwapThron(int _count)
 void COrbit_or_bit::DrawRight(int _count)
 {
 	
-#pragma region 1차
+#pragma region 1�?
 		if (_count >= 1 && _count <= 8)
 		{
 			if (_count % 2 == 1)
@@ -182,111 +185,111 @@ void COrbit_or_bit::DrawRight(int _count)
 #pragma region L2
 		if (_count == 16)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(340, 100.f, D_RIght)); // 11시 안
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(560, 133.f, D_RIght)); // 1시 밖
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(600, 360.f, D_RIght)); // 3시 30분 안
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(340, 100.f, D_RIght)); // 11????
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(560, 133.f, D_RIght)); // 1??�?
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(600, 360.f, D_RIght)); // 3??30�???
 		}
 		if (_count == 17)
 		{
 			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(560, 133.f, D_RIght));
 			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(600, 360.f, D_RIght));
 
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(221, 191, D_RIght)); // 10시 안
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(340, 80.f, D_RIght)); // 11시 밖
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(221, 191, D_RIght)); // 10????
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(340, 80.f, D_RIght)); // 11??�?
 		}
 		if (_count == 18)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(221, 191, D_RIght)); // 10시 안
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 72.f, D_RIght)); // 12시 밖
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(555, 160.f, D_RIght)); // 1시 안
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(623, 350.f, D_RIght)); // 3시 30분 밖
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(221, 191, D_RIght)); // 10????
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 72.f, D_RIght)); // 12??�?
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(555, 160.f, D_RIght)); // 1????
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(623, 350.f, D_RIght)); // 3??30�?�?
 
 		}
 		if (_count == 20)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200, 190, D_RIght)); // 10시 밖
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 90.f, D_RIght)); // 12시 안
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(560, 133.f, D_RIght)); // 1시 밖
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(600, 360.f, D_RIght)); // 3시 30분 안
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200, 190, D_RIght)); // 10??�?
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 90.f, D_RIght)); // 12????
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(560, 133.f, D_RIght)); // 1??�?
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(600, 360.f, D_RIght)); // 3??30�???
 		}
 
 		if (_count == 22)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(221, 191, D_RIght)); // 10시 안
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 72.f, D_RIght)); // 12시 밖
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(555, 160.f, D_RIght)); // 1시 안
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(623, 350.f, D_RIght)); // 3시 30분 밖
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(221, 191, D_RIght)); // 10????
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 72.f, D_RIght)); // 12??�?
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(555, 160.f, D_RIght)); // 1????
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(623, 350.f, D_RIght)); // 3??30�?�?
 		}
 
 		if (_count == 24)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200, 190, D_RIght)); // 10시 밖
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 90.f, D_RIght)); // 12시 안
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(560, 133.f, D_RIght)); // 1시 밖
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(600, 360.f, D_RIght)); // 3시 30분 안
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200, 190, D_RIght)); // 10??�?
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 90.f, D_RIght)); // 12????
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(560, 133.f, D_RIght)); // 1??�?
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(600, 360.f, D_RIght)); // 3??30�???
 		}
 		if (_count == 26)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(221, 191, D_RIght)); // 10시 안
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 72.f, D_RIght)); // 12시 밖
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(555, 160.f, D_RIght)); // 1시 안
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(623, 350.f, D_RIght)); // 3시 30분 밖
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(221, 191, D_RIght)); // 10????
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 72.f, D_RIght)); // 12??�?
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(555, 160.f, D_RIght)); // 1????
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(623, 350.f, D_RIght)); // 3??30�?�?
 		}
 		if (_count == 28)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200, 190, D_RIght)); // 10시 밖
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 90.f, D_RIght)); // 12시 안
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(560, 133.f, D_RIght)); // 1시 밖
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(600, 360.f, D_RIght)); // 3시 30분 안
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200, 190, D_RIght)); // 10??�?
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 90.f, D_RIght)); // 12????
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(560, 133.f, D_RIght)); // 1??�?
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(600, 360.f, D_RIght)); // 3??30�???
 		}
 		if (_count == 30)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(221, 191, D_RIght)); // 10시 안
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 72.f, D_RIght)); // 12시 밖
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(555, 160.f, D_RIght)); // 1시 안
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(623, 350.f, D_RIght)); // 3시 30분 밖
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(221, 191, D_RIght)); // 10????
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 72.f, D_RIght)); // 12??�?
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(555, 160.f, D_RIght)); // 1????
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(623, 350.f, D_RIght)); // 3??30�?�?
 		}
 		if (_count == 32)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200, 190, D_RIght)); // 10시 밖
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 90.f, D_RIght)); // 12시 안
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(560, 133.f, D_RIght)); // 1시 밖
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(600, 360.f, D_RIght)); // 3시 30분 안
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200, 190, D_RIght)); // 10??�?
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 90.f, D_RIght)); // 12????
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(560, 133.f, D_RIght)); // 1??�?
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(600, 360.f, D_RIght)); // 3??30�???
 		}
 		if (_count == 34)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(221, 191, D_RIght)); // 10시 안
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 72.f, D_RIght)); // 12시 밖
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(555, 160.f, D_RIght)); // 1시 안
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(623, 350.f, D_RIght)); // 3시 30분 밖
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(221, 191, D_RIght)); // 10????
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 72.f, D_RIght)); // 12??�?
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(555, 160.f, D_RIght)); // 1????
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(623, 350.f, D_RIght)); // 3??30�?�?
 		}
 		if (_count == 36)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200, 190, D_RIght)); // 10시 밖
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 90.f, D_RIght)); // 12시 안
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(560, 133.f, D_RIght)); // 1시 밖
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(600, 360.f, D_RIght)); // 3시 30분 안
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200, 190, D_RIght)); // 10??�?
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 90.f, D_RIght)); // 12????
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(560, 133.f, D_RIght)); // 1??�?
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(600, 360.f, D_RIght)); // 3??30�???
 		}
 		if (_count == 38)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(221, 191, D_RIght)); // 10시 안
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 72.f, D_RIght)); // 12시 밖
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(555, 160.f, D_RIght)); // 1시 안
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(623, 350.f, D_RIght)); // 3시 30분 밖
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(221, 191, D_RIght)); // 10????
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 72.f, D_RIght)); // 12??�?
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(555, 160.f, D_RIght)); // 1????
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(623, 350.f, D_RIght)); // 3??30�?�?
 		}
 		if (_count == 40)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200, 190, D_RIght)); // 10시 밖
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 90.f, D_RIght)); // 12시 안
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(560, 133.f, D_RIght)); // 1시 밖
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(600, 360.f, D_RIght)); // 3시 30분 안
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200, 190, D_RIght)); // 10??�?
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 90.f, D_RIght)); // 12????
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(560, 133.f, D_RIght)); // 1??�?
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(600, 360.f, D_RIght)); // 3??30�???
 		}
 		if (_count == 42)
 		{
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(221, 191, D_RIght)); // 10시 안
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 72.f, D_RIght)); // 12시 밖
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(555, 160.f, D_RIght)); // 1시 안
-			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(623, 350.f, D_RIght)); // 3시 30분 밖
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(221, 191, D_RIght)); // 10????
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(396, 72.f, D_RIght)); // 12??�?
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(555, 160.f, D_RIght)); // 1????
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(623, 350.f, D_RIght)); // 3??30�?�?
 		}
 
 
@@ -297,7 +300,7 @@ void COrbit_or_bit::DrawRight(int _count)
 void COrbit_or_bit::DrawLeft(int _count)
 {
 
-#pragma region 1차
+#pragma region 1�?
 	if (_count >= 8 && _count <= 13)
 	{
 		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::Create(274.f, 493.f, D_LEFT));
@@ -308,15 +311,15 @@ void COrbit_or_bit::DrawLeft(int _count)
 #pragma region L2
 	if (_count == 15)
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(495.f, 510.f, D_LEFT)); // 5시30분 밖
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(270.f, 461.f, D_LEFT)); // 7시 안
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(170.f, 280.f, D_LEFT)); //9시 밖
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(495.f, 510.f, D_LEFT)); // 5??0�?�?
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(270.f, 461.f, D_LEFT)); // 7????
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(170.f, 280.f, D_LEFT)); //9??�?
 	}
 	if (_count == 16)
 	{
 		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(495.f, 510.f, D_LEFT));
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(290.f, 475.f, D_LEFT)); // 7시 안
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(180.f, 360.f, D_LEFT)); // 8시 30분 밖
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(290.f, 475.f, D_LEFT)); // 7????
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(180.f, 360.f, D_LEFT)); // 8??30�?�?
 	}
 	if (_count == 17)
 	{
@@ -326,84 +329,84 @@ void COrbit_or_bit::DrawLeft(int _count)
 	}
 	if (_count == 19)
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(475.f, 495.f, D_LEFT)); // 5시 30분 안
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(310.f, 510.f, D_LEFT)); // 7시 밖
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200.f, 360.f, D_LEFT)); // 8시 30분 안
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(475.f, 495.f, D_LEFT)); // 5??30�???
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(310.f, 510.f, D_LEFT)); // 7??�?
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200.f, 360.f, D_LEFT)); // 8??30�???
 	}
 
 	if (_count == 21)
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(495.f, 510.f, D_LEFT)); // 5시30분 밖
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(300.f, 483.f, D_LEFT)); // 7시 안
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(180.f, 360.f, D_LEFT)); // 8시 30분 밖
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(495.f, 510.f, D_LEFT)); // 5??0�?�?
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(300.f, 483.f, D_LEFT)); // 7????
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(180.f, 360.f, D_LEFT)); // 8??30�?�?
 
 	}
 	if (_count == 23)
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(475.f, 495.f, D_LEFT)); // 5시 30분 안
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(310.f, 510.f, D_LEFT)); // 7시 밖
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200.f, 360.f, D_LEFT)); // 8시 30분 안
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(475.f, 495.f, D_LEFT)); // 5??30�???
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(310.f, 510.f, D_LEFT)); // 7??�?
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200.f, 360.f, D_LEFT)); // 8??30�???
 	}
 
 	if (_count == 25)
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(495.f, 510.f, D_LEFT)); // 5시30분 밖
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(300.f, 483.f, D_LEFT)); // 7시 안
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(180.f, 360.f, D_LEFT)); // 8시 30분 밖
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(495.f, 510.f, D_LEFT)); // 5??0�?�?
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(300.f, 483.f, D_LEFT)); // 7????
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(180.f, 360.f, D_LEFT)); // 8??30�?�?
 	}
 	if (_count == 27)
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(475.f, 495.f, D_LEFT)); // 5시 30분 안
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(310.f, 510.f, D_LEFT)); // 7시 밖
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200.f, 360.f, D_LEFT)); // 8시 30분 안
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(475.f, 495.f, D_LEFT)); // 5??30�???
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(310.f, 510.f, D_LEFT)); // 7??�?
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200.f, 360.f, D_LEFT)); // 8??30�???
 	}
 	if (_count == 29)
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(495.f, 510.f, D_LEFT)); // 5시30분 밖
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(300.f, 483.f, D_LEFT)); // 7시 안
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(180.f, 360.f, D_LEFT)); // 8시 30분 밖
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(495.f, 510.f, D_LEFT)); // 5??0�?�?
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(300.f, 483.f, D_LEFT)); // 7????
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(180.f, 360.f, D_LEFT)); // 8??30�?�?
 	}
 	if (_count == 31)
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(475.f, 495.f, D_LEFT)); // 5시 30분 안
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(310.f, 510.f, D_LEFT)); // 7시 밖
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200.f, 360.f, D_LEFT)); // 8시 30분 안
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(475.f, 495.f, D_LEFT)); // 5??30�???
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(310.f, 510.f, D_LEFT)); // 7??�?
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200.f, 360.f, D_LEFT)); // 8??30�???
 	}
 	if (_count == 33)
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(495.f, 510.f, D_LEFT)); // 5시30분 밖
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(300.f, 483.f, D_LEFT)); // 7시 안
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(180.f, 360.f, D_LEFT)); // 8시 30분 밖
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(495.f, 510.f, D_LEFT)); // 5??0�?�?
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(300.f, 483.f, D_LEFT)); // 7????
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(180.f, 360.f, D_LEFT)); // 8??30�?�?
 	}
 	if (_count == 35)
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(475.f, 495.f, D_LEFT)); // 5시 30분 안
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(310.f, 510.f, D_LEFT)); // 7시 밖
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200.f, 360.f, D_LEFT)); // 8시 30분 안
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(475.f, 495.f, D_LEFT)); // 5??30�???
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(310.f, 510.f, D_LEFT)); // 7??�?
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200.f, 360.f, D_LEFT)); // 8??30�???
 	}
 	if (_count == 37)
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(495.f, 510.f, D_LEFT)); // 5시30분 밖
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(300.f, 483.f, D_LEFT)); // 7시 안
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(180.f, 360.f, D_LEFT)); // 8시 30분 밖
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(495.f, 510.f, D_LEFT)); // 5??0�?�?
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(300.f, 483.f, D_LEFT)); // 7????
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(180.f, 360.f, D_LEFT)); // 8??30�?�?
 	}
 	if (_count == 39)
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(475.f, 495.f, D_LEFT)); // 5시 30분 안
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(310.f, 510.f, D_LEFT)); // 7시 밖
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200.f, 360.f, D_LEFT)); // 8시 30분 안
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(475.f, 495.f, D_LEFT)); // 5??30�???
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(310.f, 510.f, D_LEFT)); // 7??�?
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200.f, 360.f, D_LEFT)); // 8??30�???
 	}
 	if (_count == 41)
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(495.f, 510.f, D_LEFT)); // 5시30분 밖
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(300.f, 483.f, D_LEFT)); // 7시 안
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(180.f, 360.f, D_LEFT)); // 8시 30분 밖
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(495.f, 510.f, D_LEFT)); // 5??0�?�?
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(300.f, 483.f, D_LEFT)); // 7????
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(180.f, 360.f, D_LEFT)); // 8??30�?�?
 	}
 	if (_count == 43)
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(475.f, 495.f, D_LEFT)); // 5시 30분 안
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(310.f, 510.f, D_LEFT)); // 7시 밖
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200.f, 360.f, D_LEFT)); // 8시 30분 안
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(475.f, 495.f, D_LEFT)); // 5??30�???
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(310.f, 510.f, D_LEFT)); // 7??�?
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(200.f, 360.f, D_LEFT)); // 8??30�???
 	}
 #pragma endregion
 

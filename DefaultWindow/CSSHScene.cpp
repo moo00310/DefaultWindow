@@ -31,9 +31,9 @@ void CSSHScene::Initialize()
 
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer_SSH_Ice>::Create());
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer_SSH_Fire>::Create());
-	// ??繹먮끏苡??????嚥싲갭횧????肉??????쓱
+	// ??繹먮?�苡???????�싲�?��?????????????
 	CObjMgr::Get_Instance()->Get_Player()->Set_Target(CObjMgr::Get_Instance()->Get_LastPlayer());
-	// ??됰씭?????繹먮끏苡????嚥싲갭횧????肉??????쓱
+	// ???�씭?????繹먮?�苡?????�싲�?��?????????????
 	CObjMgr::Get_Instance()->Get_LastPlayer()->Set_Target(CObjMgr::Get_Instance()->Get_Player());
 
 	Create_Block();
@@ -69,7 +69,12 @@ int CSSHScene::Update()
 	Key_Input();
 	Offset();
 
-	Rev_Auto(); // Auto 洹몃깷 ?먮룞?대씪怨??곗? 援녹씠 ???곸뼱濡켂uto ?쇨퀬 ?덈뒗吏 ?댄빐瑜?紐삵븯寃좊꽕   ( ??臾닿껐 ??)
+	Rev_Auto(); // Auto 洹몃�??�?��??�?��??�? ?�녹?????곸뼱濡켂uto ??��???�뒗吏 ??�빐??紐삵�?��좊꽕   ( ???�닿�???)
+
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_BACK))
+	{
+		CSceneMgr::Get_Instance()->Set_Scene(SC_MENU);
+	}
 
 	return 0; 
 }
@@ -104,6 +109,7 @@ void CSSHScene::Render(HDC hDC)
 void CSSHScene::Release()
 {
 	CObjMgr::Get_Instance()->Release();
+	CSoundMgr::Get_Instance()->Stop_All_Event();
 }
 
 void CSSHScene::Key_Input()
@@ -236,7 +242,7 @@ void CSSHScene::Rev_Auto()
 	if (0 >= m_iStartTime)
 	{
 
-		if (!m_bChange) // ?釉띾쐠????ㅻ쾴??뚮뭄?
+		if (!m_bChange) // ??�띾??????�쾴????��?
 		{
 			//m_fCheckAngle = SSH_FIRE->Get_Angle();
 			Adjust_RevSpeed();
@@ -259,7 +265,7 @@ void CSSHScene::Rev_Auto()
 				++m_IterBlock;
 			}
 		}
-		else if (m_bChange) // ??源녿쾳????ㅻ쾴??뚮뭄?
+		else if (m_bChange) // ??源녿�?????�쾴????��?
 		{
 			//m_fCheckAngle = SSH_ICE->Get_Angle();
 			Adjust_RevSpeed();
@@ -289,11 +295,11 @@ void CSSHScene::Rev_Play()
 {
 	if (CKeyMgr::Get_Instance()->Key_Down(VK_SPACE))
 	{
-		//m_bChange = !m_bChange; // ??좊즲????bChange???袁⑸즵?쀫쓧????袁⑸즵????????( ??좊즵???????좊즵????????)
+		//m_bChange = !m_bChange; // ??좊즲????bChange???袁⑸�??�쓧????袁⑸�????????( ??좊즵???????좊즵????????)
 		//SSH_FIRE->Set_bRev(!m_bChange);
 		//SSH_ICE->Set_bRev(m_bChange);
 
-		//if (!m_bChange) // ??됰씭??????살쓴??
+		//if (!m_bChange) // ???�씭???????�쓴??
 		//{
 		//	if (180 < SSH_ICE->Get_Angle())
 		//	{
@@ -302,7 +308,7 @@ void CSSHScene::Rev_Play()
 		//	else
 		//		SSH_FIRE->Set_Angle(SSH_ICE->Get_Angle() + 180.f);
 		//}
-		//else // ??繹먮끏苡?????살쓴??
+		//else // ??繹먮?�苡??????�쓴??
 		//{
 		//	if (180 < SSH_FIRE->Get_Angle())
 		//	{
@@ -312,7 +318,7 @@ void CSSHScene::Rev_Play()
 		//		SSH_ICE->Set_Angle(SSH_FIRE->Get_Angle() + 180.f);
 		//}
 
-		if (!m_bChange) // 遺덉씠 怨듭쟾
+		if (!m_bChange) // ?�덉???�듭??
 		{
 			Adjust_RevSpeed();
 
@@ -340,7 +346,7 @@ void CSSHScene::Rev_Play()
 				++m_IterBlock;
 			}
 		}
-		else if (m_bChange) // ?쇱쓬
+		else if (m_bChange) // ??�쓬
 		{
 			Adjust_RevSpeed();
 
@@ -368,10 +374,5 @@ void CSSHScene::Rev_Play()
 				++m_IterBlock;
 			}
 		}
-	}
-
-	if (CKeyMgr::Get_Instance()->Key_Down(VK_F4))
-	{
-		CSceneMgr::Get_Instance()->Set_Scene(SC_MENU);
 	}
 }
