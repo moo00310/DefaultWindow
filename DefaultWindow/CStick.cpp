@@ -95,8 +95,8 @@ void CStick::Render(HDC hDC)
 	//디버깅
 	TCHAR cBuffer[64]; //저장할 문자열 버퍼
 
-	_stprintf_s(cBuffer, _T("Distance: %.2f"), m_fDistance);
-	TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.35f), cBuffer, (int)_tcslen(cBuffer));
+	//_stprintf_s(cBuffer, _T("Distance: %.2f"), m_fDistance);
+	//TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.35f), cBuffer, (int)_tcslen(cBuffer));
 
 	_stprintf_s(cBuffer, _T("Score: %d"), m_iScore);
 	TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.15f), cBuffer, (int)_tcslen(cBuffer));
