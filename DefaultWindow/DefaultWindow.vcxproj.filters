@@ -114,6 +114,9 @@
     <ClCompile Include="CMemoryPoolMgr.cpp">
       <Filter>05.Desgin\MemoeyPoolMgr</Filter>
     </ClCompile>
+    <ClCompile Include="CKDHLine.cpp">
+      <Filter>04.KDH</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Define.h" />
@@ -297,6 +300,9 @@
     </ClInclude>
     <ClInclude Include="CMemoryPoolMgr.h">
       <Filter>05.Desgin\MemoeyPoolMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CKDHLine.h">
+      <Filter>04.KDH</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

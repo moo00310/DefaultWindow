@@ -28,7 +28,6 @@ void CMainGame::Initialize()
   
 	CMemoryPoolMgr::Get_Instance(500, 100);
 	CSceneMgr::Get_Instance()->Set_Scene(SC_START);
-
 }
 
 void CMainGame::Update()
