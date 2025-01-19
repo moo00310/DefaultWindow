@@ -37,5 +37,38 @@ public:
 
 		return pObj;
 	}
+
+#undef new
+	static CObj* CreateThorn(float _fX, float _fY, Direction _dir)
+	{
+		// 메모리 풀에서 메모리 할당
+		void* temp = CMemoryPoolMgr::Get_Instance()->allocate();
+
+		CObj* pObj = new (temp) T(_dir);
+		pObj->Set_Pos(_fX, _fY);
+		pObj->Initialize();
+		return pObj;
+	}
+#define new DBG_NEW
+
+	static CObj* CreateSlow(D3DXVECTOR3 _vPos, bool _bSlow, float _fAngle = 180.f)
+	{
+		CObj* pObj = new T;
+		dynamic_cast<CBlock_SSH*>(pObj)->Set_bSlow(_bSlow);
+		pObj->Initialize();
+		pObj->Set_vPos(_vPos);
+		pObj->Set_Angle(_fAngle);
+		return pObj;
+	}
+
+	static CObj* Create(float _fX, float _fY, Direction _dir)
+	{
+		CObj* pObj = new T(_dir);
+		pObj->Set_Pos(_fX, _fY);
+		pObj->Initialize();
+
+		return pObj;
+	}
+
 };
 

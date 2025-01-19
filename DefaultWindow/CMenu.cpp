@@ -42,25 +42,25 @@ void CMenu::Render(HDC hDC)
 	_stprintf_s(szBuffer1, _T("1. Orbit or bit"));
 	SetTextColor(hDC, RGB(0, 0, 0));
 	SetBkMode(hDC, TRANSPARENT);
-	TextOut(hDC, 300, 150, szBuffer1, (int)_tcslen(szBuffer1));
+	TextOut(hDC, 200, 150, szBuffer1, (int)_tcslen(szBuffer1));
 
 	TCHAR szBuffer2[128];
-	_stprintf_s(szBuffer2, _T("2. Super Hexagon"));
+	_stprintf_s(szBuffer2, _T("2. A Dance of Fire and Ice"));
 	SetTextColor(hDC, RGB(0, 0, 0));
 	SetBkMode(hDC, TRANSPARENT);
-	TextOut(hDC, 300, 250, szBuffer2, (int)_tcslen(szBuffer2));
+	TextOut(hDC, 200, 250, szBuffer2, (int)_tcslen(szBuffer2));
 
 	TCHAR szBuffer3[128];
-	_stprintf_s(szBuffer3, _T("3. A Dance of Fire and Ice"));
+	_stprintf_s(szBuffer3, _T("3. Rhythm Paradise"));
 	SetTextColor(hDC, RGB(0, 0, 0));
 	SetBkMode(hDC, TRANSPARENT);
-	TextOut(hDC, 300, 350, szBuffer3, (int)_tcslen(szBuffer3));
+	TextOut(hDC, 200, 350, szBuffer3, (int)_tcslen(szBuffer3));
 
 	TCHAR szBuffer4[128];
-	_stprintf_s(szBuffer4, _T("4.Rhythm Paradise"));
+	_stprintf_s(szBuffer4, _T("4. Super Hexagon"));
 	SetTextColor(hDC, RGB(0, 0, 0));
 	SetBkMode(hDC, TRANSPARENT);
-	TextOut(hDC, 300, 450, szBuffer4, (int)_tcslen(szBuffer4));
+	TextOut(hDC, 200, 450, szBuffer4, (int)_tcslen(szBuffer4));
 
 }
 
