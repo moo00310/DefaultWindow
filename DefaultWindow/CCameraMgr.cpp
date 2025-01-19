@@ -28,6 +28,11 @@ void CCameraMgr::Update()
 		m_Camera[C_Move_LT].y = min(max(0, rand() % (2 * shakeIntensity) - shakeIntensity), 600);
 		break;
 	}
+	case CS_Reverce:
+	{
+		m_bIsReverce = true;
+		break;
+	}
 	case CS_Slow_ZoomIN:
 		Slow_ZoomIn();
 		break;
@@ -54,6 +59,7 @@ void CCameraMgr::Update()
 		}
 		break;
 	case CS_END:
+		m_bIsReverce = false;
 		m_Camera[C_Move_LT] = { 0 , 0 };
 		m_Camera[C_Move_size] = { WINCX ,WINCY };
 		m_Camera[C_Zoom_LT] = { 0 , 0 };
