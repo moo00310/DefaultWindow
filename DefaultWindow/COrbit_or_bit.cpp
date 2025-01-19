@@ -10,7 +10,8 @@
 #include "CCameraMgr.h"
 #include "CScrollMgr.h"
 
-COrbit_or_bit::COrbit_or_bit() : m_pPlayer(nullptr), m_pOrbit(nullptr), m_iTimeLine(0), m_BGM(nullptr), m_iBeatCount(0)
+COrbit_or_bit::COrbit_or_bit() : m_pPlayer(nullptr), m_pOrbit(nullptr), m_iTimeLine(0), m_BGM(nullptr), m_iBeatCount(0),
+m_bRightTimeBeat(false), m_llTimeChecker(0)
 {
 }
 
@@ -41,7 +42,7 @@ void COrbit_or_bit::Initialize()
 int COrbit_or_bit::Update()
 {
 	CObjMgr::Get_Instance()->Update();
-	m_BGM->getTimelinePosition(&m_iTimeLine);
+
 	CheckBpm();
 
 	if (CKeyMgr::Get_Instance()->Key_Down('P'))
@@ -67,7 +68,7 @@ int COrbit_or_bit::Update()
 void COrbit_or_bit::Late_Update()
 {
 	CObjMgr::Get_Instance()->Late_Update();
-	bool isCol = CObjMgr::Get_Instance()->Collision_Check(20, 15);
+	bool isCol = CObjMgr::Get_Instance()->Collision_Check(OBJ_MOUSE, 20, 15);
 }
 
 void COrbit_or_bit::Render(HDC hDC)
@@ -105,62 +106,115 @@ void COrbit_or_bit::Release()
 }
 
 
+// 대 채 영 선생님의 BPM을 통한 박자 구하기 로직
 void COrbit_or_bit::CheckBpm()
 {
+	using namespace std::chrono;
+
 	// 직전 박자에서 몇 초 지났는지 값을 받음
-	m_llTimeChecker = chrono::duration_cast<chrono::microseconds>(chrono::system_clock::now() - m_tBeatStart); 
+	m_llTimeChecker = duration_cast<microseconds>(system_clock::now() - m_tBeatStart); 
 	
 	if (m_llTimeChecker.count() >= STAGE1BPMSEC) // 이전 박자에서 다음 박자가 나와야 하는 (마이크로초) 시간 만큼 지났으면
 	{
 		if (m_bRightTimeBeat == false) // 아래 구문 1번만 수행되게 하려고 추가함 없어도 될지도
 		{
-			m_tBeatStart += chrono::microseconds(STAGE1BPMSEC); // 이전 타임스탬프에 1박 지난 만큼의 초 더해줌
-			m_tTimerRightTime = chrono::system_clock::now(); // 밑의 if문 용 **
+			m_tBeatStart += microseconds(STAGE1BPMSEC); // 이전 타임스탬프에 1박 지난 만큼의 초 더해줌
+			m_tTimerRightTime = system_clock::now(); // 밑의 if문 용 **
 			CameraMovement(++m_iBeatCount);
 			SwapThron(m_iBeatCount);
+			SetSpeed(m_iBeatCount);
 			m_bRightTimeBeat = true; // 지금 정박입니다~
 		}
 	}
-	if (chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now() - m_tTimerRightTime).count() > 80) // 80마이크로초만큼 true인 시간 유지 후
+	if (duration_cast<milliseconds>(system_clock::now() - m_tTimerRightTime).count() > 80) // 80마이크로초만큼 true인 시간 유지 후
 	{
 		m_bRightTimeBeat = false; // 저희 정박 이제 문 닫습니다~
 	}
 }
 
+
 void COrbit_or_bit::SwapThron(int _count)
 {
 	if (_count % 4 == 1)
 	{
-		CObjMgr::Get_Instance()->Dead_Monster(D_RIght);
+		CObjMgr::Get_Instance()->Dead_Thorn(D_RIght);
 		DrawRight(_count/4);
 	}
 	if (_count % 4 == 3)
 	{
-		CObjMgr::Get_Instance()->Dead_Monster(D_LEFT);
+		CObjMgr::Get_Instance()->Dead_Thorn(D_LEFT);
 		DrawLeft(_count/4);
 	}
 }
 
 void COrbit_or_bit::DrawRight(int _count)
 {
-	if (_count == 0)
+	
+	
+#pragma region 1차
+	if (_count >= 1 && _count <= 8)
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CThorn>::Create(545.f, 153.f, D_RIght));
+		if (_count % 2 == 1)
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(560.f, 134.f, D_RIght));
+		else
+			CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(545.f, 153.f, D_RIght));
 	}
-	if (_count == 1)
+
+	if (_count >= 9 && _count <= 13)
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CThorn>::Create(555.f, 134.f, D_RIght));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(545.f, 153.f, D_RIght));
 	}
-	if (_count == 2)
+#pragma endregion
+
+	if (_count == 16 )
 	{
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(340, 100.f, D_RIght));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(560, 133.f, D_RIght));
+	}
+	if (_count == 17)
+	{
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(340, 100.f, D_RIght));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(560, 133.f, D_RIght));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(600, 360.f, D_RIght));
+	}
+
+	if (_count == 18 || _count == 19)
+	{
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(340, 100.f, D_RIght));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(560, 133.f, D_RIght));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(600, 360.f, D_RIght));
 
 	}
-		
+
 }
 
 void COrbit_or_bit::DrawLeft(int _count)
 {
-	//CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CThorn>::Create(274.f, 493.f, D_LEFT));
+	
+		
+
+#pragma region 1차
+	if (_count >= 8 && _count <= 13)
+	{
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::Create(274.f, 493.f, D_LEFT));
+	}
+
+#pragma endregion
+
+	if (_count >= 15 && _count <= 17)
+	{
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(535, 485.f, D_LEFT));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(270.f, 461.f, D_LEFT));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CThorn>::CreateThorn(170.f, 280.f, D_LEFT));
+	}
+
+}
+
+void COrbit_or_bit::SetSpeed(int _count)
+{
+	if (_count == 64)
+		CObjMgr::Get_Instance()->Get_Player()->SetSpeed(3.f);
+
 }
 
 void COrbit_or_bit::CameraMovement(int _count)

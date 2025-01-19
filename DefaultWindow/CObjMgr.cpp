@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CObjMgr.h"
 #include "CThorn.h"
+#include "CMemoryPoolMgr.h"
 
 CObjMgr* CObjMgr::m_pInstance = nullptr;
 
@@ -41,10 +42,10 @@ CObj* CObjMgr::Get_Target(OBJID eID, CObj* pDst)
 	return nullptr;
 }
 
-bool CObjMgr::Collision_Check(float _Dst, float _Src)
+bool CObjMgr::Collision_Check(OBJID _eID, float _Dst, float _Src)
 {
 	m_pPlayer = m_ObjList[OBJ_PLAYER].front();
-	for_each(m_ObjList[OBJ_MONSTER].begin(), m_ObjList[OBJ_MONSTER].end(), [&](CObj* obj)
+	for_each(m_ObjList[_eID].begin(), m_ObjList[_eID].end(), [&](CObj* obj)
 		{
 			float fRadius = (_Dst + _Src) * 0.5f;
 			float fWidth = abs(m_pPlayer->Get_Info().vPos.x - obj->Get_Info().vPos.x);
@@ -76,7 +77,14 @@ int CObjMgr::Update()
 
 			if (OBJ_DEAD == iResult)
 			{
-				Safe_Delete<CObj*>(*iter);
+				if (i == OBJ_MOUSE)
+				{
+					CMemoryPoolMgr::Get_Instance()->deallocate(*iter);
+				}
+				else
+				{
+					Safe_Delete<CObj*>(*iter);
+				}
 				iter = m_ObjList[i].erase(iter);
 			}
 			else
@@ -119,9 +127,21 @@ void CObjMgr::Release()
 {
 	for (size_t i = 0; i < OBJ_END; ++i)
 	{
-		for_each(m_ObjList[i].begin(), m_ObjList[i].end(), Safe_Delete<CObj*>);
-		m_ObjList[i].clear();
+		if (i == OBJ_MOUSE)
+		{
+			for_each(m_ObjList[OBJ_MOUSE].begin(), m_ObjList[OBJ_MOUSE].end(), [](CObj* _obj)
+				{
+					CMemoryPoolMgr::Get_Instance()->deallocate(_obj);
+				});
+			m_ObjList[i].clear();
+		}
+		else
+		{
+			for_each(m_ObjList[i].begin(), m_ObjList[i].end(), Safe_Delete<CObj*>);
+			m_ObjList[i].clear();
+		}
 	}
+	
 }
 
 void CObjMgr::Delete_ID(OBJID eID)
@@ -132,9 +152,9 @@ void CObjMgr::Delete_ID(OBJID eID)
 	m_ObjList[eID].clear();
 }
 
-void CObjMgr::Dead_Monster(Direction eID)
+void CObjMgr::Dead_Thorn(Direction eID)
 {
-	for_each(m_ObjList[OBJ_MONSTER].begin(), m_ObjList[OBJ_MONSTER].end(), [=](CObj* monster)
+	for_each(m_ObjList[OBJ_MOUSE].begin(), m_ObjList[OBJ_MOUSE].end(), [=](CObj* monster)
 		{
 			if(static_cast<CThorn*>(monster)->GetDir() == eID)
 				monster->Set_Dead();

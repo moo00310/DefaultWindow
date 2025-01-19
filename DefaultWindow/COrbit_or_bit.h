@@ -21,6 +21,7 @@ private:
 
 	void DrawRight(int _count);
 	void DrawLeft(int _count);
+	void SetSpeed(int _count);
 
 private:
 	CObj* m_pPlayer;

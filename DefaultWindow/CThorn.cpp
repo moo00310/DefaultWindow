@@ -38,7 +38,7 @@ int CThorn::Update()
 
 	D3DXMATRIX		matRotZ, matTrans1, matTrans2, matScale;
 
-	D3DXMatrixScaling(&matScale, 1.35f, 1.35f, 1.35f);
+	D3DXMatrixScaling(&matScale, 1.3f, 1.3f, 1.3f);
 	D3DXMatrixRotationZ(&matRotZ, m_fAngle);
 	D3DXMatrixTranslation(&matTrans2, m_tInfo.vPos.x, m_tInfo.vPos.y, 0.f);
 
