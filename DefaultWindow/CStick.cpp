@@ -98,8 +98,8 @@ void CStick::Render(HDC hDC)
 	//_stprintf_s(cBuffer, _T("Distance: %.2f"), m_fDistance);
 	//TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.35f), cBuffer, (int)_tcslen(cBuffer));
 
-	_stprintf_s(cBuffer, _T("Score: %d"), m_iScore);
-	TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.15f), cBuffer, (int)_tcslen(cBuffer));
+	_stprintf_s(cBuffer, _T("Score: %d / %d"), m_iScore, SPAWN_COUNT);
+	TextOut(hDC, int(WINCX * 0.45f), int(WINCY * 0.15f), cBuffer, (int)_tcslen(cBuffer));
 
 }
 

@@ -116,7 +116,7 @@ void CSpawner::Check_SpawnTime()
 {
 	if (m_ullStartTime + m_ullNextSpawnTime < GetTickCount64())
 	{
-		if (m_iSpawnIndex >= 0 || m_iSpawnIndex <= SPAWN_COUNT)
+		if (m_iSpawnIndex >= 0 && m_iSpawnIndex < SPAWN_COUNT)
 		{
 			cout << m_iSpawnIndex << " Spawned!" << endl;
 			Spawn(m_arrSpawnInfo[m_iSpawnIndex].ullTimeInterval);
