@@ -20,6 +20,19 @@ CRhythmWorld::~CRhythmWorld()
 
 void CRhythmWorld::Initialize()
 {
+#ifdef _DEBUG
+
+    if (::AllocConsole() == TRUE)
+    {
+        FILE* nfp[3];
+        freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
+        freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
+        freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
+        std::ios::sync_with_stdio();
+    }
+
+#endif // _DEBUG
+
     CSoundMgr::Get_Instance()->Initialize();
     CSoundMgr::Get_Instance()->PlayEvent("event:/0004 BGM_DOREMI");
     //CSoundMgr::Get_Instance()->PlayEvent("event:/Tobu & Itro - Sunburst");
@@ -66,6 +79,12 @@ void CRhythmWorld::Render(HDC hDC)
 
 void CRhythmWorld::Release()
 {
+#ifdef _DEBUG
+
+    FreeConsole();
+
+#endif // _DEBUG
+
     CObjMgr::DestroyInstance();
     CKeyMgr::Destroy_Instance();
     CSoundMgr::Destroy_Instance();

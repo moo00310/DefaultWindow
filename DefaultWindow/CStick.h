@@ -7,7 +7,7 @@
 #define PULL_LENGTH 100.0f // 뒤로 당기는 길이를 정의
 #define FLY_SPEED 100.f
 
-#define JUDGE_WINDOW 50.f
+#define JUDGE_WINDOW 100.f
 #define FLY_INTERVAL 500
 
 class CStick :

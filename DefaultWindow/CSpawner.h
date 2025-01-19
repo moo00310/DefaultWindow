@@ -1,11 +1,13 @@
 #pragma once
 #include "CObj.h"
 
-#define SPAWN_COUNT 50
+#define SPAWN_COUNT 31
+
+#define BEAT_65 (ULONGLONG)((float)BEAT_4 * 1.5f) //6.5박
 #define BEAT_4 650 //정박 4분의 4박자
 #define BEAT_3 (ULONGLONG)((float)BEAT_4 * (3.f / 4.f)) // 4분의 3박자
 #define BEAT_2 (ULONGLONG)((float)BEAT_4 * (2.f / 4.f)) // 4분의 2박자
-#define BEAT_1 (ULONGLONG)((float)BEAT_4 * (7.f / 16.f)) // 4분의 1박자
+#define BEAT_7_16 (ULONGLONG)((float)BEAT_4 * (7.f / 16.f)) // 16분의 7박자
 
 struct tagSpawnInfo
 {
@@ -38,6 +40,7 @@ private:
     void Remove_OldSquare();
     void Set_SpawnTime();
     void Set_SpawnInfo(int _iIndex, ULONGLONG _ullSpawnTime, ULONGLONG _ullTimeInterval);
+    void Check_KeyDownTime();
 public:
     ULONGLONG   m_ullLastSpawnTime;
     ULONGLONG   m_ullStartTime;
@@ -48,6 +51,7 @@ public:
 
     CObj*       m_pRightSpawn;
     CObj*       m_pLeftSpawn;
-    
+
+    int         m_iKeyDownCount;
 };
 

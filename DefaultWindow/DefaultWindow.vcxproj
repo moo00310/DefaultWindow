@@ -72,7 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\core\inc;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\studio\inc;$(DXSDK_DIR)Include;$(IncludePath);$(DXSDK_DIR)Include</IncludePath>
-    <LibraryPath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\core\lib\x64;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\studio\lib\x64$(IncludePath);$(DXSDK_DIR)lib\x64;$(LibraryPath);$(IncludePath);$(FMOD);$(FMOD);$(FMOD);$(DXSDK_DIR)Lib/x86;$(DXSDK_DIR)lib/x86</LibraryPath>
+    <LibraryPath>$(DXSDK_DIR)lib/x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\studio\lib\x64;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\core\lib\x64;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
@@ -83,7 +83,7 @@
     <IncludePath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\studio\inc;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\core\inc;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LibraryPath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\core\lib\x64;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\studio\lib\x64$(IncludePath);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(IncludePath);$(FMOD);$(FMOD);$(FMOD);$(DXSDK_DIR)Lib/x86;$(DXSDK_DIR)lib/x86</LibraryPath>
+    <LibraryPath>$(DXSDK_DIR)lib/x64;$(LibraryPath)</LibraryPath>
     <IncludePath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\core\inc;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Universal Windows Platform\api\studio\inc;$(VC_IncludePath);$(WindowsSDK_IncludePath);;$(DXSDK_DIR)Include</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

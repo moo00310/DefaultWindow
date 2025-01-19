@@ -183,34 +183,33 @@ void CSpawner::Set_SpawnTime()
 	Set_SpawnInfo(9, 42000, BEAT_2);
 	//빨라지는 부분
 	Set_SpawnInfo(10, 49000, BEAT_2);
-	Set_SpawnInfo(11, 50700, BEAT_2);
-	Set_SpawnInfo(12, 52400, BEAT_2);
-	Set_SpawnInfo(13, 54100, BEAT_7_16);//1700
-
+	Set_SpawnInfo(11, 50500, BEAT_2);
+	Set_SpawnInfo(12, 52500, BEAT_2);
+	Set_SpawnInfo(13, 54000, BEAT_7_16);
+	//
 	Set_SpawnInfo(14, 56000, BEAT_2);
 	Set_SpawnInfo(15, 58000, BEAT_2);
 	Set_SpawnInfo(16, 60000, BEAT_2);
-	Set_SpawnInfo(17, 61500, BEAT_7_16);//1700
-
+	Set_SpawnInfo(17, 61500, BEAT_7_16);
 	//여기서 다시 느려짐
 	Set_SpawnInfo(18, 63000, BEAT_2);
 	//
 	Set_SpawnInfo(19, 67000, BEAT_3);
 	Set_SpawnInfo(20, 70500, BEAT_2);
 	//
-	Set_SpawnInfo(21, 74500, BEAT_2);//1700
-	Set_SpawnInfo(22, 76000, BEAT_7_16);//1700
+	Set_SpawnInfo(21, 74500, BEAT_2);
+	Set_SpawnInfo(22, 76000, BEAT_7_16);
 	//
 	Set_SpawnInfo(23, 80000, BEAT_2);
 	Set_SpawnInfo(24, 81500, BEAT_2);
 	Set_SpawnInfo(25, 83000, BEAT_3);
-	Set_SpawnInfo(26, 85000, BEAT_7_16);//1700
+	Set_SpawnInfo(26, 85000, BEAT_7_16);
 	//
 	Set_SpawnInfo(27, 87000, BEAT_2);
 	Set_SpawnInfo(28, 88500, BEAT_2);
 	Set_SpawnInfo(29, 90000, BEAT_2);
 	//개 느린 부분
-	Set_SpawnInfo(30, 92000, BEAT_65);//1700
+	Set_SpawnInfo(30, 92000, BEAT_65);
 }
 
 void CSpawner::Set_SpawnInfo(int _iIndex, ULONGLONG _ullSpawnTime, ULONGLONG _ullTimeInterval)
