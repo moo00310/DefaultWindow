@@ -94,6 +94,8 @@ int CKDHPlayer::Update()
 
 void CKDHPlayer::Late_Update()
 {
+	m_revolAngle += 0.5f;
+
 	// 점들을 다시 0,0 원점으로 이동시킴.
 	vertexOrigin[0].x = m_ResetPosition.x;
 	vertexOrigin[0].y = m_ResetPosition.y - m_fScale;

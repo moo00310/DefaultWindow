@@ -8,7 +8,7 @@ CHexaPad::CHexaPad()
 {
 	ZeroMemory(&m_ResetPosition, sizeof(D3DXVECTOR3));
 
-	m_fScale = 20.f;
+	m_fScale = 10.f;
 	m_Player = static_cast<CKDHPlayer*>(CObjMgr::Get_Instance()->Get_Player());
 }
 
@@ -21,18 +21,19 @@ void CHexaPad::Initialize()
 	m_eRender = RENDER_GAMEOBJECT;
 
 	m_localLookAt = { 1.f, 0.f, 0.f };
-	m_localScale = { 1.f, 1.f, 0.f };
+	m_localScale = { 1.f, 30.f, 0.f };
+	m_localPosition = { 360.f, 0.f, 0.f };
 
 	vertex[0].x = m_localPosition.x - m_fScale;
 	vertex[0].y = m_localPosition.y - m_fScale;
 
 	vertex[1].x = m_localPosition.x + m_fScale;
-	vertex[1].y = m_localPosition.y - m_fScale;
+	vertex[1].y = m_localPosition.y - m_fScale - m_fScale;
 
-	vertex[2].x = m_localPosition.x + m_fScale + m_fScale;
-	vertex[2].y = m_localPosition.y + m_fScale;
+	vertex[2].x = m_localPosition.x + m_fScale;
+	vertex[2].y = m_localPosition.y + m_fScale + m_fScale;
 
-	vertex[3].x = m_localPosition.x - m_fScale - m_fScale;
+	vertex[3].x = m_localPosition.x - m_fScale;
 	vertex[3].y = m_localPosition.y + m_fScale;
 
 	for (int i = 0; i < 4; i++)
@@ -50,6 +51,8 @@ void CHexaPad::Initialize()
 	D3DXMatrixIdentity(&m_MatrixWorld);
 
 	m_fSpeed = 4.f;
+	m_rovAngle = 0.f;
+	m_rotAngle = 0.f;
 }
 
 int CHexaPad::Update()
@@ -64,7 +67,7 @@ int CHexaPad::Update()
 	if (fPlayerDistance <= m_fScale + m_fScale)
 	{
 		// 게임 오버 판정.
-		//CSceneMgr::Get_Instance()->Set_Scene(SC_HERO);
+		CSceneMgr::Get_Instance()->Set_Scene(SC_HERO);
 		return OBJ_DEAD;
 	}
 
@@ -73,51 +76,28 @@ int CHexaPad::Update()
 		return OBJ_DEAD;
 	}
 
-	m_localScale.x = fDistance / 40.f;
+	m_localScale.y = fDistance / 40.f;
 
-	switch (m_Direction)
-	{
-	case DIR_UP:
-	{
-		m_localPosition.y += m_fSpeed;
-	}
-	break;
-
-	case DIR_DOWN:
-	{
-		m_localPosition.y -= m_fSpeed;
-	}
-	break;
-
-	case DIR_LEFT:
-	{
-		m_localPosition.x += m_fSpeed;
-	}
-	break;
-
-	case DIR_RIGHT:
-	{
-		m_localPosition.x -= m_fSpeed;
-	}
-	break;
-	}
+	m_localPosition.x -= m_fSpeed;
 
 	return 0;
 }
 
 void CHexaPad::Late_Update()
 {
+	m_rovAngle += 0.5f;
+
 	// 점들을 다시 0,0 원점으로 이동시킴.
 	vertexOrigin[0].x = m_ResetPosition.x - m_fScale;
 	vertexOrigin[0].y = m_ResetPosition.y - m_fScale;
 
 	vertexOrigin[1].x = m_ResetPosition.x + m_fScale;
-	vertexOrigin[1].y = m_ResetPosition.y - m_fScale;
+	vertexOrigin[1].y = m_ResetPosition.y - m_fScale - m_fScale;
 
-	vertexOrigin[2].x = m_ResetPosition.x + m_fScale + m_fScale;
-	vertexOrigin[2].y = m_ResetPosition.y + m_fScale;
+	vertexOrigin[2].x = m_ResetPosition.x + m_fScale;
+	vertexOrigin[2].y = m_ResetPosition.y + m_fScale + m_fScale;
 
-	vertexOrigin[3].x = m_ResetPosition.x - m_fScale - m_fScale;
+	vertexOrigin[3].x = m_ResetPosition.x - m_fScale;
 	vertexOrigin[3].y = m_ResetPosition.y + m_fScale;
 
 	// 크기 행렬.
@@ -130,10 +110,10 @@ void CHexaPad::Late_Update()
 	D3DXMatrixTranslation(&m_MatrixPosition, m_localPosition.x, m_localPosition.y, m_localPosition.z);
 
 	// 공전 행렬.
-	//D3DXMatrixRotationZ(&m_MatrixRevolution, D3DXToRadian(m_revolAngle));
+	D3DXMatrixRotationZ(&m_MatrixRevolution, D3DXToRadian(m_rovAngle));
 
 	// 부모 행렬.
-	//D3DXMatrixTranslation(&m_MatrixParent, m_localParentPosition.x, m_localParentPosition.y, m_localParentPosition.z);
+	D3DXMatrixTranslation(&m_MatrixParent, m_Player->GetLocalParentPosition().x, m_Player->GetLocalParentPosition().y, m_Player->GetLocalParentPosition().z);
 
 	// 월드 좌표로 변환.
 	// 월드 행렬 = 크기 * 자전(회전) * 이동 * 공전 * 부모
@@ -205,32 +185,28 @@ void CHexaPad::SetDirection(kDIRECTION _kDIR)
 	case DIR_UP:
 	{
 		// 위.
-		m_localPosition = { WINCX * 0.5f, -50.f, 0.f };
-		m_rotAngle = 180.f;
+		m_rovAngle = 270.f;
 	}
 	break;
 
 	case DIR_DOWN:
 	{
 		// 아래.
-		m_localPosition = { WINCX * 0.5f, WINCY + 50.f, 0.f };
-		m_rotAngle = 0.f;
+		m_rovAngle = 90.f;
 	}
 	break;
 
 	case DIR_LEFT:
 	{
 		// 좌.
-		m_localPosition = { -50.f, WINCY * 0.5f, 0.f };
-		m_rotAngle = 90.f;
+		m_rovAngle = 180.f;
 	}
 	break;
 
 	case DIR_RIGHT:
 	{
 		// 우.
-		m_localPosition = { WINCX + 50.f, WINCY * 0.5f, 0.f };
-		m_rotAngle = 270.f;
+		m_rovAngle = 0.f;
 	}
 	break;
 	}
