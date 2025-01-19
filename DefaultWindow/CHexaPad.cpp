@@ -3,6 +3,7 @@
 #include "CSceneMgr.h"
 #include "CObjMgr.h"
 #include "CHexaPadManager.h"
+#include "CKDHScene.h"
 
 CHexaPad::CHexaPad()
 {
@@ -79,13 +80,21 @@ int CHexaPad::Update()
 	m_localScale.y = fDistance / 40.f;
 
 	m_localPosition.x -= m_fSpeed;
+	//m_localPosition -= m_localDirection * m_fSpeed;
 
 	return 0;
 }
 
 void CHexaPad::Late_Update()
 {
-	m_rovAngle += 0.5f;
+	if (g_bRotateAngle == true)
+	{
+		m_rovAngle += ROTATE_SPEED;
+	}
+	else
+	{
+		m_rovAngle -= ROTATE_SPEED;
+	}
 
 	// 점들을 다시 0,0 원점으로 이동시킴.
 	vertexOrigin[0].x = m_ResetPosition.x - m_fScale;

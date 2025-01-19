@@ -2,6 +2,7 @@
 #include "CKDHPlayer.h"
 #include "CKeyMgr.h"
 #include "CObjMgr.h"
+#include "CKDHScene.h"
 
 CKDHPlayer::CKDHPlayer()
 {
@@ -49,9 +50,6 @@ void CKDHPlayer::Initialize()
 	parentVertex[1].x = m_localParentPosition.x + m_fParentScale;
 	parentVertex[1].y = m_localParentPosition.y + m_fParentScale;
 
-	/*vertex[3].x = m_localPosition.x - m_scale;
-	vertex[3].y = m_localPosition.y + m_scale;*/
-
 	for (int i = 0; i < 3; i++)
 	{
 		vertexOrigin[i].x = vertex[i].x;
@@ -94,7 +92,14 @@ int CKDHPlayer::Update()
 
 void CKDHPlayer::Late_Update()
 {
-	m_revolAngle += 0.5f;
+	if (g_bRotateAngle == true)
+	{
+		m_revolAngle += ROTATE_SPEED;
+	}
+	else
+	{
+		m_revolAngle -= ROTATE_SPEED;
+	}
 
 	// 점들을 다시 0,0 원점으로 이동시킴.
 	vertexOrigin[0].x = m_ResetPosition.x;

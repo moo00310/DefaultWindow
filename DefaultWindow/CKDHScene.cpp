@@ -6,6 +6,8 @@
 #include "CHexaPadManager.h"
 #include "CSoundMgr.h"
 
+bool g_bRotateAngle = false;
+
 CKDHScene::CKDHScene()
 {
 }
@@ -25,12 +27,21 @@ void CKDHScene::Initialize()
 	CSoundMgr::Get_Instance()->Initialize();
 	CSoundMgr::Get_Instance()->PlayEvent("event:/Milkyway");
 	CSoundMgr::Get_Instance()->Update();
+
+	m_fChangeCount = 2.f;
+	m_dwTick = GetTickCount();
 }
 
 int CKDHScene::Update()
 {
 	CObjMgr::Get_Instance()->Update();
 	CHexaPadManager::Get_Instance()->OnPattern();
+
+	if (GetTickCount() > m_dwTick + (1000.f * m_fChangeCount))
+	{
+		g_bRotateAngle = !g_bRotateAngle;
+		m_dwTick = GetTickCount();
+	}
 	
 	return 0;
 }
@@ -72,6 +83,27 @@ void CKDHScene::CreatePattern()
 		{
 			AddPad(DIR_DOWN);
 			AddPad(DIR_UP);
+			AddPad(DIR_LEFT);
+		};
+	sequence.fCount = 0.5f;
+
+	CHexaPadManager::Get_Instance()->AddPattern(sequence);
+
+	sequence.sequence = [&]()
+		{
+			AddPad(DIR_UP);
+			AddPad(DIR_LEFT);
+			AddPad(DIR_RIGHT);
+		};
+	sequence.fCount = 0.5f;
+
+	CHexaPadManager::Get_Instance()->AddPattern(sequence);
+
+	sequence.sequence = [&]()
+		{
+			AddPad(DIR_DOWN);
+			AddPad(DIR_UP);
+			AddPad(DIR_RIGHT);
 		};
 	sequence.fCount = 0.5f;
 
@@ -80,14 +112,16 @@ void CKDHScene::CreatePattern()
 	sequence.sequence = [&]()
 		{
 			AddPad(DIR_LEFT);
+			AddPad(DIR_DOWN);
 			AddPad(DIR_RIGHT);
 		};
-	sequence.fCount = 0.8f;
+	sequence.fCount = 0.5f;
 
 	CHexaPadManager::Get_Instance()->AddPattern(sequence);
 
 	sequence.sequence = [&]()
 		{
+			AddPad(DIR_LEFT);
 			AddPad(DIR_DOWN);
 			AddPad(DIR_UP);
 		};
@@ -98,9 +132,10 @@ void CKDHScene::CreatePattern()
 	sequence.sequence = [&]()
 		{
 			AddPad(DIR_LEFT);
+			AddPad(DIR_UP);
 			AddPad(DIR_RIGHT);
 		};
-	sequence.fCount = 0.8f;
+	sequence.fCount = 0.5f;
 
 	CHexaPadManager::Get_Instance()->AddPattern(sequence);
 
@@ -108,6 +143,7 @@ void CKDHScene::CreatePattern()
 		{
 			AddPad(DIR_DOWN);
 			AddPad(DIR_UP);
+			AddPad(DIR_RIGHT);
 		};
 	sequence.fCount = 0.5f;
 
@@ -116,39 +152,20 @@ void CKDHScene::CreatePattern()
 	sequence.sequence = [&]()
 		{
 			AddPad(DIR_LEFT);
-			AddPad(DIR_RIGHT);
-		};
-	sequence.fCount = 0.8f;
-
-	CHexaPadManager::Get_Instance()->AddPattern(sequence);
-
-	sequence.sequence = [&]()
-		{
-			AddPad(DIR_UP);
-			AddPad(DIR_RIGHT);
-		};
-	sequence.fCount = 0.4f;
-
-	CHexaPadManager::Get_Instance()->AddPattern(sequence);
-
-	sequence.sequence = [&]()
-		{
-			AddPad(DIR_UP);
-			AddPad(DIR_RIGHT);
 			AddPad(DIR_DOWN);
+			AddPad(DIR_RIGHT);
 		};
-	sequence.fCount = 0.4f;
+	sequence.fCount = 0.5f;
 
 	CHexaPadManager::Get_Instance()->AddPattern(sequence);
 
 	sequence.sequence = [&]()
 		{
-			AddPad(DIR_UP);
-			AddPad(DIR_RIGHT);
-			AddPad(DIR_DOWN);
 			AddPad(DIR_LEFT);
+			AddPad(DIR_DOWN);
+			AddPad(DIR_UP);
 		};
-	sequence.fCount = 1.3f;
+	sequence.fCount = 0.5f;
 
 	CHexaPadManager::Get_Instance()->AddPattern(sequence);
 }
