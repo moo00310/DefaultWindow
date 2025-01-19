@@ -7,7 +7,7 @@
 CSpawner::CSpawner()
 	:m_ullLastSpawnTime(0), m_pRightSpawn(nullptr), m_pLeftSpawn(nullptr), m_ullStartTime(0), m_ullNextSpawnTime(0), m_iSpawnIndex(0)
 {
-	ZeroMemory(&m_arrSpawnTime, sizeof(m_arrSpawnTime));
+	//ZeroMemory(&m_arrSpawnTime, sizeof(m_arrSpawnTime));
 	ZeroMemory(&m_arrSpawnInfo, sizeof(m_arrSpawnInfo));
 }
 
@@ -48,7 +48,7 @@ void CSpawner::Render(HDC hDC)
 	_stprintf_s(cBuffer, _T("Speed: %.2f"), m_fSpeed);
 	TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.3f), cBuffer, (int)_tcslen(cBuffer));
 
-	_stprintf_s(cBuffer, _T("Spawn Index: %d"), m_iSpawnIndex);
+	_stprintf_s(cBuffer, _T("Spawn Index: %d"), m_iSpawnIndex - 1);
 	TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.1f), cBuffer, (int)_tcslen(cBuffer));
 
 }
@@ -79,17 +79,18 @@ void CSpawner::Spawn()
 	}
 }
 
-void CSpawner::Spawn(float _fSpeed)
+void CSpawner::Spawn(ULONGLONG _ullTimeInterval)
 {
 	//소환
-	m_fSpeed = _fSpeed;//SPEED_MIN + (rand() % (SPEED_MAX - SPEED_MIN + 1));
+	//m_fSpeed = _fSpeed;//SPEED_MIN + (rand() % (SPEED_MAX - SPEED_MIN + 1));
 
 	m_pLeftSpawn = CAbstractFactory<CSquare>::Create(-(SIDE * 0.5f), WINCY * 0.5f - SIDE * 0.5f);
 	CObjMgr::Get_Instance()->Add_Object(OBJ_BULLET, m_pLeftSpawn);
 	if (CSquare* pSquare = dynamic_cast<CSquare*>(m_pLeftSpawn))
 	{
 		pSquare->Set_RollLeft(false);
-		pSquare->Set_Speed(m_fSpeed);
+		//pSquare->Set_Speed(m_fSpeed);
+		pSquare->Set_RollTime(_ullTimeInterval);
 	}
 
 	m_pRightSpawn = CAbstractFactory<CSquare>::Create(SIDE * 9.5f, WINCY * 0.5f - SIDE * 0.5f);
@@ -97,7 +98,8 @@ void CSpawner::Spawn(float _fSpeed)
 	if (CSquare* pSquare = dynamic_cast<CSquare*>(m_pRightSpawn))
 	{
 		pSquare->Set_RollLeft(true);
-		pSquare->Set_Speed(m_fSpeed);
+		//pSquare->Set_Speed(m_fSpeed);
+		pSquare->Set_RollTime(_ullTimeInterval);
 	}
 }
 
@@ -105,9 +107,9 @@ void CSpawner::Check_SpawnTime()
 {
 	if (m_ullStartTime + m_ullNextSpawnTime < GetTickCount64())
 	{
-		++m_iSpawnIndex;
-		m_ullNextSpawnTime = m_arrSpawnInfo[m_iSpawnIndex].ullSpawnTime;
-		Spawn(m_arrSpawnInfo[m_iSpawnIndex].fSpeed);
+		Spawn(m_arrSpawnInfo[m_iSpawnIndex].ullTimeInterval);
+		m_ullNextSpawnTime = m_arrSpawnInfo[++m_iSpawnIndex].ullSpawnTime;
+
 	}
 
 	//if (m_ullLastSpawnTime + 5000 < GetTickCount64())
@@ -155,33 +157,35 @@ void CSpawner::Remove_OldSquare()
 
 void CSpawner::Set_SpawnTime()
 {
-	/*for (int i = 0; i < SPAWN_COUNT; ++i)
+	for (int i = 0; i < SPAWN_COUNT; ++i)
 	{
-		if (i == 0)
-		{
-			m_arrSpawnInfo[i].ullSpawnTime = 5000;
-			m_arrSpawnInfo[i].fSpeed = 8.f;
-		}
-		else
-		{
-			m_arrSpawnInfo[i].ullSpawnTime = m_arrSpawnInfo[i - 1].ullSpawnTime + 5000;
-			m_arrSpawnInfo[i].fSpeed = 4.f;
-		}
-	}*/
+		m_arrSpawnInfo[i].ullSpawnTime = m_ullStartTime + 5000 * (i + 1);
+		m_arrSpawnInfo[i].ullTimeInterval = BEAT_4;
+	}
 
-	m_arrSpawnInfo[0].ullSpawnTime = 5000;
-	m_arrSpawnInfo[0].fSpeed = 4.f;
+	Set_SpawnInfo(0, 5000, BEAT_3);
+	Set_SpawnInfo(1, 10000, BEAT_4);
+	Set_SpawnInfo(2, 15000, BEAT_3);
+	Set_SpawnInfo(3, 20000, BEAT_3);
+	Set_SpawnInfo(4, 22500, BEAT_2);
+	Set_SpawnInfo(5, 25000, BEAT_3);
+	//여기서 좀 밀리는 느낌
+	Set_SpawnInfo(6, 29500, BEAT_4);
+	Set_SpawnInfo(7, 34500, BEAT_3);
+	Set_SpawnInfo(8, 39500, BEAT_3);
+	Set_SpawnInfo(9, 42000, BEAT_2);
+	//빨라지는 부분
+	Set_SpawnInfo(10, 49000, BEAT_2);
+	Set_SpawnInfo(11, 51000, BEAT_2);
+	Set_SpawnInfo(12, 53000, BEAT_2);
+	Set_SpawnInfo(13, 55000, BEAT_2);
+	Set_SpawnInfo(14, 57000, BEAT_2);
 
-	m_arrSpawnInfo[1].ullSpawnTime = 10000;
-	m_arrSpawnInfo[1].fSpeed = 4.f;
 
-	m_arrSpawnInfo[2].ullSpawnTime = 15000;
-	m_arrSpawnInfo[2].fSpeed = 4.f;
+}
 
-	m_arrSpawnInfo[3].ullSpawnTime = 25000;
-	m_arrSpawnInfo[3].fSpeed = 4.f;
-
-	m_arrSpawnInfo[4].ullSpawnTime = 35000;
-	m_arrSpawnInfo[4].fSpeed = 4.f;
-	
+void CSpawner::Set_SpawnInfo(int _iIndex, ULONGLONG _ullSpawnTime, ULONGLONG _ullTimeInterval)
+{
+	m_arrSpawnInfo[_iIndex].ullSpawnTime = m_ullStartTime + _ullSpawnTime;
+	m_arrSpawnInfo[_iIndex].ullTimeInterval = _ullTimeInterval;
 }

@@ -61,7 +61,7 @@ void CRhythmWorld::Render(HDC hDC)
 
     CObjMgr::Get_Instance()->Render(hDC);
 
-    Draw_Outline(hDC);
+    //Draw_Outline(hDC);
 }
 
 void CRhythmWorld::Release()
@@ -115,7 +115,7 @@ void CRhythmWorld::Check_Hit()
 
 void CRhythmWorld::Draw_Outline(HDC hDC)
 {
-    HPEN hPen = CreatePen(PS_SOLID, 30, RGB(0, 255, 0));
+    HPEN hPen = CreatePen(PS_SOLID, 150, RGB(0, 255, 0));
     HGDIOBJ oldPen = SelectObject(hDC, hPen);
 
     // 화면 테두리 그리기

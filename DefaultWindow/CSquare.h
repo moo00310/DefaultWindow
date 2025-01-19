@@ -4,8 +4,9 @@
 #define SIDE (WINCX/9)
 #define SPEED_MIN 2
 #define SPEED_MAX 10
-#define ROLL_COUNT 5
+#define ROLL_COUNT 6
 #define FALL_SPEED 50.f
+#define LERP_SPEED 0.2f
 
 class CSquare :
     public CObj
@@ -17,6 +18,8 @@ public:
     void Set_RollLeft(bool _b);
     void Set_Speed(float _fSpeed) { m_fSpeed = _fSpeed; }
     D3DXVECTOR3 Get_World_Center() { return m_vWorldPoint_Center; }
+    void Set_RollTime(ULONGLONG _ullTimeInterval);
+
 public:
     void Initialize() override;
     int Update() override;
@@ -33,7 +36,6 @@ private:
     void Fall();
     void OnVertexTouch();
     void Check_RollTime();
-    void Set_RollTime();
 private:
     //사각형 점 4개
     D3DXVECTOR3 m_arrLocalPoint[4];
@@ -59,8 +61,11 @@ private:
     bool        m_bFall;
 
     ULONGLONG   m_ullNextRollTime;
-    ULONGLONG   m_arrRollTime[5];
+    ULONGLONG   m_arrRollTime[ROLL_COUNT];
     int         m_iRollCount;
+
+    bool        m_bLerp;
+    float       m_fTargetAngle;
 
 };
 
