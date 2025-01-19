@@ -1,5 +1,8 @@
 #pragma once
 #include "CPlayer.h"
+
+#include "CBitOrbit_SSH.h"
+
 class CPlayer_SSH : public CPlayer
 {
 public:
@@ -44,5 +47,7 @@ protected:
 	int   m_iRevCount;
 	float m_fMaxAngle;
 	float m_fRevSpeed;
+
+	CObj* m_pBitOrbit;
 };
 

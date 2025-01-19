@@ -10,6 +10,7 @@
 #include "CSoundMgr.h"
 #include "CAbstractFactory.h"
 #include "CScrollMgr.h"
+#include "CSceneMgr.h"
 
 CSSHScene::CSSHScene() 
 	: m_bChange(false), m_fCheckAngle(0.f), m_fMaxAngle(190.f),
@@ -367,5 +368,10 @@ void CSSHScene::Rev_Play()
 				++m_IterBlock;
 			}
 		}
+	}
+
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_F4))
+	{
+		CSceneMgr::Get_Instance()->Set_Scene(SC_MENU);
 	}
 }

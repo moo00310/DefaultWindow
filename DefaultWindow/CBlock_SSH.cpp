@@ -3,7 +3,9 @@
 
 #include "CPlayer_SSH_Fire.h"
 #include "CPlayer_SSH_Ice.h"
+#include "CBitOrbit_SSH.h"
 
+#include "CAbstractFactory.h"
 #include "CScrollMgr.h"
 #include "CObjMgr.h"
 

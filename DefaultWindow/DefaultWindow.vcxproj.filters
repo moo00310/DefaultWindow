@@ -111,6 +111,9 @@
     <ClCompile Include="CPlayer_SSH_Ice.cpp">
       <Filter>02.SSH\01.Player\00. Player_SSH\02. Ice</Filter>
     </ClCompile>
+    <ClCompile Include="CBitOrbit_SSH.cpp">
+      <Filter>02.SSH\03. BitOribit_SSH</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Define.h" />
@@ -292,6 +295,9 @@
     <ClInclude Include="CPlayer_SSH.h">
       <Filter>02.SSH\01.Player\00. Player_SSH\00. SSH</Filter>
     </ClInclude>
+    <ClInclude Include="CBitOrbit_SSH.h">
+      <Filter>02.SSH\03. BitOribit_SSH</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -424,6 +430,9 @@
     </Filter>
     <Filter Include="05.Desgin\HexaPadManager">
       <UniqueIdentifier>{f82f0090-4314-4ef6-b9bd-029872c44efa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.SSH\03. BitOribit_SSH">
+      <UniqueIdentifier>{f098f7aa-600f-4697-84b8-922a67b30cfc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
