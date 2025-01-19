@@ -28,6 +28,8 @@ void CSpawner::Initialize()
 	m_ullStartTime = GetTickCount64();
 
 	m_ullNextSpawnTime = m_arrSpawnInfo[0].ullSpawnTime;
+
+	m_iSpawnIndex = 0;
 }
 
 int CSpawner::Update()
@@ -52,11 +54,11 @@ void CSpawner::Render(HDC hDC)
 	//_stprintf_s(cBuffer, _T("Speed: %.2f"), m_fSpeed);
 	//TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.3f), cBuffer, (int)_tcslen(cBuffer));
 
-	_stprintf_s(cBuffer, _T("Spawn Index: %d"), m_iSpawnIndex - 1);
-	TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.3f), cBuffer, (int)_tcslen(cBuffer));
+	//_stprintf_s(cBuffer, _T("Spawn Index: %d"), m_iSpawnIndex - 1);
+	//TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.3f), cBuffer, (int)_tcslen(cBuffer));
 
-	_stprintf_s(cBuffer, _T("Time: %d"), GetTickCount64() - m_ullStartTime);
-	TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.6f), cBuffer, (int)_tcslen(cBuffer));
+	//_stprintf_s(cBuffer, _T("Time: %d"), (int)(GetTickCount64() - m_ullStartTime));
+	//TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.6f), cBuffer, (int)_tcslen(cBuffer));
 
 }
 
@@ -114,9 +116,12 @@ void CSpawner::Check_SpawnTime()
 {
 	if (m_ullStartTime + m_ullNextSpawnTime < GetTickCount64())
 	{
-		Spawn(m_arrSpawnInfo[m_iSpawnIndex].ullTimeInterval);
-		m_ullNextSpawnTime = m_arrSpawnInfo[++m_iSpawnIndex].ullSpawnTime;
-
+		if (m_iSpawnIndex >= 0 && m_iSpawnIndex < SPAWN_COUNT)
+		{
+			cout << m_iSpawnIndex << " Spawned!" << endl;
+			Spawn(m_arrSpawnInfo[m_iSpawnIndex].ullTimeInterval);
+			m_ullNextSpawnTime = m_arrSpawnInfo[++m_iSpawnIndex].ullSpawnTime;
+		}
 	}
 
 	//if (m_ullLastSpawnTime + 5000 < GetTickCount64())
@@ -164,11 +169,11 @@ void CSpawner::Remove_OldSquare()
 
 void CSpawner::Set_SpawnTime()
 {
-	for (int i = 0; i < SPAWN_COUNT; ++i)
+	/*for (int i = 0; i < SPAWN_COUNT; ++i)
 	{
 		m_arrSpawnInfo[i].ullSpawnTime = m_ullStartTime + 5000 * (i + 1);
 		m_arrSpawnInfo[i].ullTimeInterval = BEAT_2;
-	}
+	}*/
 
 	Set_SpawnInfo(0, 5000, BEAT_3);
 	Set_SpawnInfo(1, 10000, BEAT_4);

@@ -7,6 +7,7 @@
 #include "CSpawner.h"
 #include "CSoundMgr.h"
 #include "CStick.h"
+#include "CSceneMgr.h"
 
 CRhythmWorld::CRhythmWorld()
     :m_pSpawner(nullptr), m_fDistance(0.f), m_iScore(0)
@@ -22,14 +23,14 @@ void CRhythmWorld::Initialize()
 {
 #ifdef _DEBUG
 
-    if (::AllocConsole() == TRUE)
-    {
-        FILE* nfp[3];
-        freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
-        freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
-        freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
-        std::ios::sync_with_stdio();
-    }
+    //if (::AllocConsole() == TRUE)
+    //{
+    //    FILE* nfp[3];
+    //    freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
+    //    freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
+    //    freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
+    //    std::ios::sync_with_stdio();
+    //}
 
 #endif // _DEBUG
 
@@ -49,6 +50,11 @@ int CRhythmWorld::Update()
 {
     CObjMgr::Get_Instance()->Update();
     //Check_Hit();
+    if (CKeyMgr::Get_Instance()->Key_Down(VK_BACK))
+    {
+        CSceneMgr::Get_Instance()->Set_Scene(SC_MENU);
+    }
+
     CKeyMgr::Get_Instance()->Update();
 
     return 0;
@@ -64,7 +70,7 @@ void CRhythmWorld::Render(HDC hDC)
     MoveToEx(hDC, 0, int(WINCY * 0.5f), nullptr);
     LineTo(hDC, int(WINCX), int(WINCY * 0.5f));
 
-    //TCHAR cBuffer[64]; //저장할 문자열 버퍼
+    TCHAR cBuffer[64]; //저장할 문자열 버퍼
 
     //_stprintf_s(cBuffer, _T("Distance: %.2f"), m_fDistance);
     //TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.35f), cBuffer, (int)_tcslen(cBuffer));
@@ -75,13 +81,20 @@ void CRhythmWorld::Render(HDC hDC)
     CObjMgr::Get_Instance()->Render(hDC);
 
     Draw_Outline(hDC);
+
+    _stprintf_s(cBuffer, _T("SPACE: Fire"));
+    TextOut(hDC, int(WINCX * 0.45f), int(WINCY * 0.9f), cBuffer, (int)_tcslen(cBuffer));
+
+    _stprintf_s(cBuffer, _T("BACK SPACE: Go To Menu"));
+    TextOut(hDC, int(WINCX * 0.45f), int(WINCY * 0.95f), cBuffer, (int)_tcslen(cBuffer));
+
 }
 
 void CRhythmWorld::Release()
 {
 #ifdef _DEBUG
 
-    FreeConsole();
+    //FreeConsole();
 
 #endif // _DEBUG
 
