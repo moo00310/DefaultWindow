@@ -2,6 +2,8 @@
 #include "CScene.h"
 #include "CObj.h"
 
+enum Level { L1, L2, L3, L4, L_END };
+
 class COrbit_or_bit : public CScene
 {
 public:
@@ -23,6 +25,8 @@ private:
 	void DrawLeft(int _count);
 	void SetSpeed(int _count);
 
+	void LevelDown(Level m_eLevel);
+
 private:
 	CObj* m_pPlayer;
 	CObj* m_pOrbit;
@@ -36,7 +40,11 @@ private:
 	chrono::system_clock::time_point m_tTimerRightTime; 
 
 	int m_iBeatCount;
-
 	int m_iHitCount;
+
+	Level m_eLevel;
+
+	//세이브 포인트
+	bool isSave[L_END];
 };
 
