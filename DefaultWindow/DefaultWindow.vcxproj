@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CAbstractFactory.h" />
+    <ClInclude Include="CBitOrbit_SSH.h" />
     <ClInclude Include="CBlock_SSH.h" />
     <ClInclude Include="CCameraMgr.h" />
     <ClInclude Include="CHexaPad.h" />
@@ -192,6 +193,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CBitOrbit_SSH.cpp" />
     <ClCompile Include="CBlock_SSH.cpp" />
     <ClCompile Include="CCameraMgr.cpp" />
     <ClCompile Include="CHexaPad.cpp" />

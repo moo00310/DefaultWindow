@@ -1,5 +1,6 @@
 #pragma once
 #include "CPlayer_SSH.h"
+
 class CPlayer_SSH_Fire : public CPlayer_SSH
 {
 public:

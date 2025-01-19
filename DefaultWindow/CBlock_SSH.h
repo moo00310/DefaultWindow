@@ -1,5 +1,6 @@
 #pragma once
 #include "CObj.h"
+
 class CBlock_SSH : public CObj
 {
 public:
@@ -17,7 +18,7 @@ public:
 	void Render(HDC hDC) override;
 	void Release() override;
 
-public:
+private:
 	D3DXVECTOR3 m_vPoint[4];
 	D3DXVECTOR3 m_vOriginPoint[4];
 
