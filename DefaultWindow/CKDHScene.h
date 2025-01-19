@@ -5,6 +5,7 @@
 
 #define ROTATE_SPEED 1.f
 
+extern float g_RevolAngle;
 extern bool g_bRotateAngle;
 
 class CKDHScene : public CScene

@@ -75,6 +75,7 @@ void CKDHPlayer::Initialize()
 
 	m_fSpeed = 5.f;
 	m_revolAngle = 0.f;
+	m_revOriginAngle = 0.f;
 	m_rotAngle = 90.f;
 	m_moreScale = 0.1f;
 	m_revolSpeed = 5.f;
@@ -92,14 +93,7 @@ int CKDHPlayer::Update()
 
 void CKDHPlayer::Late_Update()
 {
-	if (g_bRotateAngle == true)
-	{
-		m_revolAngle += ROTATE_SPEED;
-	}
-	else
-	{
-		m_revolAngle -= ROTATE_SPEED;
-	}
+	m_revolAngle = m_revOriginAngle + g_RevolAngle;
 
 	// 점들을 다시 0,0 원점으로 이동시킴.
 	vertexOrigin[0].x = m_ResetPosition.x;
@@ -213,13 +207,13 @@ void CKDHPlayer::Key_Input()
 
 	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_LEFT))
 	{
-		m_revolAngle -= m_revolSpeed;
+		m_revOriginAngle -= m_revolSpeed;
 		//m_rotAngle -= m_rotSpeed;
 	}
 
 	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_RIGHT))
 	{
-		m_revolAngle += m_revolSpeed;
+		m_revOriginAngle += m_revolSpeed;
 		//m_rotAngle -= m_rotSpeed;
 	}
 

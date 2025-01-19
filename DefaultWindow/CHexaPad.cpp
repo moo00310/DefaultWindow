@@ -22,7 +22,7 @@ void CHexaPad::Initialize()
 	m_eRender = RENDER_GAMEOBJECT;
 
 	m_localLookAt = { 1.f, 0.f, 0.f };
-	m_localScale = { 1.f, 30.f, 0.f };
+	m_localScale = { 1.f, 50.f, 0.f };
 	m_localPosition = { 360.f, 0.f, 0.f };
 
 	vertex[0].x = m_localPosition.x - m_fScale;
@@ -65,7 +65,7 @@ int CHexaPad::Update()
 	float fPlayerDistance = GetDistance(m_Player->GetLocalPositionToWorld());
 
 	// 플레이어 접촉 확인.
-	if (fPlayerDistance <= m_fScale + m_fScale)
+	if (fPlayerDistance <= m_fScale + m_fScale + m_fScale)
 	{
 		// 게임 오버 판정.
 		//CSceneMgr::Get_Instance()->Set_Scene(SC_HERO);
@@ -77,7 +77,7 @@ int CHexaPad::Update()
 		return OBJ_DEAD;
 	}
 
-	m_localScale.y = fDistance / 40.f;
+	m_localScale.y = fDistance / 20.f;
 
 	m_localPosition.x -= m_fSpeed;
 	//m_localPosition -= m_localDirection * m_fSpeed;
@@ -87,14 +87,7 @@ int CHexaPad::Update()
 
 void CHexaPad::Late_Update()
 {
-	if (g_bRotateAngle == true)
-	{
-		m_rovAngle += ROTATE_SPEED;
-	}
-	else
-	{
-		m_rovAngle -= ROTATE_SPEED;
-	}
+	m_rovAngle = m_rovOriginAngle + g_RevolAngle;
 
 	// 점들을 다시 0,0 원점으로 이동시킴.
 	vertexOrigin[0].x = m_ResetPosition.x - m_fScale;
@@ -194,28 +187,28 @@ void CHexaPad::SetDirection(kDIRECTION _kDIR)
 	case DIR_UP:
 	{
 		// 위.
-		m_rovAngle = 270.f;
+		m_rovOriginAngle = 270.f;
 	}
 	break;
 
 	case DIR_DOWN:
 	{
 		// 아래.
-		m_rovAngle = 90.f;
+		m_rovOriginAngle = 90.f;
 	}
 	break;
 
 	case DIR_LEFT:
 	{
 		// 좌.
-		m_rovAngle = 180.f;
+		m_rovOriginAngle = 180.f;
 	}
 	break;
 
 	case DIR_RIGHT:
 	{
 		// 우.
-		m_rovAngle = 0.f;
+		m_rovOriginAngle = 0.f;
 	}
 	break;
 	}

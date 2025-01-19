@@ -110,6 +110,8 @@ private:
 	// 공전 속도.
 	float m_revolSpeed;
 
+	float m_revOriginAngle;
+
 	// 자전 속도.
 	float m_rotSpeed;
 

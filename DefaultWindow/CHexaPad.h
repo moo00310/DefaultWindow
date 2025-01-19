@@ -85,6 +85,8 @@ private:
 
 	float m_rovAngle;
 
+	float m_rovOriginAngle;
+
 	kDIRECTION m_Direction;
 
 	CKDHPlayer* m_Player;
