@@ -4,6 +4,7 @@ class CThorn :  public CObj
 {
 public:
 	CThorn();
+	CThorn(Direction _dir);
 	virtual ~CThorn();
 public:
 	void Initialize() override;
@@ -14,6 +15,7 @@ public:
 
 public:
 	float TranceAngle();
+	Direction GetDir() { return m_eDir; }
 
 private:
 	D3DXVECTOR3 m_vPoints[3];
@@ -21,5 +23,7 @@ private:
 	D3DXVECTOR3 m_vMidPoint;
 
 	POINT m_tPoints[3];
+
+	Direction m_eDir;
 };
 

@@ -5,7 +5,7 @@
 class CCameraMgr
 {
 private:
-	CCameraMgr() : m_eCameraState(CS_END), m_pPlayer(nullptr), m_bIsReverce(false), m_Camera{}, m_ulTime(0)
+	CCameraMgr() : m_eCameraState(CS_END), m_pPlayer(nullptr), m_bIsReverce(false), m_Camera{}, m_ulTime(0), m_ePreCameraState(CS_END)
 	{}
 	~CCameraMgr() {}
 
@@ -45,6 +45,7 @@ private:
 public:
 	static CCameraMgr* m_pInstance;
 	CarmeraState m_eCameraState;
+	CarmeraState m_ePreCameraState;
 	CObj* m_pPlayer;
 	POINT m_Camera[C_End];
 

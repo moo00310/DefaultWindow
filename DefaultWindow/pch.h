@@ -14,8 +14,11 @@
 #include <iostream>
 
 #include <list>
+#include <vector>
 #include <algorithm>
 #include <functional>
+
+#include <chrono>
 
 #include <d3d9.h>
 #include <d3dx9.h>
