@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CObj.h"
+#include "CBlock_SSH.h"
 
 template<typename T>
 class CAbstractFactory
@@ -33,6 +34,16 @@ public:
 		pObj->Set_vPos(_vPos);
 		pObj->Set_Angle(_fAngle);
 
+		return pObj;
+	}
+
+	static CObj* CreateSlow(D3DXVECTOR3 _vPos, bool _bSlow, float _fAngle = 180.f)
+	{
+		CObj* pObj = new T;
+		dynamic_cast<CBlock_SSH*>(pObj)->Set_bSlow(_bSlow);
+		pObj->Initialize();
+		pObj->Set_vPos(_vPos);
+		pObj->Set_Angle(_fAngle);
 		return pObj;
 	}
 };

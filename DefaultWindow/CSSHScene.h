@@ -19,6 +19,11 @@ public:
 private:
 	void Key_Input();
 	void Offset();
+	void Create_Block();
+	void Adjust_RevSpeed();
+	void Rev_Auto();
+	void Rev_Play();
+
 
 private:
 	bool  m_bChange;
@@ -27,6 +32,7 @@ private:
 	float m_fMaxAngle;
 
 	int   m_iBlockCount;
+	int   m_iStartTime;
 
 	list<CObj*>::iterator m_IterBlock;
 };

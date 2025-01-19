@@ -1,9 +1,13 @@
 #include "pch.h"
 #include "CBlock_SSH.h"
 
-#include "CScrollMgr.h"
+#include "CPlayer_SSH_Fire.h"
+#include "CPlayer_SSH_Ice.h"
 
-CBlock_SSH::CBlock_SSH()
+#include "CScrollMgr.h"
+#include "CObjMgr.h"
+
+CBlock_SSH::CBlock_SSH() : m_bSlow(false)
 {
 }
 
