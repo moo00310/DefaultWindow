@@ -20,6 +20,8 @@ public:
 	void        Set_Angle(float _fAngle) { m_fAngle = _fAngle; }
 	void        Set_AngleEx(float _fAngle) { m_fAngle += _fAngle; }
 
+	void		SetSpeed(float _speed) { m_fSpeed = _speed; }
+
 public:
 	virtual void		Initialize()PURE;
 	virtual int			Update()PURE;

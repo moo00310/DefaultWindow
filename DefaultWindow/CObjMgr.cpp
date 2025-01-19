@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "CObjMgr.h"
+#include "CThorn.h"
+#include "CMemoryPoolMgr.h"
 
 CObjMgr* CObjMgr::m_pInstance = nullptr;
 
@@ -40,18 +42,19 @@ CObj* CObjMgr::Get_Target(OBJID eID, CObj* pDst)
 	return nullptr;
 }
 
-bool CObjMgr::Collision_Check()
+bool CObjMgr::Collision_Check(OBJID _eID, float _Dst, float _Src)
 {
 	m_pPlayer = m_ObjList[OBJ_PLAYER].front();
-	for_each(m_ObjList[OBJ_MONSTER].begin(), m_ObjList[OBJ_MONSTER].end(), [&](CObj* obj)
-		{
-			float fRadius = (20 + 15) * 0.5f;
-			float fWidth = abs(m_pPlayer->Get_Info().vPos.x - obj->Get_Info().vPos.x);
-			float fHeight = abs(m_pPlayer->Get_Info().vPos.y - obj->Get_Info().vPos.y);
-			float fDiagonal = sqrtf(fWidth * fWidth + fHeight * fHeight);
-			if (fRadius >= fDiagonal)
-				return true;
-		});
+	float fRadius = (_Dst + _Src) * 0.5f;
+
+	for (CObj* obj : m_ObjList[_eID]) {
+		float fWidth = abs(m_pPlayer->Get_Info().vPos.x - obj->Get_Info().vPos.x);
+		float fHeight = abs(m_pPlayer->Get_Info().vPos.y - obj->Get_Info().vPos.y);
+		float fDiagonal = sqrtf(fWidth * fWidth + fHeight * fHeight);
+
+		if (fRadius >= fDiagonal)
+			return true; 
+	}
 
 	return false;
 }
@@ -75,7 +78,14 @@ int CObjMgr::Update()
 
 			if (OBJ_DEAD == iResult)
 			{
-				Safe_Delete<CObj*>(*iter);
+				if (i == OBJ_MOUSE)
+				{
+					CMemoryPoolMgr::Get_Instance()->deallocate(*iter);
+				}
+				else
+				{
+					Safe_Delete<CObj*>(*iter);
+				}
 				iter = m_ObjList[i].erase(iter);
 			}
 			else
@@ -112,18 +122,27 @@ void CObjMgr::Render(HDC hDC)
 
 		m_RenderList[i].clear();
 	}
-
-	/*float x = m_ObjList[OBJ_MONSTER].front()->Get_Info().vPos.x;
-	float y = m_ObjList[OBJ_MONSTER].front()->Get_Info().vPos.y;*/
 }
 
 void CObjMgr::Release()
 {
 	for (size_t i = 0; i < OBJ_END; ++i)
 	{
-		for_each(m_ObjList[i].begin(), m_ObjList[i].end(), Safe_Delete<CObj*>);
-		m_ObjList[i].clear();
+		if (i == OBJ_MOUSE)
+		{
+			for_each(m_ObjList[OBJ_MOUSE].begin(), m_ObjList[OBJ_MOUSE].end(), [](CObj* _obj)
+				{
+					CMemoryPoolMgr::Get_Instance()->deallocate(_obj);
+				});
+			m_ObjList[i].clear();
+		}
+		else
+		{
+			for_each(m_ObjList[i].begin(), m_ObjList[i].end(), Safe_Delete<CObj*>);
+			m_ObjList[i].clear();
+		}
 	}
+	
 }
 
 void CObjMgr::Delete_ID(OBJID eID)
@@ -132,4 +151,13 @@ void CObjMgr::Delete_ID(OBJID eID)
 		Safe_Delete(pObj);
 
 	m_ObjList[eID].clear();
+}
+
+void CObjMgr::Dead_Thorn(Direction eID)
+{
+	for_each(m_ObjList[OBJ_MOUSE].begin(), m_ObjList[OBJ_MOUSE].end(), [=](CObj* monster)
+		{
+			if(static_cast<CThorn*>(monster)->GetDir() == eID)
+				monster->Set_Dead();
+		});
 }

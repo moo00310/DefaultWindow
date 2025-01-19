@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CObj.h"
+#include "CMemoryPoolMgr.h"
 
 template<typename T>
 class CAbstractFactory
@@ -35,5 +36,27 @@ public:
 
 		return pObj;
 	}
+
+	static CObj* Create(float _fX, float _fY, Direction _dir)
+	{
+		CObj* pObj = new T(_dir);
+		pObj->Set_Pos(_fX, _fY);
+		pObj->Initialize();
+
+		return pObj;
+	}
+
+#undef new
+	static CObj* CreateThorn(float _fX, float _fY, Direction _dir)
+	{
+		// 메모리 풀에서 메모리 할당
+		void* temp = CMemoryPoolMgr::Get_Instance()->allocate();
+
+		CObj* pObj = new (temp) T(_dir);
+		pObj->Set_Pos(_fX, _fY);
+		pObj->Initialize();
+		return pObj;
+	}
+#define new DBG_NEW
 };
 
