@@ -3,9 +3,12 @@
 #include "CSquare.h"
 #include "CAbstractFactory.h"
 #include "CObjMgr.h"
+#include "CKeyMgr.h"
 
 CSpawner::CSpawner()
-	:m_ullLastSpawnTime(0), m_pRightSpawn(nullptr), m_pLeftSpawn(nullptr), m_ullStartTime(0), m_ullNextSpawnTime(0), m_iSpawnIndex(0)
+	:m_ullLastSpawnTime(0), m_pRightSpawn(nullptr), m_pLeftSpawn(nullptr), m_ullStartTime(0), m_ullNextSpawnTime(0), m_iSpawnIndex(0),
+	m_iKeyDownCount(0)
+
 {
 	//ZeroMemory(&m_arrSpawnTime, sizeof(m_arrSpawnTime));
 	ZeroMemory(&m_arrSpawnInfo, sizeof(m_arrSpawnInfo));
@@ -32,6 +35,7 @@ int CSpawner::Update()
 	if (m_bDead)
 		return OBJ_DEAD;
 
+	Check_KeyDownTime();
 	Check_SpawnTime();
 
 	return OBJ_NOEVENT;
@@ -50,6 +54,9 @@ void CSpawner::Render(HDC hDC)
 
 	_stprintf_s(cBuffer, _T("Spawn Index: %d"), m_iSpawnIndex - 1);
 	TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.3f), cBuffer, (int)_tcslen(cBuffer));
+
+	_stprintf_s(cBuffer, _T("Time: %d"), GetTickCount64() - m_ullStartTime);
+	TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.6f), cBuffer, (int)_tcslen(cBuffer));
 
 }
 
@@ -166,38 +173,57 @@ void CSpawner::Set_SpawnTime()
 	Set_SpawnInfo(0, 5000, BEAT_3);
 	Set_SpawnInfo(1, 10000, BEAT_4);
 	Set_SpawnInfo(2, 15000, BEAT_3);
-	Set_SpawnInfo(3, 19500, BEAT_3);
-	Set_SpawnInfo(4, 22000, BEAT_2);
-	Set_SpawnInfo(5, 24500, BEAT_3);
+	Set_SpawnInfo(3, 20000, BEAT_3);
+	Set_SpawnInfo(4, 22500, BEAT_2);
+	Set_SpawnInfo(5, 25000, BEAT_3);
 	//여기서 좀 밀리는 느낌
 	Set_SpawnInfo(6, 29500, BEAT_4);
 	Set_SpawnInfo(7, 34500, BEAT_3);
 	Set_SpawnInfo(8, 39500, BEAT_3);
 	Set_SpawnInfo(9, 42000, BEAT_2);
 	//빨라지는 부분
-	ULONGLONG ullStart = 49000;
-	ULONGLONG ullInterval = 1600;
 	Set_SpawnInfo(10, 49000, BEAT_2);
 	Set_SpawnInfo(11, 50700, BEAT_2);
 	Set_SpawnInfo(12, 52400, BEAT_2);
-	Set_SpawnInfo(13, 54100, BEAT_1);//1700
+	Set_SpawnInfo(13, 54100, BEAT_7_16);//1700
 
-	Set_SpawnInfo(14, 55900, BEAT_2);
-	Set_SpawnInfo(15, 57600, BEAT_2);
-	Set_SpawnInfo(16, 59300, BEAT_2);
-	Set_SpawnInfo(17, 61000, BEAT_1);//1700
+	Set_SpawnInfo(14, 56000, BEAT_2);
+	Set_SpawnInfo(15, 58000, BEAT_2);
+	Set_SpawnInfo(16, 60000, BEAT_2);
+	Set_SpawnInfo(17, 61500, BEAT_7_16);//1700
 
 	//여기서 다시 느려짐
-	Set_SpawnInfo(18, 62600, BEAT_2);
-	Set_SpawnInfo(19, 67500, BEAT_4);
-	Set_SpawnInfo(20, 66000, BEAT_2);
-	Set_SpawnInfo(21, 67700, BEAT_1);//1700
-
-
+	Set_SpawnInfo(18, 63000, BEAT_2);
+	//
+	Set_SpawnInfo(19, 67000, BEAT_3);
+	Set_SpawnInfo(20, 70500, BEAT_2);
+	//
+	Set_SpawnInfo(21, 74500, BEAT_2);//1700
+	Set_SpawnInfo(22, 76000, BEAT_7_16);//1700
+	//
+	Set_SpawnInfo(23, 80000, BEAT_2);
+	Set_SpawnInfo(24, 81500, BEAT_2);
+	Set_SpawnInfo(25, 83000, BEAT_3);
+	Set_SpawnInfo(26, 85000, BEAT_7_16);//1700
+	//
+	Set_SpawnInfo(27, 87000, BEAT_2);
+	Set_SpawnInfo(28, 88500, BEAT_2);
+	Set_SpawnInfo(29, 90000, BEAT_2);
+	//개 느린 부분
+	Set_SpawnInfo(30, 92000, BEAT_65);//1700
 }
 
 void CSpawner::Set_SpawnInfo(int _iIndex, ULONGLONG _ullSpawnTime, ULONGLONG _ullTimeInterval)
 {
 	m_arrSpawnInfo[_iIndex].ullSpawnTime = m_ullStartTime + _ullSpawnTime;
 	m_arrSpawnInfo[_iIndex].ullTimeInterval = _ullTimeInterval;
+}
+
+void CSpawner::Check_KeyDownTime()
+{
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_SPACE))
+	{
+		cout << m_iKeyDownCount << ": " << GetTickCount64() - m_ullStartTime << endl;
+		++m_iKeyDownCount;
+	}
 }
