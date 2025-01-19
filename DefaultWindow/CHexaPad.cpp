@@ -68,7 +68,7 @@ int CHexaPad::Update()
 	if (fPlayerDistance <= m_fScale + m_fScale)
 	{
 		// 게임 오버 판정.
-		CSceneMgr::Get_Instance()->Set_Scene(SC_HERO);
+		//CSceneMgr::Get_Instance()->Set_Scene(SC_HERO);
 		return OBJ_DEAD;
 	}
 
@@ -145,8 +145,8 @@ void CHexaPad::Late_Update()
 	{
 		// 게임 오버 판정.
 		// 씬 재시작.
-		CSceneMgr::Get_Instance()->Set_Scene(SC_HERO);
-		CSceneMgr::Get_Instance()->Set_Scene(SC_KDH);
+		/*CSceneMgr::Get_Instance()->Set_Scene(SC_HERO);
+		CSceneMgr::Get_Instance()->Set_Scene(SC_KDH);*/
 		return;
 	}
 }

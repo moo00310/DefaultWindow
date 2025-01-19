@@ -67,6 +67,7 @@ void CKDHScene::Release()
 	CHexaPadManager::Get_Instance()->ClearPattern();
 	CHexaPadManager::Get_Instance()->Destroy_Instance();
 	CObjMgr::Get_Instance()->Release();
+	CSoundMgr::Get_Instance()->Release();
 }
 
 void CKDHScene::CreatePattern()
@@ -75,7 +76,97 @@ void CKDHScene::CreatePattern()
 	sequence.sequence = [&]()
 		{
 		};
-	sequence.fCount = 1.5f;
+	sequence.fCount = 0.5f;
+
+	CHexaPadManager::Get_Instance()->AddPattern(sequence);
+
+	sequence.sequence = [&]()
+		{
+			AddPad(DIR_DOWN);
+			AddPad(DIR_UP);
+			AddPad(DIR_LEFT);
+		};
+	sequence.fCount = 0.5f;
+
+	CHexaPadManager::Get_Instance()->AddPattern(sequence);
+
+	sequence.sequence = [&]()
+		{
+			AddPad(DIR_UP);
+			AddPad(DIR_LEFT);
+			AddPad(DIR_RIGHT);
+		};
+	sequence.fCount = 0.5f;
+
+	CHexaPadManager::Get_Instance()->AddPattern(sequence);
+
+	sequence.sequence = [&]()
+		{
+			AddPad(DIR_DOWN);
+			AddPad(DIR_UP);
+			AddPad(DIR_RIGHT);
+		};
+	sequence.fCount = 0.5f;
+
+	CHexaPadManager::Get_Instance()->AddPattern(sequence);
+
+	sequence.sequence = [&]()
+		{
+			AddPad(DIR_LEFT);
+			AddPad(DIR_DOWN);
+			AddPad(DIR_RIGHT);
+		};
+	sequence.fCount = 0.5f;
+
+	CHexaPadManager::Get_Instance()->AddPattern(sequence);
+
+	sequence.sequence = [&]()
+		{
+			AddPad(DIR_LEFT);
+			AddPad(DIR_DOWN);
+			AddPad(DIR_UP);
+		};
+	sequence.fCount = 0.5f;
+
+	CHexaPadManager::Get_Instance()->AddPattern(sequence);
+
+	sequence.sequence = [&]()
+		{
+			AddPad(DIR_LEFT);
+			AddPad(DIR_UP);
+			AddPad(DIR_RIGHT);
+		};
+	sequence.fCount = 0.5f;
+
+	CHexaPadManager::Get_Instance()->AddPattern(sequence);
+
+	sequence.sequence = [&]()
+		{
+			AddPad(DIR_DOWN);
+			AddPad(DIR_UP);
+			AddPad(DIR_RIGHT);
+		};
+	sequence.fCount = 0.5f;
+
+	CHexaPadManager::Get_Instance()->AddPattern(sequence);
+
+	sequence.sequence = [&]()
+		{
+			AddPad(DIR_LEFT);
+			AddPad(DIR_DOWN);
+			AddPad(DIR_RIGHT);
+		};
+	sequence.fCount = 0.5f;
+
+	CHexaPadManager::Get_Instance()->AddPattern(sequence);
+
+	sequence.sequence = [&]()
+		{
+			AddPad(DIR_LEFT);
+			AddPad(DIR_DOWN);
+			AddPad(DIR_UP);
+		};
+	sequence.fCount = 0.5f;
 
 	CHexaPadManager::Get_Instance()->AddPattern(sequence);
 
