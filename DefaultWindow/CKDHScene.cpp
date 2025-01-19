@@ -43,7 +43,7 @@ void CKDHScene::Initialize()
 	CreatePattern();
 
 	CSoundMgr::Get_Instance()->Initialize();
-	CSoundMgr::Get_Instance()->PlayEvent("event:/Milkyway");
+	CSoundMgr::Get_Instance()->PlayEvent("event:/Open Hexagon - Apeirogon - Milky Ways");
 	CSoundMgr::Get_Instance()->Update();
 
 	m_fChangeCount = 2.f;
