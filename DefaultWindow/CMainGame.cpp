@@ -27,8 +27,8 @@ void CMainGame::Initialize()
 	SelectObject(m_memDC, m_hBit);
   
 	CMemoryPoolMgr::Get_Instance(500, 100);
-	CSceneMgr::Get_Instance()->Set_Scene(SC_MOO);
-	//CSceneMgr::Get_Instance()->Set_Scene(SC_SSH);
+	CSceneMgr::Get_Instance()->Set_Scene(SC_START);
+
 }
 
 void CMainGame::Update()

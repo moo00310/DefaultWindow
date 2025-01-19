@@ -23,6 +23,11 @@ void CStart::Late_Update()
 
 void CStart::Render(HDC hDC)
 {
+	TCHAR szBuffer3[128];
+	_stprintf_s(szBuffer3, _T("Team_2 Rhythm_Game"));
+	SetTextColor(hDC, RGB(0, 0, 0));
+	SetBkMode(hDC, TRANSPARENT);
+	TextOut(hDC, 300, 200, szBuffer3, (int)_tcslen(szBuffer3));
 }
 
 void CStart::Release()
