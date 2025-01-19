@@ -45,11 +45,11 @@ void CSpawner::Render(HDC hDC)
 {
 	TCHAR cBuffer[64]; //저장할 문자열 버퍼
 
-	_stprintf_s(cBuffer, _T("Speed: %.2f"), m_fSpeed);
-	TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.3f), cBuffer, (int)_tcslen(cBuffer));
+	//_stprintf_s(cBuffer, _T("Speed: %.2f"), m_fSpeed);
+	//TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.3f), cBuffer, (int)_tcslen(cBuffer));
 
 	_stprintf_s(cBuffer, _T("Spawn Index: %d"), m_iSpawnIndex - 1);
-	TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.1f), cBuffer, (int)_tcslen(cBuffer));
+	TextOut(hDC, int(WINCX * 0.5f), int(WINCY * 0.3f), cBuffer, (int)_tcslen(cBuffer));
 
 }
 
@@ -159,27 +159,39 @@ void CSpawner::Set_SpawnTime()
 {
 	for (int i = 0; i < SPAWN_COUNT; ++i)
 	{
-		m_arrSpawnInfo[i].ullSpawnTime = m_ullStartTime + 2500 * (i + 1);
+		m_arrSpawnInfo[i].ullSpawnTime = m_ullStartTime + 5000 * (i + 1);
 		m_arrSpawnInfo[i].ullTimeInterval = BEAT_2;
 	}
 
 	Set_SpawnInfo(0, 5000, BEAT_3);
 	Set_SpawnInfo(1, 10000, BEAT_4);
 	Set_SpawnInfo(2, 15000, BEAT_3);
-	Set_SpawnInfo(3, 20000, BEAT_3);
-	Set_SpawnInfo(4, 22500, BEAT_2);
-	Set_SpawnInfo(5, 25000, BEAT_3);
+	Set_SpawnInfo(3, 19500, BEAT_3);
+	Set_SpawnInfo(4, 22000, BEAT_2);
+	Set_SpawnInfo(5, 24500, BEAT_3);
 	//여기서 좀 밀리는 느낌
 	Set_SpawnInfo(6, 29500, BEAT_4);
 	Set_SpawnInfo(7, 34500, BEAT_3);
 	Set_SpawnInfo(8, 39500, BEAT_3);
 	Set_SpawnInfo(9, 42000, BEAT_2);
 	//빨라지는 부분
+	ULONGLONG ullStart = 49000;
+	ULONGLONG ullInterval = 1600;
 	Set_SpawnInfo(10, 49000, BEAT_2);
-	Set_SpawnInfo(11, 51000, BEAT_2);
-	Set_SpawnInfo(12, 53000, BEAT_2);
-	Set_SpawnInfo(13, 55000, BEAT_2);
-	Set_SpawnInfo(14, 57000, BEAT_2);
+	Set_SpawnInfo(11, 50700, BEAT_2);
+	Set_SpawnInfo(12, 52400, BEAT_2);
+	Set_SpawnInfo(13, 54100, BEAT_1);//1700
+
+	Set_SpawnInfo(14, 55900, BEAT_2);
+	Set_SpawnInfo(15, 57600, BEAT_2);
+	Set_SpawnInfo(16, 59300, BEAT_2);
+	Set_SpawnInfo(17, 61000, BEAT_1);//1700
+
+	//여기서 다시 느려짐
+	Set_SpawnInfo(18, 62600, BEAT_2);
+	Set_SpawnInfo(19, 67500, BEAT_4);
+	Set_SpawnInfo(20, 66000, BEAT_2);
+	Set_SpawnInfo(21, 67700, BEAT_1);//1700
 
 
 }

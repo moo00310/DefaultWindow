@@ -7,7 +7,7 @@
 #define ROLL_COUNT 6
 #define FALL_SPEED 10.f
 #define GOUP_SPEED 5.f
-#define LERP_SPEED 0.2f
+#define LERP_SPEED 0.3f
 
 class CSquare :
     public CObj
